@@ -94,12 +94,20 @@ pub use manual::web_components;
 pub trait Render {
     /// Render an element with a given `depth` argument.
     fn render(&self, f: &mut std::fmt::Formatter<'_>, depth: usize) -> std::fmt::Result;
+
+    fn render_node(&self, target: &web_sys::Node) -> Result<(), wasm_bindgen::JsValue>;
 }
 
 impl Render for Cow<'static, str> {
     fn render(&self, f: &mut std::fmt::Formatter<'_>, depth: usize) -> std::fmt::Result {
         write!(f, "{:level$}", "", level = depth * 4)?;
         std::fmt::Display::fmt(self, f)
+    }
+
+    fn render_node(&self, target: &web_sys::Node) -> Result<(), wasm_bindgen::JsValue> {
+        target.append_child(gloo::utils::document().create_text(self))?;
+
+        Ok(())
     }
 }
 
@@ -110,6 +118,10 @@ where
     fn render(&self, f: &mut std::fmt::Formatter<'_>, depth: usize) -> std::fmt::Result {
         Render::render(&**self, f, depth)
     }
+
+    fn render_node(&self, target: &web_sys::Node) -> Result<(), wasm_bindgen::JsValue> {
+        Render::render_node(&**self, target)
+    }
 }
 impl<T> Render for &mut T
 where
@@ -117,6 +129,10 @@ where
 {
     fn render(&self, f: &mut std::fmt::Formatter<'_>, depth: usize) -> std::fmt::Result {
         Render::render(&**self, f, depth)
+    }
+
+    fn render_node(&self, target: &web_sys::Node) -> Result<(), wasm_bindgen::JsValue> {
+        Render::render_node(&**self, target)
     }
 }
 

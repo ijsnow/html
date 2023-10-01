@@ -145,6 +145,7 @@ fn generate_element(el: MergedElement) -> Result<CodeFile> {
     let fields = generate_fields(&attributes);
     let opening_tag_content = generate_opening_tag(&attributes, &tag_name, has_global_attributes);
     let closing_tag_content = generate_closing_tag(&tag_name, has_closing_tag);
+    let web_sys_element_content = generate_web_sys_element(&attributes, &tag_name);
 
     let global_field = match has_global_attributes {
         true => format!("global_attrs: crate::GlobalAttributes,"),
@@ -175,6 +176,10 @@ fn generate_element(el: MergedElement) -> Result<CodeFile> {
                 {closing_tag_content}
                 Ok(())
             }}
+
+            fn to_element(&self) -> Result<Element, JsValue> {
+                Ok({web_sys_element_content})
+            }
         }}
 
         impl std::fmt::Display for {struct_name} {{
@@ -276,6 +281,23 @@ fn generate_closing_tag(tag_name: &str, has_closing_tag: bool) -> String {
     } else {
         String::new()
     }
+}
+
+fn generate_web_sys_element(attributes: &[Attribute], tag_name: &str) -> String {
+    let output = r#"
+    impl TryFrom<> for Element {{
+        type Error = JsValue;
+
+        fn try_from(element: ThisElement) -> Element {{
+            #[wasm_bindgen]
+            extern "C" {{
+                #[wasm_bindgen(js_name = Document)]
+                pub fn document() -> web_sys::Document;
+            }}
+        }}
+    }}
+    "#;
+    todo!()
 }
 
 fn generate_attribute_display(attr: &Attribute) -> String {
