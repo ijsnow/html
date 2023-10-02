@@ -76,6 +76,51 @@ impl crate::RenderElement for Video {
         write!(writer, "</video>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(video)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.src.as_ref() {
+            element.set_attribute("src", field)?;
+        }
+        if let Some(field) = self.crossorigin.as_ref() {
+            element.set_attribute("crossorigin", field)?;
+        }
+        if let Some(field) = self.poster.as_ref() {
+            element.set_attribute("poster", field)?;
+        }
+        if let Some(field) = self.preload.as_ref() {
+            element.set_attribute("preload", field)?;
+        }
+        if let Some(field) = self.autoplay.as_ref() {
+            element.set_attribute("autoplay", field)?;
+        }
+        if self.plays_inline {
+            element.set_attribute("playsinline", "true")?;
+        }
+        if let Some(field) = self.loop_.as_ref() {
+            element.set_attribute("loop", field)?;
+        }
+        if let Some(field) = self.muted.as_ref() {
+            element.set_attribute("muted", field)?;
+        }
+        if let Some(field) = self.controls.as_ref() {
+            element.set_attribute("controls", field)?;
+        }
+        if let Some(field) = self.width.as_ref() {
+            element.set_attribute("width", field)?;
+        }
+        if let Some(field) = self.height.as_ref() {
+            element.set_attribute("height", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Video {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

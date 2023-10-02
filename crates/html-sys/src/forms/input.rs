@@ -180,6 +180,114 @@ impl crate::RenderElement for Input {
     fn write_closing_tag<W: std::fmt::Write>(&self, writer: &mut W) -> std::fmt::Result {
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(input)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.accept.as_ref() {
+            element.set_attribute("accept", field)?;
+        }
+        if let Some(field) = self.alt.as_ref() {
+            element.set_attribute("alt", field)?;
+        }
+        if let Some(field) = self.autocomplete.as_ref() {
+            element.set_attribute("autocomplete", field)?;
+        }
+        if let Some(field) = self.checked.as_ref() {
+            element.set_attribute("checked", field)?;
+        }
+        if let Some(field) = self.dirname.as_ref() {
+            element.set_attribute("dirname", field)?;
+        }
+        if let Some(field) = self.disabled.as_ref() {
+            element.set_attribute("disabled", field)?;
+        }
+        if let Some(field) = self.form.as_ref() {
+            element.set_attribute("form", field)?;
+        }
+        if let Some(field) = self.formaction.as_ref() {
+            element.set_attribute("formaction", field)?;
+        }
+        if let Some(field) = self.formenctype.as_ref() {
+            element.set_attribute("formenctype", field)?;
+        }
+        if let Some(field) = self.formmethod.as_ref() {
+            element.set_attribute("formmethod", field)?;
+        }
+        if let Some(field) = self.formnovalidate.as_ref() {
+            element.set_attribute("formnovalidate", field)?;
+        }
+        if let Some(field) = self.formtarget.as_ref() {
+            element.set_attribute("formtarget", field)?;
+        }
+        if let Some(field) = self.height.as_ref() {
+            element.set_attribute("height", field)?;
+        }
+        if let Some(field) = self.list.as_ref() {
+            element.set_attribute("list", field)?;
+        }
+        if let Some(field) = self.max.as_ref() {
+            element.set_attribute("max", field)?;
+        }
+        if let Some(field) = self.maxlength.as_ref() {
+            element.set_attribute("maxlength", field)?;
+        }
+        if let Some(field) = self.min.as_ref() {
+            element.set_attribute("min", field)?;
+        }
+        if let Some(field) = self.minlength.as_ref() {
+            element.set_attribute("minlength", field)?;
+        }
+        if let Some(field) = self.multiple.as_ref() {
+            element.set_attribute("multiple", field)?;
+        }
+        if let Some(field) = self.name.as_ref() {
+            element.set_attribute("name", field)?;
+        }
+        if let Some(field) = self.pattern.as_ref() {
+            element.set_attribute("pattern", field)?;
+        }
+        if let Some(field) = self.placeholder.as_ref() {
+            element.set_attribute("placeholder", field)?;
+        }
+        if let Some(field) = self.popovertarget.as_ref() {
+            element.set_attribute("popovertarget", field)?;
+        }
+        if let Some(field) = self.popovertargetaction.as_ref() {
+            element.set_attribute("popovertargetaction", field)?;
+        }
+        if let Some(field) = self.readonly.as_ref() {
+            element.set_attribute("readonly", field)?;
+        }
+        if let Some(field) = self.required.as_ref() {
+            element.set_attribute("required", field)?;
+        }
+        if let Some(field) = self.size.as_ref() {
+            element.set_attribute("size", field)?;
+        }
+        if let Some(field) = self.src.as_ref() {
+            element.set_attribute("src", field)?;
+        }
+        if let Some(field) = self.step.as_ref() {
+            element.set_attribute("step", field)?;
+        }
+        if let Some(field) = self.type_.as_ref() {
+            element.set_attribute("type", field)?;
+        }
+        if let Some(field) = self.value.as_ref() {
+            element.set_attribute("value", field)?;
+        }
+        if let Some(field) = self.width.as_ref() {
+            element.set_attribute("width", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Input {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

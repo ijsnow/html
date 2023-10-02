@@ -71,6 +71,48 @@ impl crate::RenderElement for Script {
         write!(writer, "</script>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(script)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.src.as_ref() {
+            element.set_attribute("src", field)?;
+        }
+        if let Some(field) = self.type_.as_ref() {
+            element.set_attribute("type", field)?;
+        }
+        if let Some(field) = self.nomodule.as_ref() {
+            element.set_attribute("nomodule", field)?;
+        }
+        if let Some(field) = self.async_.as_ref() {
+            element.set_attribute("async", field)?;
+        }
+        if let Some(field) = self.defer.as_ref() {
+            element.set_attribute("defer", field)?;
+        }
+        if let Some(field) = self.crossorigin.as_ref() {
+            element.set_attribute("crossorigin", field)?;
+        }
+        if let Some(field) = self.integrity.as_ref() {
+            element.set_attribute("integrity", field)?;
+        }
+        if let Some(field) = self.referrerpolicy.as_ref() {
+            element.set_attribute("referrerpolicy", field)?;
+        }
+        if let Some(field) = self.blocking.as_ref() {
+            element.set_attribute("blocking", field)?;
+        }
+        if let Some(field) = self.fetchpriority.as_ref() {
+            element.set_attribute("fetchpriority", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Script {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

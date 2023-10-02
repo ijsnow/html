@@ -36,6 +36,27 @@ impl crate::RenderElement for Fieldset {
         write!(writer, "</fieldset>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(fieldset)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if self.disabled {
+            element.set_attribute("disabled", "true")?;
+        }
+        if let Some(field) = self.form.as_ref() {
+            element.set_attribute("form", field)?;
+        }
+        if let Some(field) = self.name.as_ref() {
+            element.set_attribute("name", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Fieldset {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

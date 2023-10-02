@@ -86,6 +86,57 @@ impl crate::RenderElement for TextArea {
         write!(writer, "</textarea>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(textarea)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.autocomplete.as_ref() {
+            element.set_attribute("autocomplete", field)?;
+        }
+        if let Some(field) = self.cols.as_ref() {
+            element.set_attribute("cols", field)?;
+        }
+        if let Some(field) = self.dir_name.as_ref() {
+            element.set_attribute("dirname", field)?;
+        }
+        if self.disabled {
+            element.set_attribute("disabled", "true")?;
+        }
+        if let Some(field) = self.form.as_ref() {
+            element.set_attribute("form", field)?;
+        }
+        if let Some(field) = self.max_length.as_ref() {
+            element.set_attribute("maxlength", field)?;
+        }
+        if let Some(field) = self.min_length.as_ref() {
+            element.set_attribute("minlength", field)?;
+        }
+        if let Some(field) = self.name.as_ref() {
+            element.set_attribute("name", field)?;
+        }
+        if let Some(field) = self.placeholder.as_ref() {
+            element.set_attribute("placeholder", field)?;
+        }
+        if self.read_only {
+            element.set_attribute("readonly", "true")?;
+        }
+        if self.required {
+            element.set_attribute("required", "true")?;
+        }
+        if let Some(field) = self.rows.as_ref() {
+            element.set_attribute("rows", field)?;
+        }
+        if let Some(field) = self.wrap.as_ref() {
+            element.set_attribute("wrap", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for TextArea {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

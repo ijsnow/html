@@ -36,6 +36,27 @@ impl crate::RenderElement for Output {
         write!(writer, "</output>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(output)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.for_.as_ref() {
+            element.set_attribute("for", field)?;
+        }
+        if let Some(field) = self.form.as_ref() {
+            element.set_attribute("form", field)?;
+        }
+        if let Some(field) = self.name.as_ref() {
+            element.set_attribute("name", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Output {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

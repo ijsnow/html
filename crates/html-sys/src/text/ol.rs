@@ -36,6 +36,27 @@ impl crate::RenderElement for OrderedList {
         write!(writer, "</ol>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(ol)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.reversed.as_ref() {
+            element.set_attribute("reversed", field)?;
+        }
+        if let Some(field) = self.start.as_ref() {
+            element.set_attribute("start", field)?;
+        }
+        if let Some(field) = self.type_.as_ref() {
+            element.set_attribute("type", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for OrderedList {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

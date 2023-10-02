@@ -294,6 +294,13 @@ fn gen_fmt_impl(
                 {write_closing_tag}
                 Ok(())
             }}
+
+            fn render_node(&self, target: &web_sys::Node) -> Result<web_sys::Node, JsValue> {{
+                let node = html_sys::RenderElement::create_element(&self.sys)?;
+                html_sys::RenderElement::apply_attributes(&self.sys, node)?;
+                // TODO: render children.
+                Ok(node)
+            }}
         }}
 
         impl std::fmt::Debug for {struct_name} {{

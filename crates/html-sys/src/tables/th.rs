@@ -46,6 +46,33 @@ impl crate::RenderElement for TableHeader {
         write!(writer, "</th>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(th)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.colspan.as_ref() {
+            element.set_attribute("colspan", field)?;
+        }
+        if let Some(field) = self.rowspan.as_ref() {
+            element.set_attribute("rowspan", field)?;
+        }
+        if let Some(field) = self.headers.as_ref() {
+            element.set_attribute("headers", field)?;
+        }
+        if let Some(field) = self.scope.as_ref() {
+            element.set_attribute("scope", field)?;
+        }
+        if let Some(field) = self.abbr.as_ref() {
+            element.set_attribute("abbr", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for TableHeader {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

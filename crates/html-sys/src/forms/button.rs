@@ -81,6 +81,54 @@ impl crate::RenderElement for Button {
         write!(writer, "</button>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(button)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if self.disabled {
+            element.set_attribute("disabled", "true")?;
+        }
+        if let Some(field) = self.form.as_ref() {
+            element.set_attribute("form", field)?;
+        }
+        if let Some(field) = self.form_action.as_ref() {
+            element.set_attribute("formaction", field)?;
+        }
+        if let Some(field) = self.form_enctype.as_ref() {
+            element.set_attribute("formenctype", field)?;
+        }
+        if let Some(field) = self.form_method.as_ref() {
+            element.set_attribute("formmethod", field)?;
+        }
+        if self.form_no_validate {
+            element.set_attribute("formnovalidate", "true")?;
+        }
+        if let Some(field) = self.form_target.as_ref() {
+            element.set_attribute("formtarget", field)?;
+        }
+        if let Some(field) = self.name.as_ref() {
+            element.set_attribute("name", field)?;
+        }
+        if let Some(field) = self.popovertarget.as_ref() {
+            element.set_attribute("popovertarget", field)?;
+        }
+        if let Some(field) = self.popovertargetaction.as_ref() {
+            element.set_attribute("popovertargetaction", field)?;
+        }
+        if let Some(field) = self.type_.as_ref() {
+            element.set_attribute("type", field)?;
+        }
+        if let Some(field) = self.value.as_ref() {
+            element.set_attribute("value", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Button {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

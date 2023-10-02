@@ -56,6 +56,39 @@ impl crate::RenderElement for Select {
         write!(writer, "</select>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(select)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.autocomplete.as_ref() {
+            element.set_attribute("autocomplete", field)?;
+        }
+        if self.disabled {
+            element.set_attribute("disabled", "true")?;
+        }
+        if let Some(field) = self.form.as_ref() {
+            element.set_attribute("form", field)?;
+        }
+        if self.multiple {
+            element.set_attribute("multiple", "true")?;
+        }
+        if let Some(field) = self.name.as_ref() {
+            element.set_attribute("name", field)?;
+        }
+        if self.required {
+            element.set_attribute("required", "true")?;
+        }
+        if let Some(field) = self.size.as_ref() {
+            element.set_attribute("size", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Select {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

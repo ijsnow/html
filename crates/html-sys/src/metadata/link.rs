@@ -100,6 +100,66 @@ impl crate::RenderElement for Link {
     fn write_closing_tag<W: std::fmt::Write>(&self, writer: &mut W) -> std::fmt::Result {
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(link)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.href.as_ref() {
+            element.set_attribute("href", field)?;
+        }
+        if let Some(field) = self.crossorigin.as_ref() {
+            element.set_attribute("crossorigin", field)?;
+        }
+        if let Some(field) = self.rel.as_ref() {
+            element.set_attribute("rel", field)?;
+        }
+        if let Some(field) = self.media.as_ref() {
+            element.set_attribute("media", field)?;
+        }
+        if let Some(field) = self.integrity.as_ref() {
+            element.set_attribute("integrity", field)?;
+        }
+        if let Some(field) = self.hreflang.as_ref() {
+            element.set_attribute("hreflang", field)?;
+        }
+        if let Some(field) = self.type_.as_ref() {
+            element.set_attribute("type", field)?;
+        }
+        if let Some(field) = self.referrerpolicy.as_ref() {
+            element.set_attribute("referrerpolicy", field)?;
+        }
+        if let Some(field) = self.sizes.as_ref() {
+            element.set_attribute("sizes", field)?;
+        }
+        if let Some(field) = self.imagesrcset.as_ref() {
+            element.set_attribute("imagesrcset", field)?;
+        }
+        if let Some(field) = self.imagesizes.as_ref() {
+            element.set_attribute("imagesizes", field)?;
+        }
+        if let Some(field) = self.as_.as_ref() {
+            element.set_attribute("as", field)?;
+        }
+        if let Some(field) = self.blocking.as_ref() {
+            element.set_attribute("blocking", field)?;
+        }
+        if let Some(field) = self.color.as_ref() {
+            element.set_attribute("color", field)?;
+        }
+        if let Some(field) = self.disabled.as_ref() {
+            element.set_attribute("disabled", field)?;
+        }
+        if let Some(field) = self.fetchpriority.as_ref() {
+            element.set_attribute("fetchpriority", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Link {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

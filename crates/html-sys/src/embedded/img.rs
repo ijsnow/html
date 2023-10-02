@@ -85,6 +85,57 @@ impl crate::RenderElement for Image {
     fn write_closing_tag<W: std::fmt::Write>(&self, writer: &mut W) -> std::fmt::Result {
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(img)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.alt.as_ref() {
+            element.set_attribute("alt", field)?;
+        }
+        if let Some(field) = self.src.as_ref() {
+            element.set_attribute("src", field)?;
+        }
+        if let Some(field) = self.srcset.as_ref() {
+            element.set_attribute("srcset", field)?;
+        }
+        if let Some(field) = self.sizes.as_ref() {
+            element.set_attribute("sizes", field)?;
+        }
+        if let Some(field) = self.crossorigin.as_ref() {
+            element.set_attribute("crossorigin", field)?;
+        }
+        if let Some(field) = self.usemap.as_ref() {
+            element.set_attribute("usemap", field)?;
+        }
+        if let Some(field) = self.ismap.as_ref() {
+            element.set_attribute("ismap", field)?;
+        }
+        if let Some(field) = self.width.as_ref() {
+            element.set_attribute("width", field)?;
+        }
+        if let Some(field) = self.height.as_ref() {
+            element.set_attribute("height", field)?;
+        }
+        if let Some(field) = self.referrerpolicy.as_ref() {
+            element.set_attribute("referrerpolicy", field)?;
+        }
+        if let Some(field) = self.decoding.as_ref() {
+            element.set_attribute("decoding", field)?;
+        }
+        if let Some(field) = self.loading.as_ref() {
+            element.set_attribute("loading", field)?;
+        }
+        if let Some(field) = self.fetchpriority.as_ref() {
+            element.set_attribute("fetchpriority", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Image {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

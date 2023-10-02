@@ -14,6 +14,11 @@ pub trait RenderElement {
     fn write_opening_tag<W: std::fmt::Write>(&self, writer: &mut W) -> std::fmt::Result;
     /// Write the closing tag to a writer, if one is available.
     fn write_closing_tag<W: std::fmt::Write>(&self, writer: &mut W) -> std::fmt::Result;
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue>;
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<web_sys::Element, wasm_bindgen::JsValue>;
 }
 /// Container for `data-*` attributes.
 #[derive(Debug, Clone, PartialEq, Default)]
@@ -190,6 +195,96 @@ impl std::fmt::Display for GlobalAttributes {
         }
         if self.translate {
             write!(writer, r#" translate"#)?;
+        }
+        Ok(())
+    }
+}
+#[cfg(feature = "web-sys")]
+impl GlobalAttributes {
+    fn apply(&self, target: &web_sys::Element) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.access_key.as_ref() {
+            element.set_attribute("accesskey", field)?;
+        }
+        if let Some(field) = self.auto_capitalize.as_ref() {
+            element.set_attribute("autocapitalize", field)?;
+        }
+        if self.autofocus {
+            element.set_attribute("autofocus", "true")?;
+        }
+        if let Some(field) = self.class.as_ref() {
+            element.set_attribute("class", field)?;
+        }
+        if let Some(field) = self.content_editable.as_ref() {
+            element.set_attribute("contenteditable", field)?;
+        }
+        if let Some(field) = self.direction.as_ref() {
+            element.set_attribute("dir", field)?;
+        }
+        if self.draggable {
+            element.set_attribute("draggable", "true")?;
+        }
+        if let Some(field) = self.enter_key_hint.as_ref() {
+            element.set_attribute("enterkeyhint", field)?;
+        }
+        if let Some(field) = self.export_parts.as_ref() {
+            element.set_attribute("exportparts", field)?;
+        }
+        if let Some(field) = self.hidden.as_ref() {
+            element.set_attribute("hidden", field)?;
+        }
+        if let Some(field) = self.id.as_ref() {
+            element.set_attribute("id", field)?;
+        }
+        if self.inert {
+            element.set_attribute("inert", "true")?;
+        }
+        if let Some(field) = self.input_mode.as_ref() {
+            element.set_attribute("inputmode", field)?;
+        }
+        if let Some(field) = self.is_.as_ref() {
+            element.set_attribute("is", field)?;
+        }
+        if let Some(field) = self.item_id.as_ref() {
+            element.set_attribute("itemid", field)?;
+        }
+        if let Some(field) = self.item_prop.as_ref() {
+            element.set_attribute("itemprop", field)?;
+        }
+        if let Some(field) = self.item_ref.as_ref() {
+            element.set_attribute("itemref", field)?;
+        }
+        if let Some(field) = self.item_scope.as_ref() {
+            element.set_attribute("itemscope", field)?;
+        }
+        if let Some(field) = self.item_type.as_ref() {
+            element.set_attribute("itemtype", field)?;
+        }
+        if let Some(field) = self.lang.as_ref() {
+            element.set_attribute("lang", field)?;
+        }
+        if let Some(field) = self.nonce.as_ref() {
+            element.set_attribute("nonce", field)?;
+        }
+        if let Some(field) = self.part.as_ref() {
+            element.set_attribute("part", field)?;
+        }
+        if let Some(field) = self.slot.as_ref() {
+            element.set_attribute("slot", field)?;
+        }
+        if let Some(field) = self.spellcheck.as_ref() {
+            element.set_attribute("spellcheck", field)?;
+        }
+        if let Some(field) = self.style.as_ref() {
+            element.set_attribute("style", field)?;
+        }
+        if let Some(field) = self.tab_index.as_ref() {
+            element.set_attribute("tabindex", field)?;
+        }
+        if let Some(field) = self.title.as_ref() {
+            element.set_attribute("title", field)?;
+        }
+        if self.translate {
+            element.set_attribute("translate", "true")?;
         }
         Ok(())
     }

@@ -61,6 +61,42 @@ impl crate::RenderElement for Anchor {
         write!(writer, "</a>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(a)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.href.as_ref() {
+            element.set_attribute("href", field)?;
+        }
+        if let Some(field) = self.target.as_ref() {
+            element.set_attribute("target", field)?;
+        }
+        if let Some(field) = self.download.as_ref() {
+            element.set_attribute("download", field)?;
+        }
+        if let Some(field) = self.ping.as_ref() {
+            element.set_attribute("ping", field)?;
+        }
+        if let Some(field) = self.rel.as_ref() {
+            element.set_attribute("rel", field)?;
+        }
+        if let Some(field) = self.hreflang.as_ref() {
+            element.set_attribute("hreflang", field)?;
+        }
+        if let Some(field) = self.type_.as_ref() {
+            element.set_attribute("type", field)?;
+        }
+        if let Some(field) = self.referrerpolicy.as_ref() {
+            element.set_attribute("referrerpolicy", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Anchor {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

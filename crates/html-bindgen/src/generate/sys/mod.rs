@@ -15,6 +15,10 @@ pub trait RenderElement {
 
     /// Write the closing tag to a writer, if one is available.
     fn write_closing_tag<W: std::fmt::Write >(&self, writer: &mut W) -> std::fmt::Result;
+
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue>;
+
+    fn apply_attributes(&self, target: &web_sys::Element) -> Result<web_sys::Element, wasm_bindgen::JsValue>;
 }
 
 /// Container for `data-*` attributes.
@@ -97,8 +101,10 @@ pub fn generate(
             let fields = generate_fields(global_attributes);
 
             let mut display_attrs = String::new();
+            let mut assign_attrs = String::new();
             for attr in global_attributes {
                 display_attrs.push_str(&generate_attribute_display(&attr));
+                assign_attrs.push_str(&generate_attribute_assignment(&attr));
             }
             formatdoc!(
                 r#"
@@ -112,6 +118,14 @@ pub fn generate(
                     impl std::fmt::Display for GlobalAttributes {{
                         fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
                             {display_attrs}
+                            Ok(())
+                        }}
+                    }}
+
+                    #[cfg(feature = "web-sys")]
+                    impl GlobalAttributes {{
+                        fn apply(&self, target: &web_sys::Element) -> Result<(), wasm_bindgen::JsValue> {{
+                            {assign_attrs}
                             Ok(())
                         }}
                     }}
@@ -145,7 +159,7 @@ fn generate_element(el: MergedElement) -> Result<CodeFile> {
     let fields = generate_fields(&attributes);
     let opening_tag_content = generate_opening_tag(&attributes, &tag_name, has_global_attributes);
     let closing_tag_content = generate_closing_tag(&tag_name, has_closing_tag);
-    let web_sys_element_content = generate_web_sys_element(&attributes, &tag_name);
+    let attribute_assignments_content = generate_attribute_assignments(&attributes, has_global_attributes);
 
     let global_field = match has_global_attributes {
         true => format!("global_attrs: crate::GlobalAttributes,"),
@@ -177,9 +191,16 @@ fn generate_element(el: MergedElement) -> Result<CodeFile> {
                 Ok(())
             }}
 
-            fn to_element(&self) -> Result<Element, JsValue> {
-                Ok({web_sys_element_content})
-            }
+            #[cfg(feature = "web-sys")]
+            fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {{
+                gloo::utils::document().create_element({tag_name})
+            }}
+
+            #[cfg(feature = "web-sys")]
+            fn apply_attributes(&self, target: &web_sys::Element) -> Result<(), wasm_bindgen::JsValue> {{
+                {attribute_assignments_content}
+                Ok(())
+            }}
         }}
 
         impl std::fmt::Display for {struct_name} {{
@@ -283,23 +304,6 @@ fn generate_closing_tag(tag_name: &str, has_closing_tag: bool) -> String {
     }
 }
 
-fn generate_web_sys_element(attributes: &[Attribute], tag_name: &str) -> String {
-    let output = r#"
-    impl TryFrom<> for Element {{
-        type Error = JsValue;
-
-        fn try_from(element: ThisElement) -> Element {{
-            #[wasm_bindgen]
-            extern "C" {{
-                #[wasm_bindgen(js_name = Document)]
-                pub fn document() -> web_sys::Document;
-            }}
-        }}
-    }}
-    "#;
-    todo!()
-}
-
 fn generate_attribute_display(attr: &Attribute) -> String {
     let Attribute {
         name,
@@ -316,6 +320,43 @@ fn generate_attribute_display(attr: &Attribute) -> String {
         AttributeType::String | AttributeType::Integer | AttributeType::Float => format!(
             r##"if let Some(field) = self.{field_name}.as_ref() {{
                 write!(writer, r#" {name}="{{field}}""#)?;
+            }}"##
+        ),
+        AttributeType::Identifier(_) => todo!(),
+        AttributeType::Enumerable(_) => todo!(),
+    }
+}
+
+fn generate_attribute_assignments(attributes: &[Attribute], has_global_attrs: bool) -> String {
+    let mut output = String::new();
+
+    for attr in attributes {
+        output.push_str(&generate_attribute_assignment(&attr));
+    }
+
+    if has_global_attrs {
+        output.push_str("self.global_attrs.apply(target)?;");
+    }
+
+    output
+}
+
+fn generate_attribute_assignment(attr: &Attribute) -> String {
+    let Attribute {
+        name,
+        field_name,
+        ty,
+        ..
+    } = &attr;
+    match ty {
+        AttributeType::Bool => format!(
+            r##"if self.{field_name} {{
+                element.set_attribute("{name}", "true")?;
+            }}"##
+        ),
+        AttributeType::String | AttributeType::Integer | AttributeType::Float => format!(
+            r##"if let Some(field) = self.{field_name}.as_ref() {{
+                element.set_attribute("{name}", field)?;
             }}"##
         ),
         AttributeType::Identifier(_) => todo!(),

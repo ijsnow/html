@@ -71,6 +71,48 @@ impl crate::RenderElement for Iframe {
         write!(writer, "</iframe>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(iframe)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.src.as_ref() {
+            element.set_attribute("src", field)?;
+        }
+        if let Some(field) = self.srcdoc.as_ref() {
+            element.set_attribute("srcdoc", field)?;
+        }
+        if let Some(field) = self.name.as_ref() {
+            element.set_attribute("name", field)?;
+        }
+        if let Some(field) = self.sandbox.as_ref() {
+            element.set_attribute("sandbox", field)?;
+        }
+        if let Some(field) = self.allow.as_ref() {
+            element.set_attribute("allow", field)?;
+        }
+        if let Some(field) = self.allowfullscreen.as_ref() {
+            element.set_attribute("allowfullscreen", field)?;
+        }
+        if let Some(field) = self.width.as_ref() {
+            element.set_attribute("width", field)?;
+        }
+        if let Some(field) = self.height.as_ref() {
+            element.set_attribute("height", field)?;
+        }
+        if let Some(field) = self.referrerpolicy.as_ref() {
+            element.set_attribute("referrerpolicy", field)?;
+        }
+        if let Some(field) = self.loading.as_ref() {
+            element.set_attribute("loading", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Iframe {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

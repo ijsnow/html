@@ -61,6 +61,42 @@ impl crate::RenderElement for Form {
         write!(writer, "</form>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(form)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.accept_charset.as_ref() {
+            element.set_attribute("accept-charset", field)?;
+        }
+        if let Some(field) = self.action.as_ref() {
+            element.set_attribute("action", field)?;
+        }
+        if let Some(field) = self.autocomplete.as_ref() {
+            element.set_attribute("autocomplete", field)?;
+        }
+        if let Some(field) = self.enctype.as_ref() {
+            element.set_attribute("enctype", field)?;
+        }
+        if let Some(field) = self.method.as_ref() {
+            element.set_attribute("method", field)?;
+        }
+        if let Some(field) = self.name.as_ref() {
+            element.set_attribute("name", field)?;
+        }
+        if self.no_validate {
+            element.set_attribute("novalidate", "true")?;
+        }
+        if let Some(field) = self.target.as_ref() {
+            element.set_attribute("target", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Form {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

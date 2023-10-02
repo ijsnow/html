@@ -31,6 +31,24 @@ impl crate::RenderElement for OptionGroup {
         write!(writer, "</optgroup>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(optgroup)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if self.disabled {
+            element.set_attribute("disabled", "true")?;
+        }
+        if let Some(field) = self.label.as_ref() {
+            element.set_attribute("label", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for OptionGroup {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

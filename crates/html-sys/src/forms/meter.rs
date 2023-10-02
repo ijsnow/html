@@ -51,6 +51,36 @@ impl crate::RenderElement for Meter {
         write!(writer, "</meter>")?;
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(meter)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.value.as_ref() {
+            element.set_attribute("value", field)?;
+        }
+        if let Some(field) = self.min.as_ref() {
+            element.set_attribute("min", field)?;
+        }
+        if let Some(field) = self.max.as_ref() {
+            element.set_attribute("max", field)?;
+        }
+        if let Some(field) = self.low.as_ref() {
+            element.set_attribute("low", field)?;
+        }
+        if let Some(field) = self.high.as_ref() {
+            element.set_attribute("high", field)?;
+        }
+        if let Some(field) = self.optimum.as_ref() {
+            element.set_attribute("optimum", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Meter {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

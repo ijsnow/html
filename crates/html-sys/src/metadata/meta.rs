@@ -45,6 +45,33 @@ impl crate::RenderElement for Meta {
     fn write_closing_tag<W: std::fmt::Write>(&self, writer: &mut W) -> std::fmt::Result {
         Ok(())
     }
+    #[cfg(feature = "web-sys")]
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue> {
+        gloo::utils::document().create_element(meta)
+    }
+    #[cfg(feature = "web-sys")]
+    fn apply_attributes(
+        &self,
+        target: &web_sys::Element,
+    ) -> Result<(), wasm_bindgen::JsValue> {
+        if let Some(field) = self.name.as_ref() {
+            element.set_attribute("name", field)?;
+        }
+        if let Some(field) = self.http_equiv.as_ref() {
+            element.set_attribute("http-equiv", field)?;
+        }
+        if let Some(field) = self.content.as_ref() {
+            element.set_attribute("content", field)?;
+        }
+        if let Some(field) = self.charset.as_ref() {
+            element.set_attribute("charset", field)?;
+        }
+        if let Some(field) = self.media.as_ref() {
+            element.set_attribute("media", field)?;
+        }
+        self.global_attrs.apply(target)?;
+        Ok(())
+    }
 }
 impl std::fmt::Display for Meta {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

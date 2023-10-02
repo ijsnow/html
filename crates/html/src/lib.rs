@@ -105,7 +105,7 @@ impl Render for Cow<'static, str> {
     }
 
     fn render_node(&self, target: &web_sys::Node) -> Result<(), wasm_bindgen::JsValue> {
-        target.append_child(gloo::utils::document().create_text(self))?;
+        target.append_child(&gloo::utils::document().create_text_node(self))?;
 
         Ok(())
     }
