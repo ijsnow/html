@@ -8,6 +8,7 @@ pub mod scripting;
 pub mod sections;
 pub mod tables;
 pub mod text;
+use serde::{Serialize, Deserialize};
 /// Render an element to a writer.
 pub trait RenderElement {
     /// Write the opening tag to a writer.
@@ -16,7 +17,7 @@ pub trait RenderElement {
     fn write_closing_tag<W: std::fmt::Write>(&self, writer: &mut W) -> std::fmt::Result;
 }
 /// Container for `data-*` attributes.
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct DataMap {
     map: std::collections::HashMap<
         std::borrow::Cow<'static, str>,
@@ -46,7 +47,7 @@ impl std::fmt::Display for DataMap {
     }
 }
 /// The "global attributes" struct
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct GlobalAttributes {
     /// Provides a hint for generating a keyboard shortcut for the current element
     pub access_key: std::option::Option<std::borrow::Cow<'static, str>>,

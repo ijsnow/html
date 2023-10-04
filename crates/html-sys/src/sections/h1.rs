@@ -3,7 +3,7 @@
 /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/h1)
 #[doc(alias = "h1")]
 #[non_exhaustive]
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct Heading1 {
     pub data_map: crate::DataMap,
     global_attrs: crate::GlobalAttributes,

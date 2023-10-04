@@ -8,6 +8,8 @@ use crate::{utils, Result};
 use indoc::{formatdoc, writedoc};
 
 const INCLUDES: &str = r##"
+use serde::{Serialize, Deserialize};
+
 /// Render an element to a writer.
 pub trait RenderElement {
     /// Write the opening tag to a writer.
@@ -18,7 +20,7 @@ pub trait RenderElement {
 }
 
 /// Container for `data-*` attributes.
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct DataMap {
     map: std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>,
 }
@@ -104,7 +106,7 @@ pub fn generate(
                 r#"
 
                     /// The "global attributes" struct
-                    #[derive(Debug, Clone, PartialEq, Default)]
+                    #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
                     pub struct GlobalAttributes {{
                         {fields}
                     }}
@@ -157,7 +159,7 @@ fn generate_element(el: MergedElement) -> Result<CodeFile> {
         /// [MDN Documentation]({mdn_link})
         #[doc(alias = "{tag_name}")]
         #[non_exhaustive]
-        #[derive(Debug, Clone, PartialEq, Default)]
+        #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
         pub struct {struct_name} {{
             pub data_map: crate::DataMap,
             {global_field}

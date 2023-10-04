@@ -3,7 +3,7 @@
 /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption)
 #[doc(alias = "figcaption")]
 #[non_exhaustive]
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct FigureCaption {
     pub data_map: crate::DataMap,
     global_attrs: crate::GlobalAttributes,

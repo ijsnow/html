@@ -3,7 +3,7 @@
 /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/embed)
 #[doc(alias = "embed")]
 #[non_exhaustive]
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct Embed {
     pub data_map: crate::DataMap,
     global_attrs: crate::GlobalAttributes,
