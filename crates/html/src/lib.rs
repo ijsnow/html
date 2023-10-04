@@ -96,6 +96,14 @@ pub trait Render {
     fn render(&self, f: &mut std::fmt::Formatter<'_>, depth: usize) -> std::fmt::Result;
 
     fn render_node(&self, target: &web_sys::Node) -> Result<(), wasm_bindgen::JsValue>;
+
+    fn render_dom(&self, renderer: impl Renderer) -> Result<(), wasm_bindgen::JsValue> {
+        todo!()
+    }
+}
+
+pub trait Renderer {
+    fn render(node: impl Render) -> Result<(), wasm_bindgen::JsValue>;
 }
 
 impl Render for Cow<'static, str> {
@@ -137,4 +145,11 @@ where
 }
 
 /// An HTML Element
-pub trait HtmlElement {}
+pub trait HtmlElement {
+    type Attribute;
+    type Child;
+
+    fn create_element(&self) -> Result<web_sys::Element, wasm_bindgen::JsValue>;
+    fn iter_attributes(&self) -> std::iter::Iter<'a, Self::Attribute>;
+    fn iter_children<'a>(&self) -> std::iter::Iter<'a, Self::Child>;
+}
