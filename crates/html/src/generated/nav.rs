@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/nav)
     #[doc(alias = "nav")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Navigation {
         sys: html_sys::sections::Navigation,
         children: Vec<super::child::NavigationChild>,
@@ -383,7 +383,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Navigation` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum NavigationChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/sub)
     #[doc(alias = "sub")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct SubScript {
         sys: html_sys::text::SubScript,
         children: Vec<super::child::SubScriptChild>,
@@ -383,7 +383,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `SubScript` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum SubScriptChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

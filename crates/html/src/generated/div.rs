@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div)
     #[doc(alias = "div")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Division {
         sys: html_sys::text::Division,
         children: Vec<super::child::DivisionChild>,
@@ -382,7 +382,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Division` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum DivisionChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

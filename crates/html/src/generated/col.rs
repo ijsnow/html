@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/col)
     #[doc(alias = "col")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct TableColumn {
         sys: html_sys::tables::TableColumn,
     }

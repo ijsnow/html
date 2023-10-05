@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)
     #[doc(alias = "select")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Select {
         sys: html_sys::forms::Select,
         children: Vec<super::child::SelectChild>,
@@ -449,7 +449,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Select` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum SelectChild {
         /// The Option element
         Option(crate::generated::all::Option),

@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/option)
     #[doc(alias = "option")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Option {
         sys: html_sys::forms::Option,
         children: Vec<super::child::OptionChild>,
@@ -418,7 +418,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Option` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum OptionChild {
         /// The Text element
         Text(std::borrow::Cow<'static, str>),

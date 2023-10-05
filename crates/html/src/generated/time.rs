@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time)
     #[doc(alias = "time")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Time {
         sys: html_sys::text::Time,
         children: Vec<super::child::TimeChild>,
@@ -394,7 +394,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Time` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum TimeChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl)
     #[doc(alias = "dl")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct DescriptionList {
         sys: html_sys::text::DescriptionList,
         children: Vec<super::child::DescriptionListChild>,
@@ -382,7 +382,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `DescriptionList` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum DescriptionListChild {
         /// The DescriptionDetails element
         DescriptionDetails(crate::generated::all::DescriptionDetails),

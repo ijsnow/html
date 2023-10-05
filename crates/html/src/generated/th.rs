@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/th)
     #[doc(alias = "th")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct TableHeader {
         sys: html_sys::tables::TableHeader,
         children: Vec<super::child::TableHeaderChild>,
@@ -435,7 +435,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `TableHeader` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum TableHeaderChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

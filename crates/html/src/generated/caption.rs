@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/caption)
     #[doc(alias = "caption")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Caption {
         sys: html_sys::tables::Caption,
         children: Vec<super::child::CaptionChild>,
@@ -380,7 +380,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Caption` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum CaptionChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

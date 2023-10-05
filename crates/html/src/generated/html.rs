@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/html)
     #[doc(alias = "html")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Html {
         sys: html_sys::root::Html,
         children: Vec<super::child::HtmlChild>,
@@ -380,7 +380,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Html` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum HtmlChild {
         /// The Body element
         Body(crate::generated::all::Body),

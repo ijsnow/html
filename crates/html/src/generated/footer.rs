@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer)
     #[doc(alias = "footer")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Footer {
         sys: html_sys::sections::Footer,
         children: Vec<super::child::FooterChild>,
@@ -382,7 +382,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Footer` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum FooterChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

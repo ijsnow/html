@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a)
     #[doc(alias = "a")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Anchor {
         sys: html_sys::text::Anchor,
         children: Vec<super::child::AnchorChild>,
@@ -472,7 +472,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Anchor` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum AnchorChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

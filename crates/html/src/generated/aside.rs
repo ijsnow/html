@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/aside)
     #[doc(alias = "aside")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Aside {
         sys: html_sys::sections::Aside,
         children: Vec<super::child::AsideChild>,
@@ -383,7 +383,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Aside` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum AsideChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

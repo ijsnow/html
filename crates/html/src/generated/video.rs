@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video)
     #[doc(alias = "video")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Video {
         sys: html_sys::embedded::Video,
         children: Vec<super::child::VideoChild>,
@@ -497,7 +497,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Video` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum VideoChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

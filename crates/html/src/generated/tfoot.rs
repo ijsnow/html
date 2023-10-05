@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/tfoot)
     #[doc(alias = "tfoot")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct TableFoot {
         sys: html_sys::tables::TableFoot,
         children: Vec<super::child::TableFootChild>,
@@ -380,7 +380,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `TableFoot` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum TableFootChild {
         /// The Script element
         Script(crate::generated::all::Script),

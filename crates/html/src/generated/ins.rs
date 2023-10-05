@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ins)
     #[doc(alias = "ins")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct InsertedText {
         sys: html_sys::edits::InsertedText,
         children: Vec<super::child::InsertedTextChild>,
@@ -405,7 +405,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `InsertedText` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum InsertedTextChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

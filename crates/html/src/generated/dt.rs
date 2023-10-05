@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dt)
     #[doc(alias = "dt")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct DescriptionTerm {
         sys: html_sys::text::DescriptionTerm,
         children: Vec<super::child::DescriptionTermChild>,
@@ -380,7 +380,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `DescriptionTerm` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum DescriptionTermChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

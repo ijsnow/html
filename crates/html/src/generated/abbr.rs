@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/abbr)
     #[doc(alias = "abbr")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Abbreviation {
         sys: html_sys::text::Abbreviation,
         children: Vec<super::child::AbbreviationChild>,
@@ -383,7 +383,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Abbreviation` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum AbbreviationChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

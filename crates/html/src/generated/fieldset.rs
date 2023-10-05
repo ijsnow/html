@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset)
     #[doc(alias = "fieldset")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Fieldset {
         sys: html_sys::forms::Fieldset,
         children: Vec<super::child::FieldsetChild>,
@@ -412,7 +412,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Fieldset` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum FieldsetChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

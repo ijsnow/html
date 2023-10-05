@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/optgroup)
     #[doc(alias = "optgroup")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct OptionGroup {
         sys: html_sys::forms::OptionGroup,
         children: Vec<super::child::OptionGroupChild>,
@@ -399,7 +399,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `OptionGroup` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum OptionGroupChild {
         /// The Option element
         Option(crate::generated::all::Option),

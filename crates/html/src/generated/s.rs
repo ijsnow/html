@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/s)
     #[doc(alias = "s")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct StrikeThrough {
         sys: html_sys::text::StrikeThrough,
         children: Vec<super::child::StrikeThroughChild>,
@@ -383,7 +383,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `StrikeThrough` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum StrikeThroughChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

@@ -4,7 +4,7 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/p)
     #[doc(alias = "p")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default)]
+    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
     pub struct Paragraph {
         sys: html_sys::text::Paragraph,
         children: Vec<super::child::ParagraphChild>,
@@ -382,7 +382,7 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Paragraph` element
-    #[derive(PartialEq, Clone)]
+    #[derive(PartialEq, Clone, Serialize, Deserialize)]
     pub enum ParagraphChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),
