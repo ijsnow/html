@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/address)
     #[doc(alias = "address")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Address {
         sys: html_sys::sections::Address,
         children: Vec<super::child::AddressChild>,
@@ -382,7 +383,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Address` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum AddressChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

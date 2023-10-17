@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ruby)
     #[doc(alias = "ruby")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct RubyAnnotation {
         sys: html_sys::text::RubyAnnotation,
     }

@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio)
     #[doc(alias = "audio")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Audio {
         sys: html_sys::embedded::Audio,
         children: Vec<super::child::AudioChild>,
@@ -462,7 +463,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Audio` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum AudioChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table)
     #[doc(alias = "table")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Table {
         sys: html_sys::tables::Table,
         children: Vec<super::child::TableChild>,
@@ -382,7 +383,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Table` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum TableChild {
         /// The Caption element
         Caption(crate::generated::all::Caption),

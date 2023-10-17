@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button)
     #[doc(alias = "button")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Button {
         sys: html_sys::forms::Button,
         children: Vec<super::child::ButtonChild>,
@@ -510,7 +511,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Button` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum ButtonChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

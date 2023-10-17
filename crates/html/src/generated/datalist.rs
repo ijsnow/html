@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist)
     #[doc(alias = "datalist")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct DataList {
         sys: html_sys::forms::DataList,
         children: Vec<super::child::DataListChild>,
@@ -382,7 +383,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `DataList` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum DataListChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

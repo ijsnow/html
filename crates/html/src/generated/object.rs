@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/object)
     #[doc(alias = "object")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Object {
         sys: html_sys::embedded::Object,
         children: Vec<super::child::ObjectChild>,
@@ -450,7 +451,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Object` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum ObjectChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/tr)
     #[doc(alias = "tr")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct TableRow {
         sys: html_sys::tables::TableRow,
         children: Vec<super::child::TableRowChild>,
@@ -380,7 +381,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `TableRow` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum TableRowChild {
         /// The Script element
         Script(crate::generated::all::Script),

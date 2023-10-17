@@ -9,3 +9,4 @@ homepage = "https://github.com/yoshuawuyts/html"
 repository = "https://github.com/yoshuawuyts/html"
 
 [dependencies]
+serde = { version = "1.0.152", features = ["derive"], optional = true }

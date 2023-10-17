@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress)
     #[doc(alias = "progress")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Progress {
         sys: html_sys::forms::Progress,
         children: Vec<super::child::ProgressChild>,
@@ -399,7 +400,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Progress` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum ProgressChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

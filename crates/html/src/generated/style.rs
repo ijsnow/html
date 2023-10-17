@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/style)
     #[doc(alias = "style")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Style {
         sys: html_sys::metadata::Style,
         children: Vec<super::child::StyleChild>,
@@ -403,7 +404,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Style` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum StyleChild {
         /// The Text element
         Text(std::borrow::Cow<'static, str>),

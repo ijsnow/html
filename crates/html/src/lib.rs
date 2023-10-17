@@ -84,6 +84,9 @@ pub use manual::tables;
 pub use manual::text_content;
 pub use manual::web_components;
 
+#[cfg(feature = "serde")]
+pub use generated::struct_name_to_tag;
+
 /// Render an HTML element to a string.
 ///
 /// This API is similar to `Display`, but it takes a `depth` argument which

@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details)
     #[doc(alias = "details")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Details {
         sys: html_sys::interactive::Details,
         children: Vec<super::child::DetailsChild>,
@@ -391,7 +392,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Details` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum DetailsChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

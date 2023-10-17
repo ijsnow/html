@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/main)
     #[doc(alias = "main")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Main {
         sys: html_sys::text::Main,
         children: Vec<super::child::MainChild>,
@@ -382,7 +383,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Main` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum MainChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

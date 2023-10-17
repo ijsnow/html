@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/pre)
     #[doc(alias = "pre")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct PreformattedText {
         sys: html_sys::text::PreformattedText,
         children: Vec<super::child::PreformattedTextChild>,
@@ -377,7 +378,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `PreformattedText` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum PreformattedTextChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

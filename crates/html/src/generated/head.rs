@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head)
     #[doc(alias = "head")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Head {
         sys: html_sys::metadata::Head,
         children: Vec<super::child::HeadChild>,
@@ -380,7 +381,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Head` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum HeadChild {
         /// The Base element
         Base(crate::generated::all::Base),

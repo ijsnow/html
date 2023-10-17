@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script)
     #[doc(alias = "script")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Script {
         sys: html_sys::scripting::Script,
         children: Vec<super::child::ScriptChild>,
@@ -494,7 +495,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Script` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum ScriptChild {
         /// The Text element
         Text(std::borrow::Cow<'static, str>),

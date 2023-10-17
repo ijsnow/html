@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas)
     #[doc(alias = "canvas")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Canvas {
         sys: html_sys::scripting::Canvas,
         children: Vec<super::child::CanvasChild>,
@@ -400,7 +401,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Canvas` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum CanvasChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

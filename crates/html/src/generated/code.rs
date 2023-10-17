@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/code)
     #[doc(alias = "code")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Code {
         sys: html_sys::text::Code,
         children: Vec<super::child::CodeChild>,
@@ -383,7 +384,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Code` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum CodeChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

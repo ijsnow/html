@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/colgroup)
     #[doc(alias = "colgroup")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct TableColumnGroup {
         sys: html_sys::tables::TableColumnGroup,
         children: Vec<super::child::TableColumnGroupChild>,
@@ -391,7 +392,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `TableColumnGroup` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum TableColumnGroupChild {
         /// The TableColumn element
         TableColumn(crate::generated::all::TableColumn),

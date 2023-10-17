@@ -3,7 +3,8 @@
 /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/h5)
 #[doc(alias = "h5")]
 #[non_exhaustive]
-#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Heading5 {
     pub data_map: crate::DataMap,
     global_attrs: crate::GlobalAttributes,

@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/q)
     #[doc(alias = "q")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Quotation {
         sys: html_sys::text::Quotation,
         children: Vec<super::child::QuotationChild>,
@@ -394,7 +395,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Quotation` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum QuotationChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

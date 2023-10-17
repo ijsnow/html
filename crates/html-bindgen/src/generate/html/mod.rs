@@ -14,11 +14,13 @@ pub fn generate(
 ) -> Result<Vec<CodeFile>> {
     let mut output = vec![];
     let mut tag_names = vec![];
+    let mut struct_to_tag_names = vec![];
 
     // generate individual `{element}.rs` files
     for el in parsed {
         let el = el?;
         tag_names.push(el.tag_name.clone());
+        struct_to_tag_names.push((el.struct_name.clone(), el.tag_name.clone()));
         output.push(generate_element(el, global_attributes)?);
     }
 
@@ -78,6 +80,11 @@ pub fn generate(
         })
         .collect::<String>();
 
+    let struct_to_tag_name_variants = struct_to_tag_names
+        .iter()
+        .map(|(struct_name, tag_name)| format!("\"{}\" => Some(\"{}\"),", struct_name, tag_name))
+        .collect::<String>();
+
     let code = format!(
         "//! HTML elements support
         {mods}
@@ -101,6 +108,16 @@ pub fn generate(
         /// Modules according to the MDN mappings.
         pub(crate) mod mdn {{
             {by_mapping}
+        }}
+
+        #[cfg(feature = \"serde\")]
+        /// A utility function for renderers that may use strings derived from
+        /// struct definitions to generate elements.
+        pub fn struct_name_to_tag(name: &'static str) -> Option<&'static str> {{
+            match name {{
+                {struct_to_tag_name_variants}
+                _ => None
+            }}
         }}
         "
     );
@@ -172,7 +189,8 @@ fn generate_element(el: MergedElement, global_attributes: &[Attribute]) -> Resul
         /// [MDN Documentation]({mdn_link})
         #[doc(alias = "{tag_name}")]
         #[non_exhaustive]
-        #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+        #[derive(PartialEq, Clone, Default)]
+        #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
         pub struct {struct_name} {{
             sys: {sys_name},
             {children}
@@ -437,7 +455,8 @@ fn gen_enum(struct_name: &str, permitted_child_elements: &[String], should_inden
     format!(
         r#"
         /// The permitted child items for the `{struct_name}` element
-        #[derive(PartialEq, Clone, Serialize, Deserialize)]
+        #[derive(PartialEq, Clone)]
+        #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
         pub enum {struct_name}Child {{
             {members}
         }}

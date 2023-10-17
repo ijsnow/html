@@ -3,7 +3,8 @@
 /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist)
 #[doc(alias = "datalist")]
 #[non_exhaustive]
-#[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct DataList {
     pub data_map: crate::DataMap,
     global_attrs: crate::GlobalAttributes,

@@ -8,8 +8,12 @@ documentation = "https://docs.rs/html"
 homepage = "https://github.com/yoshuawuyts/html"
 repository = "https://github.com/yoshuawuyts/html"
 
+[features]
+serde = ["dep:serde", "html-sys/serde"]
+
 [dependencies]
 html-sys = { version = "0.4.1", path = "../html-sys" }
+serde = { version = "1.0.152", features = ["derive"], optional = true }
 
 [dev-dependencies]
 indoc = "2"

@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form)
     #[doc(alias = "form")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Form {
         sys: html_sys::forms::Form,
         children: Vec<super::child::FormChild>,
@@ -467,7 +468,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Form` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum FormChild {
         /// The Abbreviation element
         Abbreviation(crate::generated::all::Abbreviation),

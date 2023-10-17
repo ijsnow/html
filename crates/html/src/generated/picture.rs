@@ -4,7 +4,8 @@ pub mod element {
     /// [MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture)
     #[doc(alias = "picture")]
     #[non_exhaustive]
-    #[derive(PartialEq, Clone, Default, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone, Default)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub struct Picture {
         sys: html_sys::embedded::Picture,
         children: Vec<super::child::PictureChild>,
@@ -384,7 +385,8 @@ pub mod element {
 }
 pub mod child {
     /// The permitted child items for the `Picture` element
-    #[derive(PartialEq, Clone, Serialize, Deserialize)]
+    #[derive(PartialEq, Clone)]
+    #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
     pub enum PictureChild {
         /// The MediaSource element
         MediaSource(crate::generated::all::MediaSource),
