@@ -15,6 +15,11 @@ pub mod element {
             super::builder::VideoBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Video> for crate::Node<'a> {
+        fn from(element: &'a Video) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Video {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -757,7 +762,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Video {}
+    impl crate::HtmlElement for Video {
+        fn tag_name(&self) -> &'static str {
+            "video"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Video {}
     impl crate::PhrasingContent for Video {}
     impl crate::EmbeddedContent for Video {}
@@ -1831,6 +1861,125 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a VideoChild> for crate::Node<'a> {
+        fn from(child: &'a VideoChild) -> Self {
+            match child {
+                VideoChild::Abbreviation(el) => crate::Node::from(el),
+                VideoChild::Address(el) => crate::Node::from(el),
+                VideoChild::Anchor(el) => crate::Node::from(el),
+                VideoChild::Article(el) => crate::Node::from(el),
+                VideoChild::Aside(el) => crate::Node::from(el),
+                VideoChild::Audio(el) => crate::Node::from(el),
+                VideoChild::Base(el) => crate::Node::from(el),
+                VideoChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                VideoChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                VideoChild::BlockQuote(el) => crate::Node::from(el),
+                VideoChild::Body(el) => crate::Node::from(el),
+                VideoChild::Bold(el) => crate::Node::from(el),
+                VideoChild::Button(el) => crate::Node::from(el),
+                VideoChild::Canvas(el) => crate::Node::from(el),
+                VideoChild::Caption(el) => crate::Node::from(el),
+                VideoChild::Cite(el) => crate::Node::from(el),
+                VideoChild::Code(el) => crate::Node::from(el),
+                VideoChild::Data(el) => crate::Node::from(el),
+                VideoChild::DataList(el) => crate::Node::from(el),
+                VideoChild::Definition(el) => crate::Node::from(el),
+                VideoChild::DeletedText(el) => crate::Node::from(el),
+                VideoChild::DescriptionDetails(el) => crate::Node::from(el),
+                VideoChild::DescriptionList(el) => crate::Node::from(el),
+                VideoChild::DescriptionTerm(el) => crate::Node::from(el),
+                VideoChild::Details(el) => crate::Node::from(el),
+                VideoChild::Dialog(el) => crate::Node::from(el),
+                VideoChild::Division(el) => crate::Node::from(el),
+                VideoChild::Embed(el) => crate::Node::from(el),
+                VideoChild::Emphasis(el) => crate::Node::from(el),
+                VideoChild::Fieldset(el) => crate::Node::from(el),
+                VideoChild::Figure(el) => crate::Node::from(el),
+                VideoChild::FigureCaption(el) => crate::Node::from(el),
+                VideoChild::Footer(el) => crate::Node::from(el),
+                VideoChild::Form(el) => crate::Node::from(el),
+                VideoChild::Head(el) => crate::Node::from(el),
+                VideoChild::Header(el) => crate::Node::from(el),
+                VideoChild::Heading1(el) => crate::Node::from(el),
+                VideoChild::Heading2(el) => crate::Node::from(el),
+                VideoChild::Heading3(el) => crate::Node::from(el),
+                VideoChild::Heading4(el) => crate::Node::from(el),
+                VideoChild::Heading5(el) => crate::Node::from(el),
+                VideoChild::Heading6(el) => crate::Node::from(el),
+                VideoChild::HeadingGroup(el) => crate::Node::from(el),
+                VideoChild::Html(el) => crate::Node::from(el),
+                VideoChild::Iframe(el) => crate::Node::from(el),
+                VideoChild::Image(el) => crate::Node::from(el),
+                VideoChild::ImageMap(el) => crate::Node::from(el),
+                VideoChild::ImageMapArea(el) => crate::Node::from(el),
+                VideoChild::Input(el) => crate::Node::from(el),
+                VideoChild::InsertedText(el) => crate::Node::from(el),
+                VideoChild::Italic(el) => crate::Node::from(el),
+                VideoChild::KeyboardInput(el) => crate::Node::from(el),
+                VideoChild::Label(el) => crate::Node::from(el),
+                VideoChild::Legend(el) => crate::Node::from(el),
+                VideoChild::LineBreak(el) => crate::Node::from(el),
+                VideoChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                VideoChild::Link(el) => crate::Node::from(el),
+                VideoChild::ListItem(el) => crate::Node::from(el),
+                VideoChild::Main(el) => crate::Node::from(el),
+                VideoChild::MarkText(el) => crate::Node::from(el),
+                VideoChild::MediaSource(el) => crate::Node::from(el),
+                VideoChild::Menu(el) => crate::Node::from(el),
+                VideoChild::Meta(el) => crate::Node::from(el),
+                VideoChild::Meter(el) => crate::Node::from(el),
+                VideoChild::Navigation(el) => crate::Node::from(el),
+                VideoChild::NoScript(el) => crate::Node::from(el),
+                VideoChild::Object(el) => crate::Node::from(el),
+                VideoChild::Option(el) => crate::Node::from(el),
+                VideoChild::OptionGroup(el) => crate::Node::from(el),
+                VideoChild::OrderedList(el) => crate::Node::from(el),
+                VideoChild::Output(el) => crate::Node::from(el),
+                VideoChild::Paragraph(el) => crate::Node::from(el),
+                VideoChild::Picture(el) => crate::Node::from(el),
+                VideoChild::PreformattedText(el) => crate::Node::from(el),
+                VideoChild::Progress(el) => crate::Node::from(el),
+                VideoChild::Quotation(el) => crate::Node::from(el),
+                VideoChild::RubyAnnotation(el) => crate::Node::from(el),
+                VideoChild::RubyFallbackParenthesis(el) => crate::Node::from(el),
+                VideoChild::RubyText(el) => crate::Node::from(el),
+                VideoChild::SampleOutput(el) => crate::Node::from(el),
+                VideoChild::Script(el) => crate::Node::from(el),
+                VideoChild::Search(el) => crate::Node::from(el),
+                VideoChild::Section(el) => crate::Node::from(el),
+                VideoChild::Select(el) => crate::Node::from(el),
+                VideoChild::SideComment(el) => crate::Node::from(el),
+                VideoChild::Slot(el) => crate::Node::from(el),
+                VideoChild::Span(el) => crate::Node::from(el),
+                VideoChild::StrikeThrough(el) => crate::Node::from(el),
+                VideoChild::Strong(el) => crate::Node::from(el),
+                VideoChild::Style(el) => crate::Node::from(el),
+                VideoChild::SubScript(el) => crate::Node::from(el),
+                VideoChild::Summary(el) => crate::Node::from(el),
+                VideoChild::SuperScript(el) => crate::Node::from(el),
+                VideoChild::Table(el) => crate::Node::from(el),
+                VideoChild::TableBody(el) => crate::Node::from(el),
+                VideoChild::TableCell(el) => crate::Node::from(el),
+                VideoChild::TableColumn(el) => crate::Node::from(el),
+                VideoChild::TableColumnGroup(el) => crate::Node::from(el),
+                VideoChild::TableFoot(el) => crate::Node::from(el),
+                VideoChild::TableHead(el) => crate::Node::from(el),
+                VideoChild::TableHeader(el) => crate::Node::from(el),
+                VideoChild::TableRow(el) => crate::Node::from(el),
+                VideoChild::Template(el) => crate::Node::from(el),
+                VideoChild::Text(el) => crate::Node::from(el),
+                VideoChild::TextArea(el) => crate::Node::from(el),
+                VideoChild::TextTrack(el) => crate::Node::from(el),
+                VideoChild::ThematicBreak(el) => crate::Node::from(el),
+                VideoChild::Time(el) => crate::Node::from(el),
+                VideoChild::Title(el) => crate::Node::from(el),
+                VideoChild::Underline(el) => crate::Node::from(el),
+                VideoChild::UnorderedList(el) => crate::Node::from(el),
+                VideoChild::Variable(el) => crate::Node::from(el),
+                VideoChild::Video(el) => crate::Node::from(el),
             }
         }
     }

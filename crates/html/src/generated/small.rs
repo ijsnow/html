@@ -15,6 +15,11 @@ pub mod element {
             super::builder::SideCommentBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a SideComment> for crate::Node<'a> {
+        fn from(element: &'a SideComment) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl SideComment {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for SideComment {}
+    impl crate::HtmlElement for SideComment {
+        fn tag_name(&self) -> &'static str {
+            "small"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for SideComment {}
     impl crate::PhrasingContent for SideComment {}
     impl crate::PalpableContent for SideComment {}
@@ -1404,6 +1434,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a SideCommentChild> for crate::Node<'a> {
+        fn from(child: &'a SideCommentChild) -> Self {
+            match child {
+                SideCommentChild::Abbreviation(el) => crate::Node::from(el),
+                SideCommentChild::Anchor(el) => crate::Node::from(el),
+                SideCommentChild::Audio(el) => crate::Node::from(el),
+                SideCommentChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                SideCommentChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                SideCommentChild::Bold(el) => crate::Node::from(el),
+                SideCommentChild::Button(el) => crate::Node::from(el),
+                SideCommentChild::Canvas(el) => crate::Node::from(el),
+                SideCommentChild::Cite(el) => crate::Node::from(el),
+                SideCommentChild::Code(el) => crate::Node::from(el),
+                SideCommentChild::Data(el) => crate::Node::from(el),
+                SideCommentChild::DataList(el) => crate::Node::from(el),
+                SideCommentChild::Definition(el) => crate::Node::from(el),
+                SideCommentChild::DeletedText(el) => crate::Node::from(el),
+                SideCommentChild::Embed(el) => crate::Node::from(el),
+                SideCommentChild::Emphasis(el) => crate::Node::from(el),
+                SideCommentChild::Iframe(el) => crate::Node::from(el),
+                SideCommentChild::Image(el) => crate::Node::from(el),
+                SideCommentChild::ImageMap(el) => crate::Node::from(el),
+                SideCommentChild::ImageMapArea(el) => crate::Node::from(el),
+                SideCommentChild::Input(el) => crate::Node::from(el),
+                SideCommentChild::InsertedText(el) => crate::Node::from(el),
+                SideCommentChild::Italic(el) => crate::Node::from(el),
+                SideCommentChild::KeyboardInput(el) => crate::Node::from(el),
+                SideCommentChild::Label(el) => crate::Node::from(el),
+                SideCommentChild::LineBreak(el) => crate::Node::from(el),
+                SideCommentChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                SideCommentChild::Link(el) => crate::Node::from(el),
+                SideCommentChild::MarkText(el) => crate::Node::from(el),
+                SideCommentChild::Meta(el) => crate::Node::from(el),
+                SideCommentChild::Meter(el) => crate::Node::from(el),
+                SideCommentChild::NoScript(el) => crate::Node::from(el),
+                SideCommentChild::Object(el) => crate::Node::from(el),
+                SideCommentChild::Output(el) => crate::Node::from(el),
+                SideCommentChild::Picture(el) => crate::Node::from(el),
+                SideCommentChild::Progress(el) => crate::Node::from(el),
+                SideCommentChild::Quotation(el) => crate::Node::from(el),
+                SideCommentChild::RubyAnnotation(el) => crate::Node::from(el),
+                SideCommentChild::SampleOutput(el) => crate::Node::from(el),
+                SideCommentChild::Script(el) => crate::Node::from(el),
+                SideCommentChild::Select(el) => crate::Node::from(el),
+                SideCommentChild::SideComment(el) => crate::Node::from(el),
+                SideCommentChild::Slot(el) => crate::Node::from(el),
+                SideCommentChild::Span(el) => crate::Node::from(el),
+                SideCommentChild::StrikeThrough(el) => crate::Node::from(el),
+                SideCommentChild::Strong(el) => crate::Node::from(el),
+                SideCommentChild::SubScript(el) => crate::Node::from(el),
+                SideCommentChild::SuperScript(el) => crate::Node::from(el),
+                SideCommentChild::Template(el) => crate::Node::from(el),
+                SideCommentChild::Text(el) => crate::Node::from(el),
+                SideCommentChild::TextArea(el) => crate::Node::from(el),
+                SideCommentChild::Time(el) => crate::Node::from(el),
+                SideCommentChild::Underline(el) => crate::Node::from(el),
+                SideCommentChild::Variable(el) => crate::Node::from(el),
+                SideCommentChild::Video(el) => crate::Node::from(el),
             }
         }
     }

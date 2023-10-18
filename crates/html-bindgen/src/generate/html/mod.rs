@@ -186,6 +186,12 @@ fn generate_element(el: MergedElement, global_attributes: &[Attribute]) -> Resul
             }}
         }}
 
+        impl<'a> From<&'a {struct_name}> for crate::Node<'a> {{
+            fn from(element: &'a {struct_name}) -> crate::Node<'a> {{
+                crate::Node::Element(element)
+            }}
+        }}
+
         {data_map_methods}
         {getter_setter_methods}
         {child_methods}
@@ -434,6 +440,10 @@ fn gen_enum(struct_name: &str, permitted_child_elements: &[String], should_inden
         .iter()
         .map(|el| format!(r#"Self::{el}(el) => write!(f, "{{el}}"),"#))
         .collect::<String>();
+    let node_from_patterns = permitted_child_elements
+        .iter()
+        .map(|el| format!(r#"{struct_name}Child::{el}(el) => crate::Node::from(el),"#))
+        .collect::<String>();
 
     format!(
         r#"
@@ -466,6 +476,14 @@ fn gen_enum(struct_name: &str, permitted_child_elements: &[String], should_inden
                 }}
             }}
         }}
+
+        impl<'a> From<&'a {struct_name}Child> for crate::Node<'a> {{
+            fn from(child: &'a {struct_name}Child) -> Self {{
+                match child {{
+                    {node_from_patterns}
+                }}
+            }}
+        }}
         "#
     )
 }
@@ -479,37 +497,35 @@ fn gen_html_element_impl(
     if has_global_attributes {
         let children = if has_children {
             "
-            if nodes.len() < self.children.len() {{
-                nodes.reserve(self.children.len() - nodes.len());
-            }}
-
-            for child in self.children {{
-                nodes.push(From::from(child));
-            }}
+            self.children
+                .iter()
+                .map(From::from)
+                .collect()
             "
-            .into()
         } else {
-            String::new()
+            "vec![]"
         };
 
         format!(
             r##"
             impl crate::HtmlElement for {struct_name} {{
-                // fn tag_name(&self) -> &'static str {{
-                //     "{tag_name}"
-                // }}
-                //
-                // fn set_attributes(&self, attrs: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
-                //     html_sys::ElementDescription::set_attributes(attrs);
-                // }}
-                //
-                // fn set_data(&self, data: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
-                //     html_sys::ElementDescription::set_data(attrs);
-                // }}
-                //
-                // fn set_children(&self, nodes: &mut Vec<Node<'_>>) {{
-                //     {children}
-                // }}
+                fn tag_name(&self) -> &'static str {{
+                    "{tag_name}"
+                }}
+
+                fn attributes(&self) -> std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>> {{
+                    use html_sys::ElementDescription;
+                    self.sys.attributes()
+                }}
+
+                fn data(&self) -> std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>> {{
+                    use html_sys::ElementDescription;
+                    self.sys.data()
+                }}
+
+                fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {{
+                    {children}
+                }}
             }}
         "##
         )

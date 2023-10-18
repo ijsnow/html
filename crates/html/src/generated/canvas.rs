@@ -15,6 +15,11 @@ pub mod element {
             super::builder::CanvasBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Canvas> for crate::Node<'a> {
+        fn from(element: &'a Canvas) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Canvas {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -904,7 +909,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Canvas {}
+    impl crate::HtmlElement for Canvas {
+        fn tag_name(&self) -> &'static str {
+            "canvas"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Canvas {}
     impl crate::PhrasingContent for Canvas {}
     impl crate::EmbeddedContent for Canvas {}
@@ -1979,6 +2009,125 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a CanvasChild> for crate::Node<'a> {
+        fn from(child: &'a CanvasChild) -> Self {
+            match child {
+                CanvasChild::Abbreviation(el) => crate::Node::from(el),
+                CanvasChild::Address(el) => crate::Node::from(el),
+                CanvasChild::Anchor(el) => crate::Node::from(el),
+                CanvasChild::Article(el) => crate::Node::from(el),
+                CanvasChild::Aside(el) => crate::Node::from(el),
+                CanvasChild::Audio(el) => crate::Node::from(el),
+                CanvasChild::Base(el) => crate::Node::from(el),
+                CanvasChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                CanvasChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                CanvasChild::BlockQuote(el) => crate::Node::from(el),
+                CanvasChild::Body(el) => crate::Node::from(el),
+                CanvasChild::Bold(el) => crate::Node::from(el),
+                CanvasChild::Button(el) => crate::Node::from(el),
+                CanvasChild::Canvas(el) => crate::Node::from(el),
+                CanvasChild::Caption(el) => crate::Node::from(el),
+                CanvasChild::Cite(el) => crate::Node::from(el),
+                CanvasChild::Code(el) => crate::Node::from(el),
+                CanvasChild::Data(el) => crate::Node::from(el),
+                CanvasChild::DataList(el) => crate::Node::from(el),
+                CanvasChild::Definition(el) => crate::Node::from(el),
+                CanvasChild::DeletedText(el) => crate::Node::from(el),
+                CanvasChild::DescriptionDetails(el) => crate::Node::from(el),
+                CanvasChild::DescriptionList(el) => crate::Node::from(el),
+                CanvasChild::DescriptionTerm(el) => crate::Node::from(el),
+                CanvasChild::Details(el) => crate::Node::from(el),
+                CanvasChild::Dialog(el) => crate::Node::from(el),
+                CanvasChild::Division(el) => crate::Node::from(el),
+                CanvasChild::Embed(el) => crate::Node::from(el),
+                CanvasChild::Emphasis(el) => crate::Node::from(el),
+                CanvasChild::Fieldset(el) => crate::Node::from(el),
+                CanvasChild::Figure(el) => crate::Node::from(el),
+                CanvasChild::FigureCaption(el) => crate::Node::from(el),
+                CanvasChild::Footer(el) => crate::Node::from(el),
+                CanvasChild::Form(el) => crate::Node::from(el),
+                CanvasChild::Head(el) => crate::Node::from(el),
+                CanvasChild::Header(el) => crate::Node::from(el),
+                CanvasChild::Heading1(el) => crate::Node::from(el),
+                CanvasChild::Heading2(el) => crate::Node::from(el),
+                CanvasChild::Heading3(el) => crate::Node::from(el),
+                CanvasChild::Heading4(el) => crate::Node::from(el),
+                CanvasChild::Heading5(el) => crate::Node::from(el),
+                CanvasChild::Heading6(el) => crate::Node::from(el),
+                CanvasChild::HeadingGroup(el) => crate::Node::from(el),
+                CanvasChild::Html(el) => crate::Node::from(el),
+                CanvasChild::Iframe(el) => crate::Node::from(el),
+                CanvasChild::Image(el) => crate::Node::from(el),
+                CanvasChild::ImageMap(el) => crate::Node::from(el),
+                CanvasChild::ImageMapArea(el) => crate::Node::from(el),
+                CanvasChild::Input(el) => crate::Node::from(el),
+                CanvasChild::InsertedText(el) => crate::Node::from(el),
+                CanvasChild::Italic(el) => crate::Node::from(el),
+                CanvasChild::KeyboardInput(el) => crate::Node::from(el),
+                CanvasChild::Label(el) => crate::Node::from(el),
+                CanvasChild::Legend(el) => crate::Node::from(el),
+                CanvasChild::LineBreak(el) => crate::Node::from(el),
+                CanvasChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                CanvasChild::Link(el) => crate::Node::from(el),
+                CanvasChild::ListItem(el) => crate::Node::from(el),
+                CanvasChild::Main(el) => crate::Node::from(el),
+                CanvasChild::MarkText(el) => crate::Node::from(el),
+                CanvasChild::MediaSource(el) => crate::Node::from(el),
+                CanvasChild::Menu(el) => crate::Node::from(el),
+                CanvasChild::Meta(el) => crate::Node::from(el),
+                CanvasChild::Meter(el) => crate::Node::from(el),
+                CanvasChild::Navigation(el) => crate::Node::from(el),
+                CanvasChild::NoScript(el) => crate::Node::from(el),
+                CanvasChild::Object(el) => crate::Node::from(el),
+                CanvasChild::Option(el) => crate::Node::from(el),
+                CanvasChild::OptionGroup(el) => crate::Node::from(el),
+                CanvasChild::OrderedList(el) => crate::Node::from(el),
+                CanvasChild::Output(el) => crate::Node::from(el),
+                CanvasChild::Paragraph(el) => crate::Node::from(el),
+                CanvasChild::Picture(el) => crate::Node::from(el),
+                CanvasChild::PreformattedText(el) => crate::Node::from(el),
+                CanvasChild::Progress(el) => crate::Node::from(el),
+                CanvasChild::Quotation(el) => crate::Node::from(el),
+                CanvasChild::RubyAnnotation(el) => crate::Node::from(el),
+                CanvasChild::RubyFallbackParenthesis(el) => crate::Node::from(el),
+                CanvasChild::RubyText(el) => crate::Node::from(el),
+                CanvasChild::SampleOutput(el) => crate::Node::from(el),
+                CanvasChild::Script(el) => crate::Node::from(el),
+                CanvasChild::Search(el) => crate::Node::from(el),
+                CanvasChild::Section(el) => crate::Node::from(el),
+                CanvasChild::Select(el) => crate::Node::from(el),
+                CanvasChild::SideComment(el) => crate::Node::from(el),
+                CanvasChild::Slot(el) => crate::Node::from(el),
+                CanvasChild::Span(el) => crate::Node::from(el),
+                CanvasChild::StrikeThrough(el) => crate::Node::from(el),
+                CanvasChild::Strong(el) => crate::Node::from(el),
+                CanvasChild::Style(el) => crate::Node::from(el),
+                CanvasChild::SubScript(el) => crate::Node::from(el),
+                CanvasChild::Summary(el) => crate::Node::from(el),
+                CanvasChild::SuperScript(el) => crate::Node::from(el),
+                CanvasChild::Table(el) => crate::Node::from(el),
+                CanvasChild::TableBody(el) => crate::Node::from(el),
+                CanvasChild::TableCell(el) => crate::Node::from(el),
+                CanvasChild::TableColumn(el) => crate::Node::from(el),
+                CanvasChild::TableColumnGroup(el) => crate::Node::from(el),
+                CanvasChild::TableFoot(el) => crate::Node::from(el),
+                CanvasChild::TableHead(el) => crate::Node::from(el),
+                CanvasChild::TableHeader(el) => crate::Node::from(el),
+                CanvasChild::TableRow(el) => crate::Node::from(el),
+                CanvasChild::Template(el) => crate::Node::from(el),
+                CanvasChild::Text(el) => crate::Node::from(el),
+                CanvasChild::TextArea(el) => crate::Node::from(el),
+                CanvasChild::TextTrack(el) => crate::Node::from(el),
+                CanvasChild::ThematicBreak(el) => crate::Node::from(el),
+                CanvasChild::Time(el) => crate::Node::from(el),
+                CanvasChild::Title(el) => crate::Node::from(el),
+                CanvasChild::Underline(el) => crate::Node::from(el),
+                CanvasChild::UnorderedList(el) => crate::Node::from(el),
+                CanvasChild::Variable(el) => crate::Node::from(el),
+                CanvasChild::Video(el) => crate::Node::from(el),
             }
         }
     }

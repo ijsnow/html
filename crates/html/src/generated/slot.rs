@@ -15,6 +15,11 @@ pub mod element {
             super::builder::SlotBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Slot> for crate::Node<'a> {
+        fn from(element: &'a Slot) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Slot {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -377,7 +382,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Slot {}
+    impl crate::HtmlElement for Slot {
+        fn tag_name(&self) -> &'static str {
+            "slot"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Slot {}
     impl crate::PhrasingContent for Slot {}
     impl std::convert::Into<html_sys::scripting::Slot> for Slot {
@@ -1448,6 +1478,125 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a SlotChild> for crate::Node<'a> {
+        fn from(child: &'a SlotChild) -> Self {
+            match child {
+                SlotChild::Abbreviation(el) => crate::Node::from(el),
+                SlotChild::Address(el) => crate::Node::from(el),
+                SlotChild::Anchor(el) => crate::Node::from(el),
+                SlotChild::Article(el) => crate::Node::from(el),
+                SlotChild::Aside(el) => crate::Node::from(el),
+                SlotChild::Audio(el) => crate::Node::from(el),
+                SlotChild::Base(el) => crate::Node::from(el),
+                SlotChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                SlotChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                SlotChild::BlockQuote(el) => crate::Node::from(el),
+                SlotChild::Body(el) => crate::Node::from(el),
+                SlotChild::Bold(el) => crate::Node::from(el),
+                SlotChild::Button(el) => crate::Node::from(el),
+                SlotChild::Canvas(el) => crate::Node::from(el),
+                SlotChild::Caption(el) => crate::Node::from(el),
+                SlotChild::Cite(el) => crate::Node::from(el),
+                SlotChild::Code(el) => crate::Node::from(el),
+                SlotChild::Data(el) => crate::Node::from(el),
+                SlotChild::DataList(el) => crate::Node::from(el),
+                SlotChild::Definition(el) => crate::Node::from(el),
+                SlotChild::DeletedText(el) => crate::Node::from(el),
+                SlotChild::DescriptionDetails(el) => crate::Node::from(el),
+                SlotChild::DescriptionList(el) => crate::Node::from(el),
+                SlotChild::DescriptionTerm(el) => crate::Node::from(el),
+                SlotChild::Details(el) => crate::Node::from(el),
+                SlotChild::Dialog(el) => crate::Node::from(el),
+                SlotChild::Division(el) => crate::Node::from(el),
+                SlotChild::Embed(el) => crate::Node::from(el),
+                SlotChild::Emphasis(el) => crate::Node::from(el),
+                SlotChild::Fieldset(el) => crate::Node::from(el),
+                SlotChild::Figure(el) => crate::Node::from(el),
+                SlotChild::FigureCaption(el) => crate::Node::from(el),
+                SlotChild::Footer(el) => crate::Node::from(el),
+                SlotChild::Form(el) => crate::Node::from(el),
+                SlotChild::Head(el) => crate::Node::from(el),
+                SlotChild::Header(el) => crate::Node::from(el),
+                SlotChild::Heading1(el) => crate::Node::from(el),
+                SlotChild::Heading2(el) => crate::Node::from(el),
+                SlotChild::Heading3(el) => crate::Node::from(el),
+                SlotChild::Heading4(el) => crate::Node::from(el),
+                SlotChild::Heading5(el) => crate::Node::from(el),
+                SlotChild::Heading6(el) => crate::Node::from(el),
+                SlotChild::HeadingGroup(el) => crate::Node::from(el),
+                SlotChild::Html(el) => crate::Node::from(el),
+                SlotChild::Iframe(el) => crate::Node::from(el),
+                SlotChild::Image(el) => crate::Node::from(el),
+                SlotChild::ImageMap(el) => crate::Node::from(el),
+                SlotChild::ImageMapArea(el) => crate::Node::from(el),
+                SlotChild::Input(el) => crate::Node::from(el),
+                SlotChild::InsertedText(el) => crate::Node::from(el),
+                SlotChild::Italic(el) => crate::Node::from(el),
+                SlotChild::KeyboardInput(el) => crate::Node::from(el),
+                SlotChild::Label(el) => crate::Node::from(el),
+                SlotChild::Legend(el) => crate::Node::from(el),
+                SlotChild::LineBreak(el) => crate::Node::from(el),
+                SlotChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                SlotChild::Link(el) => crate::Node::from(el),
+                SlotChild::ListItem(el) => crate::Node::from(el),
+                SlotChild::Main(el) => crate::Node::from(el),
+                SlotChild::MarkText(el) => crate::Node::from(el),
+                SlotChild::MediaSource(el) => crate::Node::from(el),
+                SlotChild::Menu(el) => crate::Node::from(el),
+                SlotChild::Meta(el) => crate::Node::from(el),
+                SlotChild::Meter(el) => crate::Node::from(el),
+                SlotChild::Navigation(el) => crate::Node::from(el),
+                SlotChild::NoScript(el) => crate::Node::from(el),
+                SlotChild::Object(el) => crate::Node::from(el),
+                SlotChild::Option(el) => crate::Node::from(el),
+                SlotChild::OptionGroup(el) => crate::Node::from(el),
+                SlotChild::OrderedList(el) => crate::Node::from(el),
+                SlotChild::Output(el) => crate::Node::from(el),
+                SlotChild::Paragraph(el) => crate::Node::from(el),
+                SlotChild::Picture(el) => crate::Node::from(el),
+                SlotChild::PreformattedText(el) => crate::Node::from(el),
+                SlotChild::Progress(el) => crate::Node::from(el),
+                SlotChild::Quotation(el) => crate::Node::from(el),
+                SlotChild::RubyAnnotation(el) => crate::Node::from(el),
+                SlotChild::RubyFallbackParenthesis(el) => crate::Node::from(el),
+                SlotChild::RubyText(el) => crate::Node::from(el),
+                SlotChild::SampleOutput(el) => crate::Node::from(el),
+                SlotChild::Script(el) => crate::Node::from(el),
+                SlotChild::Search(el) => crate::Node::from(el),
+                SlotChild::Section(el) => crate::Node::from(el),
+                SlotChild::Select(el) => crate::Node::from(el),
+                SlotChild::SideComment(el) => crate::Node::from(el),
+                SlotChild::Slot(el) => crate::Node::from(el),
+                SlotChild::Span(el) => crate::Node::from(el),
+                SlotChild::StrikeThrough(el) => crate::Node::from(el),
+                SlotChild::Strong(el) => crate::Node::from(el),
+                SlotChild::Style(el) => crate::Node::from(el),
+                SlotChild::SubScript(el) => crate::Node::from(el),
+                SlotChild::Summary(el) => crate::Node::from(el),
+                SlotChild::SuperScript(el) => crate::Node::from(el),
+                SlotChild::Table(el) => crate::Node::from(el),
+                SlotChild::TableBody(el) => crate::Node::from(el),
+                SlotChild::TableCell(el) => crate::Node::from(el),
+                SlotChild::TableColumn(el) => crate::Node::from(el),
+                SlotChild::TableColumnGroup(el) => crate::Node::from(el),
+                SlotChild::TableFoot(el) => crate::Node::from(el),
+                SlotChild::TableHead(el) => crate::Node::from(el),
+                SlotChild::TableHeader(el) => crate::Node::from(el),
+                SlotChild::TableRow(el) => crate::Node::from(el),
+                SlotChild::Template(el) => crate::Node::from(el),
+                SlotChild::Text(el) => crate::Node::from(el),
+                SlotChild::TextArea(el) => crate::Node::from(el),
+                SlotChild::TextTrack(el) => crate::Node::from(el),
+                SlotChild::ThematicBreak(el) => crate::Node::from(el),
+                SlotChild::Time(el) => crate::Node::from(el),
+                SlotChild::Title(el) => crate::Node::from(el),
+                SlotChild::Underline(el) => crate::Node::from(el),
+                SlotChild::UnorderedList(el) => crate::Node::from(el),
+                SlotChild::Variable(el) => crate::Node::from(el),
+                SlotChild::Video(el) => crate::Node::from(el),
             }
         }
     }

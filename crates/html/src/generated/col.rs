@@ -14,6 +14,11 @@ pub mod element {
             super::builder::TableColumnBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a TableColumn> for crate::Node<'a> {
+        fn from(element: &'a TableColumn) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl TableColumn {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -354,7 +359,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for TableColumn {}
+    impl crate::HtmlElement for TableColumn {
+        fn tag_name(&self) -> &'static str {
+            "col"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl std::convert::Into<html_sys::tables::TableColumn> for TableColumn {
         fn into(self) -> html_sys::tables::TableColumn {
             self.sys

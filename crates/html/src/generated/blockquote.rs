@@ -15,6 +15,11 @@ pub mod element {
             super::builder::BlockQuoteBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a BlockQuote> for crate::Node<'a> {
+        fn from(element: &'a BlockQuote) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl BlockQuote {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -899,7 +904,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for BlockQuote {}
+    impl crate::HtmlElement for BlockQuote {
+        fn tag_name(&self) -> &'static str {
+            "blockquote"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for BlockQuote {}
     impl crate::PalpableContent for BlockQuote {}
     impl std::convert::Into<html_sys::text::BlockQuote> for BlockQuote {
@@ -1727,6 +1757,98 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a BlockQuoteChild> for crate::Node<'a> {
+        fn from(child: &'a BlockQuoteChild) -> Self {
+            match child {
+                BlockQuoteChild::Abbreviation(el) => crate::Node::from(el),
+                BlockQuoteChild::Address(el) => crate::Node::from(el),
+                BlockQuoteChild::Anchor(el) => crate::Node::from(el),
+                BlockQuoteChild::Article(el) => crate::Node::from(el),
+                BlockQuoteChild::Aside(el) => crate::Node::from(el),
+                BlockQuoteChild::Audio(el) => crate::Node::from(el),
+                BlockQuoteChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                BlockQuoteChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                BlockQuoteChild::BlockQuote(el) => crate::Node::from(el),
+                BlockQuoteChild::Bold(el) => crate::Node::from(el),
+                BlockQuoteChild::Button(el) => crate::Node::from(el),
+                BlockQuoteChild::Canvas(el) => crate::Node::from(el),
+                BlockQuoteChild::Cite(el) => crate::Node::from(el),
+                BlockQuoteChild::Code(el) => crate::Node::from(el),
+                BlockQuoteChild::Data(el) => crate::Node::from(el),
+                BlockQuoteChild::DataList(el) => crate::Node::from(el),
+                BlockQuoteChild::Definition(el) => crate::Node::from(el),
+                BlockQuoteChild::DeletedText(el) => crate::Node::from(el),
+                BlockQuoteChild::DescriptionList(el) => crate::Node::from(el),
+                BlockQuoteChild::Details(el) => crate::Node::from(el),
+                BlockQuoteChild::Dialog(el) => crate::Node::from(el),
+                BlockQuoteChild::Division(el) => crate::Node::from(el),
+                BlockQuoteChild::Embed(el) => crate::Node::from(el),
+                BlockQuoteChild::Emphasis(el) => crate::Node::from(el),
+                BlockQuoteChild::Fieldset(el) => crate::Node::from(el),
+                BlockQuoteChild::Figure(el) => crate::Node::from(el),
+                BlockQuoteChild::Footer(el) => crate::Node::from(el),
+                BlockQuoteChild::Form(el) => crate::Node::from(el),
+                BlockQuoteChild::Header(el) => crate::Node::from(el),
+                BlockQuoteChild::Heading1(el) => crate::Node::from(el),
+                BlockQuoteChild::Heading2(el) => crate::Node::from(el),
+                BlockQuoteChild::Heading3(el) => crate::Node::from(el),
+                BlockQuoteChild::Heading4(el) => crate::Node::from(el),
+                BlockQuoteChild::Heading5(el) => crate::Node::from(el),
+                BlockQuoteChild::Heading6(el) => crate::Node::from(el),
+                BlockQuoteChild::HeadingGroup(el) => crate::Node::from(el),
+                BlockQuoteChild::Iframe(el) => crate::Node::from(el),
+                BlockQuoteChild::Image(el) => crate::Node::from(el),
+                BlockQuoteChild::ImageMap(el) => crate::Node::from(el),
+                BlockQuoteChild::ImageMapArea(el) => crate::Node::from(el),
+                BlockQuoteChild::Input(el) => crate::Node::from(el),
+                BlockQuoteChild::InsertedText(el) => crate::Node::from(el),
+                BlockQuoteChild::Italic(el) => crate::Node::from(el),
+                BlockQuoteChild::KeyboardInput(el) => crate::Node::from(el),
+                BlockQuoteChild::Label(el) => crate::Node::from(el),
+                BlockQuoteChild::LineBreak(el) => crate::Node::from(el),
+                BlockQuoteChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                BlockQuoteChild::Link(el) => crate::Node::from(el),
+                BlockQuoteChild::Main(el) => crate::Node::from(el),
+                BlockQuoteChild::MarkText(el) => crate::Node::from(el),
+                BlockQuoteChild::Menu(el) => crate::Node::from(el),
+                BlockQuoteChild::Meta(el) => crate::Node::from(el),
+                BlockQuoteChild::Meter(el) => crate::Node::from(el),
+                BlockQuoteChild::Navigation(el) => crate::Node::from(el),
+                BlockQuoteChild::NoScript(el) => crate::Node::from(el),
+                BlockQuoteChild::Object(el) => crate::Node::from(el),
+                BlockQuoteChild::OrderedList(el) => crate::Node::from(el),
+                BlockQuoteChild::Output(el) => crate::Node::from(el),
+                BlockQuoteChild::Paragraph(el) => crate::Node::from(el),
+                BlockQuoteChild::Picture(el) => crate::Node::from(el),
+                BlockQuoteChild::PreformattedText(el) => crate::Node::from(el),
+                BlockQuoteChild::Progress(el) => crate::Node::from(el),
+                BlockQuoteChild::Quotation(el) => crate::Node::from(el),
+                BlockQuoteChild::RubyAnnotation(el) => crate::Node::from(el),
+                BlockQuoteChild::SampleOutput(el) => crate::Node::from(el),
+                BlockQuoteChild::Script(el) => crate::Node::from(el),
+                BlockQuoteChild::Search(el) => crate::Node::from(el),
+                BlockQuoteChild::Section(el) => crate::Node::from(el),
+                BlockQuoteChild::Select(el) => crate::Node::from(el),
+                BlockQuoteChild::SideComment(el) => crate::Node::from(el),
+                BlockQuoteChild::Slot(el) => crate::Node::from(el),
+                BlockQuoteChild::Span(el) => crate::Node::from(el),
+                BlockQuoteChild::StrikeThrough(el) => crate::Node::from(el),
+                BlockQuoteChild::Strong(el) => crate::Node::from(el),
+                BlockQuoteChild::SubScript(el) => crate::Node::from(el),
+                BlockQuoteChild::SuperScript(el) => crate::Node::from(el),
+                BlockQuoteChild::Table(el) => crate::Node::from(el),
+                BlockQuoteChild::Template(el) => crate::Node::from(el),
+                BlockQuoteChild::Text(el) => crate::Node::from(el),
+                BlockQuoteChild::TextArea(el) => crate::Node::from(el),
+                BlockQuoteChild::ThematicBreak(el) => crate::Node::from(el),
+                BlockQuoteChild::Time(el) => crate::Node::from(el),
+                BlockQuoteChild::Underline(el) => crate::Node::from(el),
+                BlockQuoteChild::UnorderedList(el) => crate::Node::from(el),
+                BlockQuoteChild::Variable(el) => crate::Node::from(el),
+                BlockQuoteChild::Video(el) => crate::Node::from(el),
             }
         }
     }

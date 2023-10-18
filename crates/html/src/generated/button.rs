@@ -15,6 +15,11 @@ pub mod element {
             super::builder::ButtonBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Button> for crate::Node<'a> {
+        fn from(element: &'a Button) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Button {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -944,7 +949,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Button {}
+    impl crate::HtmlElement for Button {
+        fn tag_name(&self) -> &'static str {
+            "button"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Button {}
     impl crate::PhrasingContent for Button {}
     impl crate::InteractiveContent for Button {}
@@ -1494,6 +1524,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a ButtonChild> for crate::Node<'a> {
+        fn from(child: &'a ButtonChild) -> Self {
+            match child {
+                ButtonChild::Abbreviation(el) => crate::Node::from(el),
+                ButtonChild::Anchor(el) => crate::Node::from(el),
+                ButtonChild::Audio(el) => crate::Node::from(el),
+                ButtonChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                ButtonChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                ButtonChild::Bold(el) => crate::Node::from(el),
+                ButtonChild::Button(el) => crate::Node::from(el),
+                ButtonChild::Canvas(el) => crate::Node::from(el),
+                ButtonChild::Cite(el) => crate::Node::from(el),
+                ButtonChild::Code(el) => crate::Node::from(el),
+                ButtonChild::Data(el) => crate::Node::from(el),
+                ButtonChild::DataList(el) => crate::Node::from(el),
+                ButtonChild::Definition(el) => crate::Node::from(el),
+                ButtonChild::DeletedText(el) => crate::Node::from(el),
+                ButtonChild::Embed(el) => crate::Node::from(el),
+                ButtonChild::Emphasis(el) => crate::Node::from(el),
+                ButtonChild::Iframe(el) => crate::Node::from(el),
+                ButtonChild::Image(el) => crate::Node::from(el),
+                ButtonChild::ImageMap(el) => crate::Node::from(el),
+                ButtonChild::ImageMapArea(el) => crate::Node::from(el),
+                ButtonChild::Input(el) => crate::Node::from(el),
+                ButtonChild::InsertedText(el) => crate::Node::from(el),
+                ButtonChild::Italic(el) => crate::Node::from(el),
+                ButtonChild::KeyboardInput(el) => crate::Node::from(el),
+                ButtonChild::Label(el) => crate::Node::from(el),
+                ButtonChild::LineBreak(el) => crate::Node::from(el),
+                ButtonChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                ButtonChild::Link(el) => crate::Node::from(el),
+                ButtonChild::MarkText(el) => crate::Node::from(el),
+                ButtonChild::Meta(el) => crate::Node::from(el),
+                ButtonChild::Meter(el) => crate::Node::from(el),
+                ButtonChild::NoScript(el) => crate::Node::from(el),
+                ButtonChild::Object(el) => crate::Node::from(el),
+                ButtonChild::Output(el) => crate::Node::from(el),
+                ButtonChild::Picture(el) => crate::Node::from(el),
+                ButtonChild::Progress(el) => crate::Node::from(el),
+                ButtonChild::Quotation(el) => crate::Node::from(el),
+                ButtonChild::RubyAnnotation(el) => crate::Node::from(el),
+                ButtonChild::SampleOutput(el) => crate::Node::from(el),
+                ButtonChild::Script(el) => crate::Node::from(el),
+                ButtonChild::Select(el) => crate::Node::from(el),
+                ButtonChild::SideComment(el) => crate::Node::from(el),
+                ButtonChild::Slot(el) => crate::Node::from(el),
+                ButtonChild::Span(el) => crate::Node::from(el),
+                ButtonChild::StrikeThrough(el) => crate::Node::from(el),
+                ButtonChild::Strong(el) => crate::Node::from(el),
+                ButtonChild::SubScript(el) => crate::Node::from(el),
+                ButtonChild::SuperScript(el) => crate::Node::from(el),
+                ButtonChild::Template(el) => crate::Node::from(el),
+                ButtonChild::Text(el) => crate::Node::from(el),
+                ButtonChild::TextArea(el) => crate::Node::from(el),
+                ButtonChild::Time(el) => crate::Node::from(el),
+                ButtonChild::Underline(el) => crate::Node::from(el),
+                ButtonChild::Variable(el) => crate::Node::from(el),
+                ButtonChild::Video(el) => crate::Node::from(el),
             }
         }
     }

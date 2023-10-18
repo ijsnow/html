@@ -14,6 +14,11 @@ pub mod element {
             super::builder::ImageMapAreaBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a ImageMapArea> for crate::Node<'a> {
+        fn from(element: &'a ImageMapArea) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl ImageMapArea {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -721,7 +726,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for ImageMapArea {}
+    impl crate::HtmlElement for ImageMapArea {
+        fn tag_name(&self) -> &'static str {
+            "area"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl crate::FlowContent for ImageMapArea {}
     impl crate::PhrasingContent for ImageMapArea {}
     impl std::convert::Into<html_sys::embedded::ImageMapArea> for ImageMapArea {

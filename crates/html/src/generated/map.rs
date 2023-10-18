@@ -15,6 +15,11 @@ pub mod element {
             super::builder::ImageMapBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a ImageMap> for crate::Node<'a> {
+        fn from(element: &'a ImageMap) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl ImageMap {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -377,7 +382,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for ImageMap {}
+    impl crate::HtmlElement for ImageMap {
+        fn tag_name(&self) -> &'static str {
+            "map"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for ImageMap {}
     impl crate::PhrasingContent for ImageMap {}
     impl crate::PalpableContent for ImageMap {}
@@ -1452,6 +1482,125 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a ImageMapChild> for crate::Node<'a> {
+        fn from(child: &'a ImageMapChild) -> Self {
+            match child {
+                ImageMapChild::Abbreviation(el) => crate::Node::from(el),
+                ImageMapChild::Address(el) => crate::Node::from(el),
+                ImageMapChild::Anchor(el) => crate::Node::from(el),
+                ImageMapChild::Article(el) => crate::Node::from(el),
+                ImageMapChild::Aside(el) => crate::Node::from(el),
+                ImageMapChild::Audio(el) => crate::Node::from(el),
+                ImageMapChild::Base(el) => crate::Node::from(el),
+                ImageMapChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                ImageMapChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                ImageMapChild::BlockQuote(el) => crate::Node::from(el),
+                ImageMapChild::Body(el) => crate::Node::from(el),
+                ImageMapChild::Bold(el) => crate::Node::from(el),
+                ImageMapChild::Button(el) => crate::Node::from(el),
+                ImageMapChild::Canvas(el) => crate::Node::from(el),
+                ImageMapChild::Caption(el) => crate::Node::from(el),
+                ImageMapChild::Cite(el) => crate::Node::from(el),
+                ImageMapChild::Code(el) => crate::Node::from(el),
+                ImageMapChild::Data(el) => crate::Node::from(el),
+                ImageMapChild::DataList(el) => crate::Node::from(el),
+                ImageMapChild::Definition(el) => crate::Node::from(el),
+                ImageMapChild::DeletedText(el) => crate::Node::from(el),
+                ImageMapChild::DescriptionDetails(el) => crate::Node::from(el),
+                ImageMapChild::DescriptionList(el) => crate::Node::from(el),
+                ImageMapChild::DescriptionTerm(el) => crate::Node::from(el),
+                ImageMapChild::Details(el) => crate::Node::from(el),
+                ImageMapChild::Dialog(el) => crate::Node::from(el),
+                ImageMapChild::Division(el) => crate::Node::from(el),
+                ImageMapChild::Embed(el) => crate::Node::from(el),
+                ImageMapChild::Emphasis(el) => crate::Node::from(el),
+                ImageMapChild::Fieldset(el) => crate::Node::from(el),
+                ImageMapChild::Figure(el) => crate::Node::from(el),
+                ImageMapChild::FigureCaption(el) => crate::Node::from(el),
+                ImageMapChild::Footer(el) => crate::Node::from(el),
+                ImageMapChild::Form(el) => crate::Node::from(el),
+                ImageMapChild::Head(el) => crate::Node::from(el),
+                ImageMapChild::Header(el) => crate::Node::from(el),
+                ImageMapChild::Heading1(el) => crate::Node::from(el),
+                ImageMapChild::Heading2(el) => crate::Node::from(el),
+                ImageMapChild::Heading3(el) => crate::Node::from(el),
+                ImageMapChild::Heading4(el) => crate::Node::from(el),
+                ImageMapChild::Heading5(el) => crate::Node::from(el),
+                ImageMapChild::Heading6(el) => crate::Node::from(el),
+                ImageMapChild::HeadingGroup(el) => crate::Node::from(el),
+                ImageMapChild::Html(el) => crate::Node::from(el),
+                ImageMapChild::Iframe(el) => crate::Node::from(el),
+                ImageMapChild::Image(el) => crate::Node::from(el),
+                ImageMapChild::ImageMap(el) => crate::Node::from(el),
+                ImageMapChild::ImageMapArea(el) => crate::Node::from(el),
+                ImageMapChild::Input(el) => crate::Node::from(el),
+                ImageMapChild::InsertedText(el) => crate::Node::from(el),
+                ImageMapChild::Italic(el) => crate::Node::from(el),
+                ImageMapChild::KeyboardInput(el) => crate::Node::from(el),
+                ImageMapChild::Label(el) => crate::Node::from(el),
+                ImageMapChild::Legend(el) => crate::Node::from(el),
+                ImageMapChild::LineBreak(el) => crate::Node::from(el),
+                ImageMapChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                ImageMapChild::Link(el) => crate::Node::from(el),
+                ImageMapChild::ListItem(el) => crate::Node::from(el),
+                ImageMapChild::Main(el) => crate::Node::from(el),
+                ImageMapChild::MarkText(el) => crate::Node::from(el),
+                ImageMapChild::MediaSource(el) => crate::Node::from(el),
+                ImageMapChild::Menu(el) => crate::Node::from(el),
+                ImageMapChild::Meta(el) => crate::Node::from(el),
+                ImageMapChild::Meter(el) => crate::Node::from(el),
+                ImageMapChild::Navigation(el) => crate::Node::from(el),
+                ImageMapChild::NoScript(el) => crate::Node::from(el),
+                ImageMapChild::Object(el) => crate::Node::from(el),
+                ImageMapChild::Option(el) => crate::Node::from(el),
+                ImageMapChild::OptionGroup(el) => crate::Node::from(el),
+                ImageMapChild::OrderedList(el) => crate::Node::from(el),
+                ImageMapChild::Output(el) => crate::Node::from(el),
+                ImageMapChild::Paragraph(el) => crate::Node::from(el),
+                ImageMapChild::Picture(el) => crate::Node::from(el),
+                ImageMapChild::PreformattedText(el) => crate::Node::from(el),
+                ImageMapChild::Progress(el) => crate::Node::from(el),
+                ImageMapChild::Quotation(el) => crate::Node::from(el),
+                ImageMapChild::RubyAnnotation(el) => crate::Node::from(el),
+                ImageMapChild::RubyFallbackParenthesis(el) => crate::Node::from(el),
+                ImageMapChild::RubyText(el) => crate::Node::from(el),
+                ImageMapChild::SampleOutput(el) => crate::Node::from(el),
+                ImageMapChild::Script(el) => crate::Node::from(el),
+                ImageMapChild::Search(el) => crate::Node::from(el),
+                ImageMapChild::Section(el) => crate::Node::from(el),
+                ImageMapChild::Select(el) => crate::Node::from(el),
+                ImageMapChild::SideComment(el) => crate::Node::from(el),
+                ImageMapChild::Slot(el) => crate::Node::from(el),
+                ImageMapChild::Span(el) => crate::Node::from(el),
+                ImageMapChild::StrikeThrough(el) => crate::Node::from(el),
+                ImageMapChild::Strong(el) => crate::Node::from(el),
+                ImageMapChild::Style(el) => crate::Node::from(el),
+                ImageMapChild::SubScript(el) => crate::Node::from(el),
+                ImageMapChild::Summary(el) => crate::Node::from(el),
+                ImageMapChild::SuperScript(el) => crate::Node::from(el),
+                ImageMapChild::Table(el) => crate::Node::from(el),
+                ImageMapChild::TableBody(el) => crate::Node::from(el),
+                ImageMapChild::TableCell(el) => crate::Node::from(el),
+                ImageMapChild::TableColumn(el) => crate::Node::from(el),
+                ImageMapChild::TableColumnGroup(el) => crate::Node::from(el),
+                ImageMapChild::TableFoot(el) => crate::Node::from(el),
+                ImageMapChild::TableHead(el) => crate::Node::from(el),
+                ImageMapChild::TableHeader(el) => crate::Node::from(el),
+                ImageMapChild::TableRow(el) => crate::Node::from(el),
+                ImageMapChild::Template(el) => crate::Node::from(el),
+                ImageMapChild::Text(el) => crate::Node::from(el),
+                ImageMapChild::TextArea(el) => crate::Node::from(el),
+                ImageMapChild::TextTrack(el) => crate::Node::from(el),
+                ImageMapChild::ThematicBreak(el) => crate::Node::from(el),
+                ImageMapChild::Time(el) => crate::Node::from(el),
+                ImageMapChild::Title(el) => crate::Node::from(el),
+                ImageMapChild::Underline(el) => crate::Node::from(el),
+                ImageMapChild::UnorderedList(el) => crate::Node::from(el),
+                ImageMapChild::Variable(el) => crate::Node::from(el),
+                ImageMapChild::Video(el) => crate::Node::from(el),
             }
         }
     }

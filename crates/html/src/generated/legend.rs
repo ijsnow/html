@@ -15,6 +15,11 @@ pub mod element {
             super::builder::LegendBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Legend> for crate::Node<'a> {
+        fn from(element: &'a Legend) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Legend {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -582,7 +587,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Legend {}
+    impl crate::HtmlElement for Legend {
+        fn tag_name(&self) -> &'static str {
+            "legend"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::forms::Legend> for Legend {
         fn into(self) -> html_sys::forms::Legend {
             self.sys
@@ -1191,6 +1221,74 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a LegendChild> for crate::Node<'a> {
+        fn from(child: &'a LegendChild) -> Self {
+            match child {
+                LegendChild::Abbreviation(el) => crate::Node::from(el),
+                LegendChild::Anchor(el) => crate::Node::from(el),
+                LegendChild::Audio(el) => crate::Node::from(el),
+                LegendChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                LegendChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                LegendChild::Bold(el) => crate::Node::from(el),
+                LegendChild::Button(el) => crate::Node::from(el),
+                LegendChild::Canvas(el) => crate::Node::from(el),
+                LegendChild::Cite(el) => crate::Node::from(el),
+                LegendChild::Code(el) => crate::Node::from(el),
+                LegendChild::Data(el) => crate::Node::from(el),
+                LegendChild::DataList(el) => crate::Node::from(el),
+                LegendChild::Definition(el) => crate::Node::from(el),
+                LegendChild::DeletedText(el) => crate::Node::from(el),
+                LegendChild::Embed(el) => crate::Node::from(el),
+                LegendChild::Emphasis(el) => crate::Node::from(el),
+                LegendChild::Heading1(el) => crate::Node::from(el),
+                LegendChild::Heading2(el) => crate::Node::from(el),
+                LegendChild::Heading3(el) => crate::Node::from(el),
+                LegendChild::Heading4(el) => crate::Node::from(el),
+                LegendChild::Heading5(el) => crate::Node::from(el),
+                LegendChild::Heading6(el) => crate::Node::from(el),
+                LegendChild::HeadingGroup(el) => crate::Node::from(el),
+                LegendChild::Iframe(el) => crate::Node::from(el),
+                LegendChild::Image(el) => crate::Node::from(el),
+                LegendChild::ImageMap(el) => crate::Node::from(el),
+                LegendChild::ImageMapArea(el) => crate::Node::from(el),
+                LegendChild::Input(el) => crate::Node::from(el),
+                LegendChild::InsertedText(el) => crate::Node::from(el),
+                LegendChild::Italic(el) => crate::Node::from(el),
+                LegendChild::KeyboardInput(el) => crate::Node::from(el),
+                LegendChild::Label(el) => crate::Node::from(el),
+                LegendChild::LineBreak(el) => crate::Node::from(el),
+                LegendChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                LegendChild::Link(el) => crate::Node::from(el),
+                LegendChild::MarkText(el) => crate::Node::from(el),
+                LegendChild::Meta(el) => crate::Node::from(el),
+                LegendChild::Meter(el) => crate::Node::from(el),
+                LegendChild::NoScript(el) => crate::Node::from(el),
+                LegendChild::Object(el) => crate::Node::from(el),
+                LegendChild::Output(el) => crate::Node::from(el),
+                LegendChild::Picture(el) => crate::Node::from(el),
+                LegendChild::Progress(el) => crate::Node::from(el),
+                LegendChild::Quotation(el) => crate::Node::from(el),
+                LegendChild::RubyAnnotation(el) => crate::Node::from(el),
+                LegendChild::SampleOutput(el) => crate::Node::from(el),
+                LegendChild::Script(el) => crate::Node::from(el),
+                LegendChild::Select(el) => crate::Node::from(el),
+                LegendChild::SideComment(el) => crate::Node::from(el),
+                LegendChild::Slot(el) => crate::Node::from(el),
+                LegendChild::Span(el) => crate::Node::from(el),
+                LegendChild::StrikeThrough(el) => crate::Node::from(el),
+                LegendChild::Strong(el) => crate::Node::from(el),
+                LegendChild::SubScript(el) => crate::Node::from(el),
+                LegendChild::SuperScript(el) => crate::Node::from(el),
+                LegendChild::Template(el) => crate::Node::from(el),
+                LegendChild::Text(el) => crate::Node::from(el),
+                LegendChild::TextArea(el) => crate::Node::from(el),
+                LegendChild::Time(el) => crate::Node::from(el),
+                LegendChild::Underline(el) => crate::Node::from(el),
+                LegendChild::Variable(el) => crate::Node::from(el),
+                LegendChild::Video(el) => crate::Node::from(el),
             }
         }
     }

@@ -292,14 +292,14 @@ impl crate::RenderElement for DeletedText {
     }
 }
 impl crate::ElementDescription for DeletedText {
-    fn set_attributes(
+    fn attributes(
         &self,
-        attrs: &mut std::collections::HashMap<
-            std::borrow::Cow<'static, str>,
-            std::borrow::Cow<'static, str>,
-        >,
-    ) {
-        self.global_attrs.add(attrs);
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
         if let Some(field) = &self.cite {
             attrs.insert(std::borrow::Cow::Borrowed("cite"), field.to_owned());
         }
@@ -604,15 +604,15 @@ impl crate::ElementDescription for DeletedText {
         if let Some(field) = &self.aria_value_text {
             attrs.insert(std::borrow::Cow::Borrowed("aria-valuetext"), field.to_owned());
         }
+        attrs
     }
-    fn set_data(
+    fn data(
         &self,
-        data: &mut std::collections::HashMap<
-            std::borrow::Cow<'static, str>,
-            std::borrow::Cow<'static, str>,
-        >,
-    ) {
-        data.extend((&*self.data_map).clone());
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        (&*self.data_map).clone()
     }
 }
 impl std::fmt::Display for DeletedText {

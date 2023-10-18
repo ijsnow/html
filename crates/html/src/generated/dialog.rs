@@ -15,6 +15,11 @@ pub mod element {
             super::builder::DialogBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Dialog> for crate::Node<'a> {
+        fn from(element: &'a Dialog) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Dialog {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -642,7 +647,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Dialog {}
+    impl crate::HtmlElement for Dialog {
+        fn tag_name(&self) -> &'static str {
+            "dialog"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Dialog {}
     impl std::convert::Into<html_sys::interactive::Dialog> for Dialog {
         fn into(self) -> html_sys::interactive::Dialog {
@@ -1468,6 +1498,98 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a DialogChild> for crate::Node<'a> {
+        fn from(child: &'a DialogChild) -> Self {
+            match child {
+                DialogChild::Abbreviation(el) => crate::Node::from(el),
+                DialogChild::Address(el) => crate::Node::from(el),
+                DialogChild::Anchor(el) => crate::Node::from(el),
+                DialogChild::Article(el) => crate::Node::from(el),
+                DialogChild::Aside(el) => crate::Node::from(el),
+                DialogChild::Audio(el) => crate::Node::from(el),
+                DialogChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                DialogChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                DialogChild::BlockQuote(el) => crate::Node::from(el),
+                DialogChild::Bold(el) => crate::Node::from(el),
+                DialogChild::Button(el) => crate::Node::from(el),
+                DialogChild::Canvas(el) => crate::Node::from(el),
+                DialogChild::Cite(el) => crate::Node::from(el),
+                DialogChild::Code(el) => crate::Node::from(el),
+                DialogChild::Data(el) => crate::Node::from(el),
+                DialogChild::DataList(el) => crate::Node::from(el),
+                DialogChild::Definition(el) => crate::Node::from(el),
+                DialogChild::DeletedText(el) => crate::Node::from(el),
+                DialogChild::DescriptionList(el) => crate::Node::from(el),
+                DialogChild::Details(el) => crate::Node::from(el),
+                DialogChild::Dialog(el) => crate::Node::from(el),
+                DialogChild::Division(el) => crate::Node::from(el),
+                DialogChild::Embed(el) => crate::Node::from(el),
+                DialogChild::Emphasis(el) => crate::Node::from(el),
+                DialogChild::Fieldset(el) => crate::Node::from(el),
+                DialogChild::Figure(el) => crate::Node::from(el),
+                DialogChild::Footer(el) => crate::Node::from(el),
+                DialogChild::Form(el) => crate::Node::from(el),
+                DialogChild::Header(el) => crate::Node::from(el),
+                DialogChild::Heading1(el) => crate::Node::from(el),
+                DialogChild::Heading2(el) => crate::Node::from(el),
+                DialogChild::Heading3(el) => crate::Node::from(el),
+                DialogChild::Heading4(el) => crate::Node::from(el),
+                DialogChild::Heading5(el) => crate::Node::from(el),
+                DialogChild::Heading6(el) => crate::Node::from(el),
+                DialogChild::HeadingGroup(el) => crate::Node::from(el),
+                DialogChild::Iframe(el) => crate::Node::from(el),
+                DialogChild::Image(el) => crate::Node::from(el),
+                DialogChild::ImageMap(el) => crate::Node::from(el),
+                DialogChild::ImageMapArea(el) => crate::Node::from(el),
+                DialogChild::Input(el) => crate::Node::from(el),
+                DialogChild::InsertedText(el) => crate::Node::from(el),
+                DialogChild::Italic(el) => crate::Node::from(el),
+                DialogChild::KeyboardInput(el) => crate::Node::from(el),
+                DialogChild::Label(el) => crate::Node::from(el),
+                DialogChild::LineBreak(el) => crate::Node::from(el),
+                DialogChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                DialogChild::Link(el) => crate::Node::from(el),
+                DialogChild::Main(el) => crate::Node::from(el),
+                DialogChild::MarkText(el) => crate::Node::from(el),
+                DialogChild::Menu(el) => crate::Node::from(el),
+                DialogChild::Meta(el) => crate::Node::from(el),
+                DialogChild::Meter(el) => crate::Node::from(el),
+                DialogChild::Navigation(el) => crate::Node::from(el),
+                DialogChild::NoScript(el) => crate::Node::from(el),
+                DialogChild::Object(el) => crate::Node::from(el),
+                DialogChild::OrderedList(el) => crate::Node::from(el),
+                DialogChild::Output(el) => crate::Node::from(el),
+                DialogChild::Paragraph(el) => crate::Node::from(el),
+                DialogChild::Picture(el) => crate::Node::from(el),
+                DialogChild::PreformattedText(el) => crate::Node::from(el),
+                DialogChild::Progress(el) => crate::Node::from(el),
+                DialogChild::Quotation(el) => crate::Node::from(el),
+                DialogChild::RubyAnnotation(el) => crate::Node::from(el),
+                DialogChild::SampleOutput(el) => crate::Node::from(el),
+                DialogChild::Script(el) => crate::Node::from(el),
+                DialogChild::Search(el) => crate::Node::from(el),
+                DialogChild::Section(el) => crate::Node::from(el),
+                DialogChild::Select(el) => crate::Node::from(el),
+                DialogChild::SideComment(el) => crate::Node::from(el),
+                DialogChild::Slot(el) => crate::Node::from(el),
+                DialogChild::Span(el) => crate::Node::from(el),
+                DialogChild::StrikeThrough(el) => crate::Node::from(el),
+                DialogChild::Strong(el) => crate::Node::from(el),
+                DialogChild::SubScript(el) => crate::Node::from(el),
+                DialogChild::SuperScript(el) => crate::Node::from(el),
+                DialogChild::Table(el) => crate::Node::from(el),
+                DialogChild::Template(el) => crate::Node::from(el),
+                DialogChild::Text(el) => crate::Node::from(el),
+                DialogChild::TextArea(el) => crate::Node::from(el),
+                DialogChild::ThematicBreak(el) => crate::Node::from(el),
+                DialogChild::Time(el) => crate::Node::from(el),
+                DialogChild::Underline(el) => crate::Node::from(el),
+                DialogChild::UnorderedList(el) => crate::Node::from(el),
+                DialogChild::Variable(el) => crate::Node::from(el),
+                DialogChild::Video(el) => crate::Node::from(el),
             }
         }
     }

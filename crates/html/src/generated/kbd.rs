@@ -15,6 +15,11 @@ pub mod element {
             super::builder::KeyboardInputBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a KeyboardInput> for crate::Node<'a> {
+        fn from(element: &'a KeyboardInput) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl KeyboardInput {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for KeyboardInput {}
+    impl crate::HtmlElement for KeyboardInput {
+        fn tag_name(&self) -> &'static str {
+            "kbd"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for KeyboardInput {}
     impl crate::PhrasingContent for KeyboardInput {}
     impl crate::PalpableContent for KeyboardInput {}
@@ -1407,6 +1437,69 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a KeyboardInputChild> for crate::Node<'a> {
+        fn from(child: &'a KeyboardInputChild) -> Self {
+            match child {
+                KeyboardInputChild::Abbreviation(el) => crate::Node::from(el),
+                KeyboardInputChild::Anchor(el) => crate::Node::from(el),
+                KeyboardInputChild::Audio(el) => crate::Node::from(el),
+                KeyboardInputChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                KeyboardInputChild::BidirectionalTextOverride(el) => {
+                    crate::Node::from(el)
+                }
+                KeyboardInputChild::Bold(el) => crate::Node::from(el),
+                KeyboardInputChild::Button(el) => crate::Node::from(el),
+                KeyboardInputChild::Canvas(el) => crate::Node::from(el),
+                KeyboardInputChild::Cite(el) => crate::Node::from(el),
+                KeyboardInputChild::Code(el) => crate::Node::from(el),
+                KeyboardInputChild::Data(el) => crate::Node::from(el),
+                KeyboardInputChild::DataList(el) => crate::Node::from(el),
+                KeyboardInputChild::Definition(el) => crate::Node::from(el),
+                KeyboardInputChild::DeletedText(el) => crate::Node::from(el),
+                KeyboardInputChild::Embed(el) => crate::Node::from(el),
+                KeyboardInputChild::Emphasis(el) => crate::Node::from(el),
+                KeyboardInputChild::Iframe(el) => crate::Node::from(el),
+                KeyboardInputChild::Image(el) => crate::Node::from(el),
+                KeyboardInputChild::ImageMap(el) => crate::Node::from(el),
+                KeyboardInputChild::ImageMapArea(el) => crate::Node::from(el),
+                KeyboardInputChild::Input(el) => crate::Node::from(el),
+                KeyboardInputChild::InsertedText(el) => crate::Node::from(el),
+                KeyboardInputChild::Italic(el) => crate::Node::from(el),
+                KeyboardInputChild::KeyboardInput(el) => crate::Node::from(el),
+                KeyboardInputChild::Label(el) => crate::Node::from(el),
+                KeyboardInputChild::LineBreak(el) => crate::Node::from(el),
+                KeyboardInputChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                KeyboardInputChild::Link(el) => crate::Node::from(el),
+                KeyboardInputChild::MarkText(el) => crate::Node::from(el),
+                KeyboardInputChild::Meta(el) => crate::Node::from(el),
+                KeyboardInputChild::Meter(el) => crate::Node::from(el),
+                KeyboardInputChild::NoScript(el) => crate::Node::from(el),
+                KeyboardInputChild::Object(el) => crate::Node::from(el),
+                KeyboardInputChild::Output(el) => crate::Node::from(el),
+                KeyboardInputChild::Picture(el) => crate::Node::from(el),
+                KeyboardInputChild::Progress(el) => crate::Node::from(el),
+                KeyboardInputChild::Quotation(el) => crate::Node::from(el),
+                KeyboardInputChild::RubyAnnotation(el) => crate::Node::from(el),
+                KeyboardInputChild::SampleOutput(el) => crate::Node::from(el),
+                KeyboardInputChild::Script(el) => crate::Node::from(el),
+                KeyboardInputChild::Select(el) => crate::Node::from(el),
+                KeyboardInputChild::SideComment(el) => crate::Node::from(el),
+                KeyboardInputChild::Slot(el) => crate::Node::from(el),
+                KeyboardInputChild::Span(el) => crate::Node::from(el),
+                KeyboardInputChild::StrikeThrough(el) => crate::Node::from(el),
+                KeyboardInputChild::Strong(el) => crate::Node::from(el),
+                KeyboardInputChild::SubScript(el) => crate::Node::from(el),
+                KeyboardInputChild::SuperScript(el) => crate::Node::from(el),
+                KeyboardInputChild::Template(el) => crate::Node::from(el),
+                KeyboardInputChild::Text(el) => crate::Node::from(el),
+                KeyboardInputChild::TextArea(el) => crate::Node::from(el),
+                KeyboardInputChild::Time(el) => crate::Node::from(el),
+                KeyboardInputChild::Underline(el) => crate::Node::from(el),
+                KeyboardInputChild::Variable(el) => crate::Node::from(el),
+                KeyboardInputChild::Video(el) => crate::Node::from(el),
             }
         }
     }

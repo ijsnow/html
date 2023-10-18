@@ -15,6 +15,11 @@ pub mod element {
             super::builder::SpanBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Span> for crate::Node<'a> {
+        fn from(element: &'a Span) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Span {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Span {}
+    impl crate::HtmlElement for Span {
+        fn tag_name(&self) -> &'static str {
+            "span"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Span {}
     impl crate::PhrasingContent for Span {}
     impl crate::PalpableContent for Span {}
@@ -1402,6 +1432,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a SpanChild> for crate::Node<'a> {
+        fn from(child: &'a SpanChild) -> Self {
+            match child {
+                SpanChild::Abbreviation(el) => crate::Node::from(el),
+                SpanChild::Anchor(el) => crate::Node::from(el),
+                SpanChild::Audio(el) => crate::Node::from(el),
+                SpanChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                SpanChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                SpanChild::Bold(el) => crate::Node::from(el),
+                SpanChild::Button(el) => crate::Node::from(el),
+                SpanChild::Canvas(el) => crate::Node::from(el),
+                SpanChild::Cite(el) => crate::Node::from(el),
+                SpanChild::Code(el) => crate::Node::from(el),
+                SpanChild::Data(el) => crate::Node::from(el),
+                SpanChild::DataList(el) => crate::Node::from(el),
+                SpanChild::Definition(el) => crate::Node::from(el),
+                SpanChild::DeletedText(el) => crate::Node::from(el),
+                SpanChild::Embed(el) => crate::Node::from(el),
+                SpanChild::Emphasis(el) => crate::Node::from(el),
+                SpanChild::Iframe(el) => crate::Node::from(el),
+                SpanChild::Image(el) => crate::Node::from(el),
+                SpanChild::ImageMap(el) => crate::Node::from(el),
+                SpanChild::ImageMapArea(el) => crate::Node::from(el),
+                SpanChild::Input(el) => crate::Node::from(el),
+                SpanChild::InsertedText(el) => crate::Node::from(el),
+                SpanChild::Italic(el) => crate::Node::from(el),
+                SpanChild::KeyboardInput(el) => crate::Node::from(el),
+                SpanChild::Label(el) => crate::Node::from(el),
+                SpanChild::LineBreak(el) => crate::Node::from(el),
+                SpanChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                SpanChild::Link(el) => crate::Node::from(el),
+                SpanChild::MarkText(el) => crate::Node::from(el),
+                SpanChild::Meta(el) => crate::Node::from(el),
+                SpanChild::Meter(el) => crate::Node::from(el),
+                SpanChild::NoScript(el) => crate::Node::from(el),
+                SpanChild::Object(el) => crate::Node::from(el),
+                SpanChild::Output(el) => crate::Node::from(el),
+                SpanChild::Picture(el) => crate::Node::from(el),
+                SpanChild::Progress(el) => crate::Node::from(el),
+                SpanChild::Quotation(el) => crate::Node::from(el),
+                SpanChild::RubyAnnotation(el) => crate::Node::from(el),
+                SpanChild::SampleOutput(el) => crate::Node::from(el),
+                SpanChild::Script(el) => crate::Node::from(el),
+                SpanChild::Select(el) => crate::Node::from(el),
+                SpanChild::SideComment(el) => crate::Node::from(el),
+                SpanChild::Slot(el) => crate::Node::from(el),
+                SpanChild::Span(el) => crate::Node::from(el),
+                SpanChild::StrikeThrough(el) => crate::Node::from(el),
+                SpanChild::Strong(el) => crate::Node::from(el),
+                SpanChild::SubScript(el) => crate::Node::from(el),
+                SpanChild::SuperScript(el) => crate::Node::from(el),
+                SpanChild::Template(el) => crate::Node::from(el),
+                SpanChild::Text(el) => crate::Node::from(el),
+                SpanChild::TextArea(el) => crate::Node::from(el),
+                SpanChild::Time(el) => crate::Node::from(el),
+                SpanChild::Underline(el) => crate::Node::from(el),
+                SpanChild::Variable(el) => crate::Node::from(el),
+                SpanChild::Video(el) => crate::Node::from(el),
             }
         }
     }

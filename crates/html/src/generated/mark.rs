@@ -15,6 +15,11 @@ pub mod element {
             super::builder::MarkTextBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a MarkText> for crate::Node<'a> {
+        fn from(element: &'a MarkText) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl MarkText {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for MarkText {}
+    impl crate::HtmlElement for MarkText {
+        fn tag_name(&self) -> &'static str {
+            "mark"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for MarkText {}
     impl crate::PhrasingContent for MarkText {}
     impl crate::PalpableContent for MarkText {}
@@ -1404,6 +1434,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a MarkTextChild> for crate::Node<'a> {
+        fn from(child: &'a MarkTextChild) -> Self {
+            match child {
+                MarkTextChild::Abbreviation(el) => crate::Node::from(el),
+                MarkTextChild::Anchor(el) => crate::Node::from(el),
+                MarkTextChild::Audio(el) => crate::Node::from(el),
+                MarkTextChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                MarkTextChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                MarkTextChild::Bold(el) => crate::Node::from(el),
+                MarkTextChild::Button(el) => crate::Node::from(el),
+                MarkTextChild::Canvas(el) => crate::Node::from(el),
+                MarkTextChild::Cite(el) => crate::Node::from(el),
+                MarkTextChild::Code(el) => crate::Node::from(el),
+                MarkTextChild::Data(el) => crate::Node::from(el),
+                MarkTextChild::DataList(el) => crate::Node::from(el),
+                MarkTextChild::Definition(el) => crate::Node::from(el),
+                MarkTextChild::DeletedText(el) => crate::Node::from(el),
+                MarkTextChild::Embed(el) => crate::Node::from(el),
+                MarkTextChild::Emphasis(el) => crate::Node::from(el),
+                MarkTextChild::Iframe(el) => crate::Node::from(el),
+                MarkTextChild::Image(el) => crate::Node::from(el),
+                MarkTextChild::ImageMap(el) => crate::Node::from(el),
+                MarkTextChild::ImageMapArea(el) => crate::Node::from(el),
+                MarkTextChild::Input(el) => crate::Node::from(el),
+                MarkTextChild::InsertedText(el) => crate::Node::from(el),
+                MarkTextChild::Italic(el) => crate::Node::from(el),
+                MarkTextChild::KeyboardInput(el) => crate::Node::from(el),
+                MarkTextChild::Label(el) => crate::Node::from(el),
+                MarkTextChild::LineBreak(el) => crate::Node::from(el),
+                MarkTextChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                MarkTextChild::Link(el) => crate::Node::from(el),
+                MarkTextChild::MarkText(el) => crate::Node::from(el),
+                MarkTextChild::Meta(el) => crate::Node::from(el),
+                MarkTextChild::Meter(el) => crate::Node::from(el),
+                MarkTextChild::NoScript(el) => crate::Node::from(el),
+                MarkTextChild::Object(el) => crate::Node::from(el),
+                MarkTextChild::Output(el) => crate::Node::from(el),
+                MarkTextChild::Picture(el) => crate::Node::from(el),
+                MarkTextChild::Progress(el) => crate::Node::from(el),
+                MarkTextChild::Quotation(el) => crate::Node::from(el),
+                MarkTextChild::RubyAnnotation(el) => crate::Node::from(el),
+                MarkTextChild::SampleOutput(el) => crate::Node::from(el),
+                MarkTextChild::Script(el) => crate::Node::from(el),
+                MarkTextChild::Select(el) => crate::Node::from(el),
+                MarkTextChild::SideComment(el) => crate::Node::from(el),
+                MarkTextChild::Slot(el) => crate::Node::from(el),
+                MarkTextChild::Span(el) => crate::Node::from(el),
+                MarkTextChild::StrikeThrough(el) => crate::Node::from(el),
+                MarkTextChild::Strong(el) => crate::Node::from(el),
+                MarkTextChild::SubScript(el) => crate::Node::from(el),
+                MarkTextChild::SuperScript(el) => crate::Node::from(el),
+                MarkTextChild::Template(el) => crate::Node::from(el),
+                MarkTextChild::Text(el) => crate::Node::from(el),
+                MarkTextChild::TextArea(el) => crate::Node::from(el),
+                MarkTextChild::Time(el) => crate::Node::from(el),
+                MarkTextChild::Underline(el) => crate::Node::from(el),
+                MarkTextChild::Variable(el) => crate::Node::from(el),
+                MarkTextChild::Video(el) => crate::Node::from(el),
             }
         }
     }

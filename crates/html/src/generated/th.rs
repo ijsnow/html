@@ -15,6 +15,11 @@ pub mod element {
             super::builder::TableHeaderBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a TableHeader> for crate::Node<'a> {
+        fn from(element: &'a TableHeader) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl TableHeader {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -943,7 +948,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for TableHeader {}
+    impl crate::HtmlElement for TableHeader {
+        fn tag_name(&self) -> &'static str {
+            "th"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::tables::TableHeader> for TableHeader {
         fn into(self) -> html_sys::tables::TableHeader {
             self.sys
@@ -1770,6 +1800,98 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a TableHeaderChild> for crate::Node<'a> {
+        fn from(child: &'a TableHeaderChild) -> Self {
+            match child {
+                TableHeaderChild::Abbreviation(el) => crate::Node::from(el),
+                TableHeaderChild::Address(el) => crate::Node::from(el),
+                TableHeaderChild::Anchor(el) => crate::Node::from(el),
+                TableHeaderChild::Article(el) => crate::Node::from(el),
+                TableHeaderChild::Aside(el) => crate::Node::from(el),
+                TableHeaderChild::Audio(el) => crate::Node::from(el),
+                TableHeaderChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                TableHeaderChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                TableHeaderChild::BlockQuote(el) => crate::Node::from(el),
+                TableHeaderChild::Bold(el) => crate::Node::from(el),
+                TableHeaderChild::Button(el) => crate::Node::from(el),
+                TableHeaderChild::Canvas(el) => crate::Node::from(el),
+                TableHeaderChild::Cite(el) => crate::Node::from(el),
+                TableHeaderChild::Code(el) => crate::Node::from(el),
+                TableHeaderChild::Data(el) => crate::Node::from(el),
+                TableHeaderChild::DataList(el) => crate::Node::from(el),
+                TableHeaderChild::Definition(el) => crate::Node::from(el),
+                TableHeaderChild::DeletedText(el) => crate::Node::from(el),
+                TableHeaderChild::DescriptionList(el) => crate::Node::from(el),
+                TableHeaderChild::Details(el) => crate::Node::from(el),
+                TableHeaderChild::Dialog(el) => crate::Node::from(el),
+                TableHeaderChild::Division(el) => crate::Node::from(el),
+                TableHeaderChild::Embed(el) => crate::Node::from(el),
+                TableHeaderChild::Emphasis(el) => crate::Node::from(el),
+                TableHeaderChild::Fieldset(el) => crate::Node::from(el),
+                TableHeaderChild::Figure(el) => crate::Node::from(el),
+                TableHeaderChild::Footer(el) => crate::Node::from(el),
+                TableHeaderChild::Form(el) => crate::Node::from(el),
+                TableHeaderChild::Header(el) => crate::Node::from(el),
+                TableHeaderChild::Heading1(el) => crate::Node::from(el),
+                TableHeaderChild::Heading2(el) => crate::Node::from(el),
+                TableHeaderChild::Heading3(el) => crate::Node::from(el),
+                TableHeaderChild::Heading4(el) => crate::Node::from(el),
+                TableHeaderChild::Heading5(el) => crate::Node::from(el),
+                TableHeaderChild::Heading6(el) => crate::Node::from(el),
+                TableHeaderChild::HeadingGroup(el) => crate::Node::from(el),
+                TableHeaderChild::Iframe(el) => crate::Node::from(el),
+                TableHeaderChild::Image(el) => crate::Node::from(el),
+                TableHeaderChild::ImageMap(el) => crate::Node::from(el),
+                TableHeaderChild::ImageMapArea(el) => crate::Node::from(el),
+                TableHeaderChild::Input(el) => crate::Node::from(el),
+                TableHeaderChild::InsertedText(el) => crate::Node::from(el),
+                TableHeaderChild::Italic(el) => crate::Node::from(el),
+                TableHeaderChild::KeyboardInput(el) => crate::Node::from(el),
+                TableHeaderChild::Label(el) => crate::Node::from(el),
+                TableHeaderChild::LineBreak(el) => crate::Node::from(el),
+                TableHeaderChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                TableHeaderChild::Link(el) => crate::Node::from(el),
+                TableHeaderChild::Main(el) => crate::Node::from(el),
+                TableHeaderChild::MarkText(el) => crate::Node::from(el),
+                TableHeaderChild::Menu(el) => crate::Node::from(el),
+                TableHeaderChild::Meta(el) => crate::Node::from(el),
+                TableHeaderChild::Meter(el) => crate::Node::from(el),
+                TableHeaderChild::Navigation(el) => crate::Node::from(el),
+                TableHeaderChild::NoScript(el) => crate::Node::from(el),
+                TableHeaderChild::Object(el) => crate::Node::from(el),
+                TableHeaderChild::OrderedList(el) => crate::Node::from(el),
+                TableHeaderChild::Output(el) => crate::Node::from(el),
+                TableHeaderChild::Paragraph(el) => crate::Node::from(el),
+                TableHeaderChild::Picture(el) => crate::Node::from(el),
+                TableHeaderChild::PreformattedText(el) => crate::Node::from(el),
+                TableHeaderChild::Progress(el) => crate::Node::from(el),
+                TableHeaderChild::Quotation(el) => crate::Node::from(el),
+                TableHeaderChild::RubyAnnotation(el) => crate::Node::from(el),
+                TableHeaderChild::SampleOutput(el) => crate::Node::from(el),
+                TableHeaderChild::Script(el) => crate::Node::from(el),
+                TableHeaderChild::Search(el) => crate::Node::from(el),
+                TableHeaderChild::Section(el) => crate::Node::from(el),
+                TableHeaderChild::Select(el) => crate::Node::from(el),
+                TableHeaderChild::SideComment(el) => crate::Node::from(el),
+                TableHeaderChild::Slot(el) => crate::Node::from(el),
+                TableHeaderChild::Span(el) => crate::Node::from(el),
+                TableHeaderChild::StrikeThrough(el) => crate::Node::from(el),
+                TableHeaderChild::Strong(el) => crate::Node::from(el),
+                TableHeaderChild::SubScript(el) => crate::Node::from(el),
+                TableHeaderChild::SuperScript(el) => crate::Node::from(el),
+                TableHeaderChild::Table(el) => crate::Node::from(el),
+                TableHeaderChild::Template(el) => crate::Node::from(el),
+                TableHeaderChild::Text(el) => crate::Node::from(el),
+                TableHeaderChild::TextArea(el) => crate::Node::from(el),
+                TableHeaderChild::ThematicBreak(el) => crate::Node::from(el),
+                TableHeaderChild::Time(el) => crate::Node::from(el),
+                TableHeaderChild::Underline(el) => crate::Node::from(el),
+                TableHeaderChild::UnorderedList(el) => crate::Node::from(el),
+                TableHeaderChild::Variable(el) => crate::Node::from(el),
+                TableHeaderChild::Video(el) => crate::Node::from(el),
             }
         }
     }

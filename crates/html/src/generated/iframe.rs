@@ -14,6 +14,11 @@ pub mod element {
             super::builder::IframeBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Iframe> for crate::Node<'a> {
+        fn from(element: &'a Iframe) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Iframe {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -734,7 +739,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Iframe {}
+    impl crate::HtmlElement for Iframe {
+        fn tag_name(&self) -> &'static str {
+            "iframe"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl crate::FlowContent for Iframe {}
     impl crate::PhrasingContent for Iframe {}
     impl crate::EmbeddedContent for Iframe {}

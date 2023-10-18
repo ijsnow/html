@@ -15,6 +15,11 @@ pub mod element {
             super::builder::StyleBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Style> for crate::Node<'a> {
+        fn from(element: &'a Style) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Style {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -388,7 +393,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Style {}
+    impl crate::HtmlElement for Style {
+        fn tag_name(&self) -> &'static str {
+            "style"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::MetadataContent for Style {}
     impl std::convert::Into<html_sys::metadata::Style> for Style {
         fn into(self) -> html_sys::metadata::Style {
@@ -444,6 +474,13 @@ pub mod child {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
                 Self::Text(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a StyleChild> for crate::Node<'a> {
+        fn from(child: &'a StyleChild) -> Self {
+            match child {
+                StyleChild::Text(el) => crate::Node::from(el),
             }
         }
     }

@@ -15,6 +15,11 @@ pub mod element {
             super::builder::SelectBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Select> for crate::Node<'a> {
+        fn from(element: &'a Select) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Select {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -756,7 +761,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Select {}
+    impl crate::HtmlElement for Select {
+        fn tag_name(&self) -> &'static str {
+            "select"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Select {}
     impl crate::PhrasingContent for Select {}
     impl crate::InteractiveContent for Select {}
@@ -841,6 +871,17 @@ pub mod child {
                 Self::Script(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
                 Self::ThematicBreak(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a SelectChild> for crate::Node<'a> {
+        fn from(child: &'a SelectChild) -> Self {
+            match child {
+                SelectChild::Option(el) => crate::Node::from(el),
+                SelectChild::OptionGroup(el) => crate::Node::from(el),
+                SelectChild::Script(el) => crate::Node::from(el),
+                SelectChild::Template(el) => crate::Node::from(el),
+                SelectChild::ThematicBreak(el) => crate::Node::from(el),
             }
         }
     }

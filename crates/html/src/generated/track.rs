@@ -14,6 +14,11 @@ pub mod element {
             super::builder::TextTrackBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a TextTrack> for crate::Node<'a> {
+        fn from(element: &'a TextTrack) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl TextTrack {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -395,7 +400,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for TextTrack {}
+    impl crate::HtmlElement for TextTrack {
+        fn tag_name(&self) -> &'static str {
+            "track"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl std::convert::Into<html_sys::embedded::TextTrack> for TextTrack {
         fn into(self) -> html_sys::embedded::TextTrack {
             self.sys

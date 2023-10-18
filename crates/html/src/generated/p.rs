@@ -15,6 +15,11 @@ pub mod element {
             super::builder::ParagraphBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Paragraph> for crate::Node<'a> {
+        fn from(element: &'a Paragraph) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Paragraph {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Paragraph {}
+    impl crate::HtmlElement for Paragraph {
+        fn tag_name(&self) -> &'static str {
+            "p"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Paragraph {}
     impl crate::PalpableContent for Paragraph {}
     impl std::convert::Into<html_sys::text::Paragraph> for Paragraph {
@@ -1403,6 +1433,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a ParagraphChild> for crate::Node<'a> {
+        fn from(child: &'a ParagraphChild) -> Self {
+            match child {
+                ParagraphChild::Abbreviation(el) => crate::Node::from(el),
+                ParagraphChild::Anchor(el) => crate::Node::from(el),
+                ParagraphChild::Audio(el) => crate::Node::from(el),
+                ParagraphChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                ParagraphChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                ParagraphChild::Bold(el) => crate::Node::from(el),
+                ParagraphChild::Button(el) => crate::Node::from(el),
+                ParagraphChild::Canvas(el) => crate::Node::from(el),
+                ParagraphChild::Cite(el) => crate::Node::from(el),
+                ParagraphChild::Code(el) => crate::Node::from(el),
+                ParagraphChild::Data(el) => crate::Node::from(el),
+                ParagraphChild::DataList(el) => crate::Node::from(el),
+                ParagraphChild::Definition(el) => crate::Node::from(el),
+                ParagraphChild::DeletedText(el) => crate::Node::from(el),
+                ParagraphChild::Embed(el) => crate::Node::from(el),
+                ParagraphChild::Emphasis(el) => crate::Node::from(el),
+                ParagraphChild::Iframe(el) => crate::Node::from(el),
+                ParagraphChild::Image(el) => crate::Node::from(el),
+                ParagraphChild::ImageMap(el) => crate::Node::from(el),
+                ParagraphChild::ImageMapArea(el) => crate::Node::from(el),
+                ParagraphChild::Input(el) => crate::Node::from(el),
+                ParagraphChild::InsertedText(el) => crate::Node::from(el),
+                ParagraphChild::Italic(el) => crate::Node::from(el),
+                ParagraphChild::KeyboardInput(el) => crate::Node::from(el),
+                ParagraphChild::Label(el) => crate::Node::from(el),
+                ParagraphChild::LineBreak(el) => crate::Node::from(el),
+                ParagraphChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                ParagraphChild::Link(el) => crate::Node::from(el),
+                ParagraphChild::MarkText(el) => crate::Node::from(el),
+                ParagraphChild::Meta(el) => crate::Node::from(el),
+                ParagraphChild::Meter(el) => crate::Node::from(el),
+                ParagraphChild::NoScript(el) => crate::Node::from(el),
+                ParagraphChild::Object(el) => crate::Node::from(el),
+                ParagraphChild::Output(el) => crate::Node::from(el),
+                ParagraphChild::Picture(el) => crate::Node::from(el),
+                ParagraphChild::Progress(el) => crate::Node::from(el),
+                ParagraphChild::Quotation(el) => crate::Node::from(el),
+                ParagraphChild::RubyAnnotation(el) => crate::Node::from(el),
+                ParagraphChild::SampleOutput(el) => crate::Node::from(el),
+                ParagraphChild::Script(el) => crate::Node::from(el),
+                ParagraphChild::Select(el) => crate::Node::from(el),
+                ParagraphChild::SideComment(el) => crate::Node::from(el),
+                ParagraphChild::Slot(el) => crate::Node::from(el),
+                ParagraphChild::Span(el) => crate::Node::from(el),
+                ParagraphChild::StrikeThrough(el) => crate::Node::from(el),
+                ParagraphChild::Strong(el) => crate::Node::from(el),
+                ParagraphChild::SubScript(el) => crate::Node::from(el),
+                ParagraphChild::SuperScript(el) => crate::Node::from(el),
+                ParagraphChild::Template(el) => crate::Node::from(el),
+                ParagraphChild::Text(el) => crate::Node::from(el),
+                ParagraphChild::TextArea(el) => crate::Node::from(el),
+                ParagraphChild::Time(el) => crate::Node::from(el),
+                ParagraphChild::Underline(el) => crate::Node::from(el),
+                ParagraphChild::Variable(el) => crate::Node::from(el),
+                ParagraphChild::Video(el) => crate::Node::from(el),
             }
         }
     }

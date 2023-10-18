@@ -14,6 +14,11 @@ pub mod element {
             super::builder::ThematicBreakBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a ThematicBreak> for crate::Node<'a> {
+        fn from(element: &'a ThematicBreak) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl ThematicBreak {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -641,7 +646,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for ThematicBreak {}
+    impl crate::HtmlElement for ThematicBreak {
+        fn tag_name(&self) -> &'static str {
+            "hr"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl crate::FlowContent for ThematicBreak {}
     impl std::convert::Into<html_sys::text::ThematicBreak> for ThematicBreak {
         fn into(self) -> html_sys::text::ThematicBreak {

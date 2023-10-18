@@ -68,9 +68,7 @@ mod manual;
 
 use std::borrow::Cow;
 use std::collections::HashMap;
-use std::marker::PhantomData;
 
-use html_sys::ElementDescription;
 pub use manual::categories::*;
 
 pub use manual::content;
@@ -125,13 +123,29 @@ where
 
 /// An HTML Element
 pub trait HtmlElement {
-    // fn tag_name(&self) -> Option<&'static str>;
-    // fn set_attributes(&self, attrs: &mut HashMap<Cow<'static, str>, Cow<'static, str>>);
-    // fn set_data(&self, data: &mut HashMap<Cow<'static, str>, Cow<'static, str>>);
-    // fn set_children(&self, nodes: &mut Vec<Node<'_>>);
+    /// Get the tag name for an element.
+    fn tag_name(&self) -> &'static str;
+
+    /// Get the attributes for an element.
+    fn attributes(&self) -> HashMap<Cow<'static, str>, Cow<'static, str>>;
+
+    /// Get the dataset attributes for an element.
+    fn data(&self) -> HashMap<Cow<'static, str>, Cow<'static, str>>;
+
+    /// Get the children for an element.
+    fn children<'a>(&'a self) -> Vec<Node<'a>>;
 }
 
+/// A generic node element to describe children.
 pub enum Node<'a> {
+    /// An HtmlElement.
     Element(&'a dyn HtmlElement),
+    /// A text node.
     Text(Cow<'static, str>),
+}
+
+impl<'a> From<&'a std::borrow::Cow<'static, str>> for Node<'a> {
+    fn from(text: &'a std::borrow::Cow<'static, str>) -> Node<'a> {
+        Node::Text(text.to_owned())
+    }
 }

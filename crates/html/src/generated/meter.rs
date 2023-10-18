@@ -15,6 +15,11 @@ pub mod element {
             super::builder::MeterBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Meter> for crate::Node<'a> {
+        fn from(element: &'a Meter) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Meter {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -701,7 +706,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Meter {}
+    impl crate::HtmlElement for Meter {
+        fn tag_name(&self) -> &'static str {
+            "meter"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Meter {}
     impl crate::PhrasingContent for Meter {}
     impl crate::PalpableContent for Meter {}
@@ -1248,6 +1278,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a MeterChild> for crate::Node<'a> {
+        fn from(child: &'a MeterChild) -> Self {
+            match child {
+                MeterChild::Abbreviation(el) => crate::Node::from(el),
+                MeterChild::Anchor(el) => crate::Node::from(el),
+                MeterChild::Audio(el) => crate::Node::from(el),
+                MeterChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                MeterChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                MeterChild::Bold(el) => crate::Node::from(el),
+                MeterChild::Button(el) => crate::Node::from(el),
+                MeterChild::Canvas(el) => crate::Node::from(el),
+                MeterChild::Cite(el) => crate::Node::from(el),
+                MeterChild::Code(el) => crate::Node::from(el),
+                MeterChild::Data(el) => crate::Node::from(el),
+                MeterChild::DataList(el) => crate::Node::from(el),
+                MeterChild::Definition(el) => crate::Node::from(el),
+                MeterChild::DeletedText(el) => crate::Node::from(el),
+                MeterChild::Embed(el) => crate::Node::from(el),
+                MeterChild::Emphasis(el) => crate::Node::from(el),
+                MeterChild::Iframe(el) => crate::Node::from(el),
+                MeterChild::Image(el) => crate::Node::from(el),
+                MeterChild::ImageMap(el) => crate::Node::from(el),
+                MeterChild::ImageMapArea(el) => crate::Node::from(el),
+                MeterChild::Input(el) => crate::Node::from(el),
+                MeterChild::InsertedText(el) => crate::Node::from(el),
+                MeterChild::Italic(el) => crate::Node::from(el),
+                MeterChild::KeyboardInput(el) => crate::Node::from(el),
+                MeterChild::Label(el) => crate::Node::from(el),
+                MeterChild::LineBreak(el) => crate::Node::from(el),
+                MeterChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                MeterChild::Link(el) => crate::Node::from(el),
+                MeterChild::MarkText(el) => crate::Node::from(el),
+                MeterChild::Meta(el) => crate::Node::from(el),
+                MeterChild::Meter(el) => crate::Node::from(el),
+                MeterChild::NoScript(el) => crate::Node::from(el),
+                MeterChild::Object(el) => crate::Node::from(el),
+                MeterChild::Output(el) => crate::Node::from(el),
+                MeterChild::Picture(el) => crate::Node::from(el),
+                MeterChild::Progress(el) => crate::Node::from(el),
+                MeterChild::Quotation(el) => crate::Node::from(el),
+                MeterChild::RubyAnnotation(el) => crate::Node::from(el),
+                MeterChild::SampleOutput(el) => crate::Node::from(el),
+                MeterChild::Script(el) => crate::Node::from(el),
+                MeterChild::Select(el) => crate::Node::from(el),
+                MeterChild::SideComment(el) => crate::Node::from(el),
+                MeterChild::Slot(el) => crate::Node::from(el),
+                MeterChild::Span(el) => crate::Node::from(el),
+                MeterChild::StrikeThrough(el) => crate::Node::from(el),
+                MeterChild::Strong(el) => crate::Node::from(el),
+                MeterChild::SubScript(el) => crate::Node::from(el),
+                MeterChild::SuperScript(el) => crate::Node::from(el),
+                MeterChild::Template(el) => crate::Node::from(el),
+                MeterChild::Text(el) => crate::Node::from(el),
+                MeterChild::TextArea(el) => crate::Node::from(el),
+                MeterChild::Time(el) => crate::Node::from(el),
+                MeterChild::Underline(el) => crate::Node::from(el),
+                MeterChild::Variable(el) => crate::Node::from(el),
+                MeterChild::Video(el) => crate::Node::from(el),
             }
         }
     }

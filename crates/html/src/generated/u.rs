@@ -15,6 +15,11 @@ pub mod element {
             super::builder::UnderlineBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Underline> for crate::Node<'a> {
+        fn from(element: &'a Underline) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Underline {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Underline {}
+    impl crate::HtmlElement for Underline {
+        fn tag_name(&self) -> &'static str {
+            "u"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Underline {}
     impl crate::PhrasingContent for Underline {}
     impl crate::PalpableContent for Underline {}
@@ -1404,6 +1434,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a UnderlineChild> for crate::Node<'a> {
+        fn from(child: &'a UnderlineChild) -> Self {
+            match child {
+                UnderlineChild::Abbreviation(el) => crate::Node::from(el),
+                UnderlineChild::Anchor(el) => crate::Node::from(el),
+                UnderlineChild::Audio(el) => crate::Node::from(el),
+                UnderlineChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                UnderlineChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                UnderlineChild::Bold(el) => crate::Node::from(el),
+                UnderlineChild::Button(el) => crate::Node::from(el),
+                UnderlineChild::Canvas(el) => crate::Node::from(el),
+                UnderlineChild::Cite(el) => crate::Node::from(el),
+                UnderlineChild::Code(el) => crate::Node::from(el),
+                UnderlineChild::Data(el) => crate::Node::from(el),
+                UnderlineChild::DataList(el) => crate::Node::from(el),
+                UnderlineChild::Definition(el) => crate::Node::from(el),
+                UnderlineChild::DeletedText(el) => crate::Node::from(el),
+                UnderlineChild::Embed(el) => crate::Node::from(el),
+                UnderlineChild::Emphasis(el) => crate::Node::from(el),
+                UnderlineChild::Iframe(el) => crate::Node::from(el),
+                UnderlineChild::Image(el) => crate::Node::from(el),
+                UnderlineChild::ImageMap(el) => crate::Node::from(el),
+                UnderlineChild::ImageMapArea(el) => crate::Node::from(el),
+                UnderlineChild::Input(el) => crate::Node::from(el),
+                UnderlineChild::InsertedText(el) => crate::Node::from(el),
+                UnderlineChild::Italic(el) => crate::Node::from(el),
+                UnderlineChild::KeyboardInput(el) => crate::Node::from(el),
+                UnderlineChild::Label(el) => crate::Node::from(el),
+                UnderlineChild::LineBreak(el) => crate::Node::from(el),
+                UnderlineChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                UnderlineChild::Link(el) => crate::Node::from(el),
+                UnderlineChild::MarkText(el) => crate::Node::from(el),
+                UnderlineChild::Meta(el) => crate::Node::from(el),
+                UnderlineChild::Meter(el) => crate::Node::from(el),
+                UnderlineChild::NoScript(el) => crate::Node::from(el),
+                UnderlineChild::Object(el) => crate::Node::from(el),
+                UnderlineChild::Output(el) => crate::Node::from(el),
+                UnderlineChild::Picture(el) => crate::Node::from(el),
+                UnderlineChild::Progress(el) => crate::Node::from(el),
+                UnderlineChild::Quotation(el) => crate::Node::from(el),
+                UnderlineChild::RubyAnnotation(el) => crate::Node::from(el),
+                UnderlineChild::SampleOutput(el) => crate::Node::from(el),
+                UnderlineChild::Script(el) => crate::Node::from(el),
+                UnderlineChild::Select(el) => crate::Node::from(el),
+                UnderlineChild::SideComment(el) => crate::Node::from(el),
+                UnderlineChild::Slot(el) => crate::Node::from(el),
+                UnderlineChild::Span(el) => crate::Node::from(el),
+                UnderlineChild::StrikeThrough(el) => crate::Node::from(el),
+                UnderlineChild::Strong(el) => crate::Node::from(el),
+                UnderlineChild::SubScript(el) => crate::Node::from(el),
+                UnderlineChild::SuperScript(el) => crate::Node::from(el),
+                UnderlineChild::Template(el) => crate::Node::from(el),
+                UnderlineChild::Text(el) => crate::Node::from(el),
+                UnderlineChild::TextArea(el) => crate::Node::from(el),
+                UnderlineChild::Time(el) => crate::Node::from(el),
+                UnderlineChild::Underline(el) => crate::Node::from(el),
+                UnderlineChild::Variable(el) => crate::Node::from(el),
+                UnderlineChild::Video(el) => crate::Node::from(el),
             }
         }
     }

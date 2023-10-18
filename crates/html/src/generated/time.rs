@@ -15,6 +15,11 @@ pub mod element {
             super::builder::TimeBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Time> for crate::Node<'a> {
+        fn from(element: &'a Time) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Time {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -866,7 +871,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Time {}
+    impl crate::HtmlElement for Time {
+        fn tag_name(&self) -> &'static str {
+            "time"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Time {}
     impl crate::PhrasingContent for Time {}
     impl crate::PalpableContent for Time {}
@@ -1413,6 +1443,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a TimeChild> for crate::Node<'a> {
+        fn from(child: &'a TimeChild) -> Self {
+            match child {
+                TimeChild::Abbreviation(el) => crate::Node::from(el),
+                TimeChild::Anchor(el) => crate::Node::from(el),
+                TimeChild::Audio(el) => crate::Node::from(el),
+                TimeChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                TimeChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                TimeChild::Bold(el) => crate::Node::from(el),
+                TimeChild::Button(el) => crate::Node::from(el),
+                TimeChild::Canvas(el) => crate::Node::from(el),
+                TimeChild::Cite(el) => crate::Node::from(el),
+                TimeChild::Code(el) => crate::Node::from(el),
+                TimeChild::Data(el) => crate::Node::from(el),
+                TimeChild::DataList(el) => crate::Node::from(el),
+                TimeChild::Definition(el) => crate::Node::from(el),
+                TimeChild::DeletedText(el) => crate::Node::from(el),
+                TimeChild::Embed(el) => crate::Node::from(el),
+                TimeChild::Emphasis(el) => crate::Node::from(el),
+                TimeChild::Iframe(el) => crate::Node::from(el),
+                TimeChild::Image(el) => crate::Node::from(el),
+                TimeChild::ImageMap(el) => crate::Node::from(el),
+                TimeChild::ImageMapArea(el) => crate::Node::from(el),
+                TimeChild::Input(el) => crate::Node::from(el),
+                TimeChild::InsertedText(el) => crate::Node::from(el),
+                TimeChild::Italic(el) => crate::Node::from(el),
+                TimeChild::KeyboardInput(el) => crate::Node::from(el),
+                TimeChild::Label(el) => crate::Node::from(el),
+                TimeChild::LineBreak(el) => crate::Node::from(el),
+                TimeChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                TimeChild::Link(el) => crate::Node::from(el),
+                TimeChild::MarkText(el) => crate::Node::from(el),
+                TimeChild::Meta(el) => crate::Node::from(el),
+                TimeChild::Meter(el) => crate::Node::from(el),
+                TimeChild::NoScript(el) => crate::Node::from(el),
+                TimeChild::Object(el) => crate::Node::from(el),
+                TimeChild::Output(el) => crate::Node::from(el),
+                TimeChild::Picture(el) => crate::Node::from(el),
+                TimeChild::Progress(el) => crate::Node::from(el),
+                TimeChild::Quotation(el) => crate::Node::from(el),
+                TimeChild::RubyAnnotation(el) => crate::Node::from(el),
+                TimeChild::SampleOutput(el) => crate::Node::from(el),
+                TimeChild::Script(el) => crate::Node::from(el),
+                TimeChild::Select(el) => crate::Node::from(el),
+                TimeChild::SideComment(el) => crate::Node::from(el),
+                TimeChild::Slot(el) => crate::Node::from(el),
+                TimeChild::Span(el) => crate::Node::from(el),
+                TimeChild::StrikeThrough(el) => crate::Node::from(el),
+                TimeChild::Strong(el) => crate::Node::from(el),
+                TimeChild::SubScript(el) => crate::Node::from(el),
+                TimeChild::SuperScript(el) => crate::Node::from(el),
+                TimeChild::Template(el) => crate::Node::from(el),
+                TimeChild::Text(el) => crate::Node::from(el),
+                TimeChild::TextArea(el) => crate::Node::from(el),
+                TimeChild::Time(el) => crate::Node::from(el),
+                TimeChild::Underline(el) => crate::Node::from(el),
+                TimeChild::Variable(el) => crate::Node::from(el),
+                TimeChild::Video(el) => crate::Node::from(el),
             }
         }
     }

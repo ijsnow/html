@@ -18,21 +18,19 @@ pub trait RenderElement {
 /// Get information about an element.
 pub trait ElementDescription {
     /// Access the attributes that have a value for an element.
-    fn set_attributes(
+    fn attributes(
         &self,
-        attrs: &mut std::collections::HashMap<
-            std::borrow::Cow<'static, str>,
-            std::borrow::Cow<'static, str>,
-        >,
-    );
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    >;
     /// Access the data attributes that have a value for an element.
-    fn set_data(
+    fn data(
         &self,
-        data: &mut std::collections::HashMap<
-            std::borrow::Cow<'static, str>,
-            std::borrow::Cow<'static, str>,
-        >,
-    );
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    >;
 }
 /// Container for `data-*` attributes.
 #[derive(Debug, Clone, PartialEq, Default)]

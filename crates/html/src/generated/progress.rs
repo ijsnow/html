@@ -15,6 +15,11 @@ pub mod element {
             super::builder::ProgressBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Progress> for crate::Node<'a> {
+        fn from(element: &'a Progress) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Progress {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -677,7 +682,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Progress {}
+    impl crate::HtmlElement for Progress {
+        fn tag_name(&self) -> &'static str {
+            "progress"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Progress {}
     impl crate::PhrasingContent for Progress {}
     impl crate::PalpableContent for Progress {}
@@ -1226,6 +1256,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a ProgressChild> for crate::Node<'a> {
+        fn from(child: &'a ProgressChild) -> Self {
+            match child {
+                ProgressChild::Abbreviation(el) => crate::Node::from(el),
+                ProgressChild::Anchor(el) => crate::Node::from(el),
+                ProgressChild::Audio(el) => crate::Node::from(el),
+                ProgressChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                ProgressChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                ProgressChild::Bold(el) => crate::Node::from(el),
+                ProgressChild::Button(el) => crate::Node::from(el),
+                ProgressChild::Canvas(el) => crate::Node::from(el),
+                ProgressChild::Cite(el) => crate::Node::from(el),
+                ProgressChild::Code(el) => crate::Node::from(el),
+                ProgressChild::Data(el) => crate::Node::from(el),
+                ProgressChild::DataList(el) => crate::Node::from(el),
+                ProgressChild::Definition(el) => crate::Node::from(el),
+                ProgressChild::DeletedText(el) => crate::Node::from(el),
+                ProgressChild::Embed(el) => crate::Node::from(el),
+                ProgressChild::Emphasis(el) => crate::Node::from(el),
+                ProgressChild::Iframe(el) => crate::Node::from(el),
+                ProgressChild::Image(el) => crate::Node::from(el),
+                ProgressChild::ImageMap(el) => crate::Node::from(el),
+                ProgressChild::ImageMapArea(el) => crate::Node::from(el),
+                ProgressChild::Input(el) => crate::Node::from(el),
+                ProgressChild::InsertedText(el) => crate::Node::from(el),
+                ProgressChild::Italic(el) => crate::Node::from(el),
+                ProgressChild::KeyboardInput(el) => crate::Node::from(el),
+                ProgressChild::Label(el) => crate::Node::from(el),
+                ProgressChild::LineBreak(el) => crate::Node::from(el),
+                ProgressChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                ProgressChild::Link(el) => crate::Node::from(el),
+                ProgressChild::MarkText(el) => crate::Node::from(el),
+                ProgressChild::Meta(el) => crate::Node::from(el),
+                ProgressChild::Meter(el) => crate::Node::from(el),
+                ProgressChild::NoScript(el) => crate::Node::from(el),
+                ProgressChild::Object(el) => crate::Node::from(el),
+                ProgressChild::Output(el) => crate::Node::from(el),
+                ProgressChild::Picture(el) => crate::Node::from(el),
+                ProgressChild::Progress(el) => crate::Node::from(el),
+                ProgressChild::Quotation(el) => crate::Node::from(el),
+                ProgressChild::RubyAnnotation(el) => crate::Node::from(el),
+                ProgressChild::SampleOutput(el) => crate::Node::from(el),
+                ProgressChild::Script(el) => crate::Node::from(el),
+                ProgressChild::Select(el) => crate::Node::from(el),
+                ProgressChild::SideComment(el) => crate::Node::from(el),
+                ProgressChild::Slot(el) => crate::Node::from(el),
+                ProgressChild::Span(el) => crate::Node::from(el),
+                ProgressChild::StrikeThrough(el) => crate::Node::from(el),
+                ProgressChild::Strong(el) => crate::Node::from(el),
+                ProgressChild::SubScript(el) => crate::Node::from(el),
+                ProgressChild::SuperScript(el) => crate::Node::from(el),
+                ProgressChild::Template(el) => crate::Node::from(el),
+                ProgressChild::Text(el) => crate::Node::from(el),
+                ProgressChild::TextArea(el) => crate::Node::from(el),
+                ProgressChild::Time(el) => crate::Node::from(el),
+                ProgressChild::Underline(el) => crate::Node::from(el),
+                ProgressChild::Variable(el) => crate::Node::from(el),
+                ProgressChild::Video(el) => crate::Node::from(el),
             }
         }
     }

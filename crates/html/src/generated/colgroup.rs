@@ -15,6 +15,11 @@ pub mod element {
             super::builder::TableColumnGroupBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a TableColumnGroup> for crate::Node<'a> {
+        fn from(element: &'a TableColumnGroup) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl TableColumnGroup {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -377,7 +382,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for TableColumnGroup {}
+    impl crate::HtmlElement for TableColumnGroup {
+        fn tag_name(&self) -> &'static str {
+            "colgroup"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::tables::TableColumnGroup> for TableColumnGroup {
         fn into(self) -> html_sys::tables::TableColumnGroup {
             self.sys
@@ -432,6 +462,14 @@ pub mod child {
             match self {
                 Self::TableColumn(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a TableColumnGroupChild> for crate::Node<'a> {
+        fn from(child: &'a TableColumnGroupChild) -> Self {
+            match child {
+                TableColumnGroupChild::TableColumn(el) => crate::Node::from(el),
+                TableColumnGroupChild::Template(el) => crate::Node::from(el),
             }
         }
     }

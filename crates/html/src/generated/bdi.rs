@@ -15,6 +15,11 @@ pub mod element {
             super::builder::BidirectionalIsolateBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a BidirectionalIsolate> for crate::Node<'a> {
+        fn from(element: &'a BidirectionalIsolate) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl BidirectionalIsolate {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -857,7 +862,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for BidirectionalIsolate {}
+    impl crate::HtmlElement for BidirectionalIsolate {
+        fn tag_name(&self) -> &'static str {
+            "bdi"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for BidirectionalIsolate {}
     impl crate::PhrasingContent for BidirectionalIsolate {}
     impl crate::PalpableContent for BidirectionalIsolate {}
@@ -1443,6 +1473,73 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a BidirectionalIsolateChild> for crate::Node<'a> {
+        fn from(child: &'a BidirectionalIsolateChild) -> Self {
+            match child {
+                BidirectionalIsolateChild::Abbreviation(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Anchor(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Audio(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::BidirectionalIsolate(el) => {
+                    crate::Node::from(el)
+                }
+                BidirectionalIsolateChild::BidirectionalTextOverride(el) => {
+                    crate::Node::from(el)
+                }
+                BidirectionalIsolateChild::Bold(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Button(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Canvas(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Cite(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Code(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Data(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::DataList(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Definition(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::DeletedText(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Embed(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Emphasis(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Iframe(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Image(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::ImageMap(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::ImageMapArea(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Input(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::InsertedText(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Italic(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::KeyboardInput(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Label(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::LineBreak(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::LineBreakOpportunity(el) => {
+                    crate::Node::from(el)
+                }
+                BidirectionalIsolateChild::Link(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::MarkText(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Meta(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Meter(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::NoScript(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Object(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Output(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Picture(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Progress(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Quotation(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::RubyAnnotation(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::SampleOutput(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Script(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Select(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::SideComment(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Slot(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Span(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::StrikeThrough(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Strong(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::SubScript(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::SuperScript(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Template(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Text(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::TextArea(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Time(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Underline(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Variable(el) => crate::Node::from(el),
+                BidirectionalIsolateChild::Video(el) => crate::Node::from(el),
             }
         }
     }

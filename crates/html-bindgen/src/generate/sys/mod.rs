@@ -20,10 +20,10 @@ pub trait RenderElement {
 /// Get information about an element.
 pub trait ElementDescription {
     /// Access the attributes that have a value for an element.
-    fn set_attributes(&self, attrs: &mut std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>);
+    fn attributes(&self) -> std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>;
 
     /// Access the data attributes that have a value for an element.
-    fn set_data(&self, data: &mut std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>);
+    fn data(&self) -> std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>;
 }
 
 /// Container for `data-*` attributes.
@@ -200,13 +200,15 @@ fn generate_element(el: MergedElement) -> Result<CodeFile> {
         }}
 
         impl crate::ElementDescription for {struct_name} {{
-            fn set_attributes(&self, attrs: &mut std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>) {{
-                self.global_attrs.add(attrs);
+            fn attributes(&self) -> std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>> {{
+                let mut attrs = std::collections::HashMap::new();
+                self.global_attrs.add(&mut attrs);
                 {add_attrs}
+                attrs
             }}
 
-            fn set_data(&self, data: &mut std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>) {{
-                data.extend((&*self.data_map).clone());
+            fn data(&self) -> std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>> {{
+                (&*self.data_map).clone()
             }}
         }}
 

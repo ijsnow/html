@@ -15,6 +15,11 @@ pub mod element {
             super::builder::AbbreviationBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Abbreviation> for crate::Node<'a> {
+        fn from(element: &'a Abbreviation) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Abbreviation {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Abbreviation {}
+    impl crate::HtmlElement for Abbreviation {
+        fn tag_name(&self) -> &'static str {
+            "abbr"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Abbreviation {}
     impl crate::PhrasingContent for Abbreviation {}
     impl crate::PalpableContent for Abbreviation {}
@@ -1405,6 +1435,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a AbbreviationChild> for crate::Node<'a> {
+        fn from(child: &'a AbbreviationChild) -> Self {
+            match child {
+                AbbreviationChild::Abbreviation(el) => crate::Node::from(el),
+                AbbreviationChild::Anchor(el) => crate::Node::from(el),
+                AbbreviationChild::Audio(el) => crate::Node::from(el),
+                AbbreviationChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                AbbreviationChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                AbbreviationChild::Bold(el) => crate::Node::from(el),
+                AbbreviationChild::Button(el) => crate::Node::from(el),
+                AbbreviationChild::Canvas(el) => crate::Node::from(el),
+                AbbreviationChild::Cite(el) => crate::Node::from(el),
+                AbbreviationChild::Code(el) => crate::Node::from(el),
+                AbbreviationChild::Data(el) => crate::Node::from(el),
+                AbbreviationChild::DataList(el) => crate::Node::from(el),
+                AbbreviationChild::Definition(el) => crate::Node::from(el),
+                AbbreviationChild::DeletedText(el) => crate::Node::from(el),
+                AbbreviationChild::Embed(el) => crate::Node::from(el),
+                AbbreviationChild::Emphasis(el) => crate::Node::from(el),
+                AbbreviationChild::Iframe(el) => crate::Node::from(el),
+                AbbreviationChild::Image(el) => crate::Node::from(el),
+                AbbreviationChild::ImageMap(el) => crate::Node::from(el),
+                AbbreviationChild::ImageMapArea(el) => crate::Node::from(el),
+                AbbreviationChild::Input(el) => crate::Node::from(el),
+                AbbreviationChild::InsertedText(el) => crate::Node::from(el),
+                AbbreviationChild::Italic(el) => crate::Node::from(el),
+                AbbreviationChild::KeyboardInput(el) => crate::Node::from(el),
+                AbbreviationChild::Label(el) => crate::Node::from(el),
+                AbbreviationChild::LineBreak(el) => crate::Node::from(el),
+                AbbreviationChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                AbbreviationChild::Link(el) => crate::Node::from(el),
+                AbbreviationChild::MarkText(el) => crate::Node::from(el),
+                AbbreviationChild::Meta(el) => crate::Node::from(el),
+                AbbreviationChild::Meter(el) => crate::Node::from(el),
+                AbbreviationChild::NoScript(el) => crate::Node::from(el),
+                AbbreviationChild::Object(el) => crate::Node::from(el),
+                AbbreviationChild::Output(el) => crate::Node::from(el),
+                AbbreviationChild::Picture(el) => crate::Node::from(el),
+                AbbreviationChild::Progress(el) => crate::Node::from(el),
+                AbbreviationChild::Quotation(el) => crate::Node::from(el),
+                AbbreviationChild::RubyAnnotation(el) => crate::Node::from(el),
+                AbbreviationChild::SampleOutput(el) => crate::Node::from(el),
+                AbbreviationChild::Script(el) => crate::Node::from(el),
+                AbbreviationChild::Select(el) => crate::Node::from(el),
+                AbbreviationChild::SideComment(el) => crate::Node::from(el),
+                AbbreviationChild::Slot(el) => crate::Node::from(el),
+                AbbreviationChild::Span(el) => crate::Node::from(el),
+                AbbreviationChild::StrikeThrough(el) => crate::Node::from(el),
+                AbbreviationChild::Strong(el) => crate::Node::from(el),
+                AbbreviationChild::SubScript(el) => crate::Node::from(el),
+                AbbreviationChild::SuperScript(el) => crate::Node::from(el),
+                AbbreviationChild::Template(el) => crate::Node::from(el),
+                AbbreviationChild::Text(el) => crate::Node::from(el),
+                AbbreviationChild::TextArea(el) => crate::Node::from(el),
+                AbbreviationChild::Time(el) => crate::Node::from(el),
+                AbbreviationChild::Underline(el) => crate::Node::from(el),
+                AbbreviationChild::Variable(el) => crate::Node::from(el),
+                AbbreviationChild::Video(el) => crate::Node::from(el),
             }
         }
     }

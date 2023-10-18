@@ -15,6 +15,11 @@ pub mod element {
             super::builder::FieldsetBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Fieldset> for crate::Node<'a> {
+        fn from(element: &'a Fieldset) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Fieldset {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -694,7 +699,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Fieldset {}
+    impl crate::HtmlElement for Fieldset {
+        fn tag_name(&self) -> &'static str {
+            "fieldset"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Fieldset {}
     impl crate::PalpableContent for Fieldset {}
     impl std::convert::Into<html_sys::forms::Fieldset> for Fieldset {
@@ -1530,6 +1560,99 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a FieldsetChild> for crate::Node<'a> {
+        fn from(child: &'a FieldsetChild) -> Self {
+            match child {
+                FieldsetChild::Abbreviation(el) => crate::Node::from(el),
+                FieldsetChild::Address(el) => crate::Node::from(el),
+                FieldsetChild::Anchor(el) => crate::Node::from(el),
+                FieldsetChild::Article(el) => crate::Node::from(el),
+                FieldsetChild::Aside(el) => crate::Node::from(el),
+                FieldsetChild::Audio(el) => crate::Node::from(el),
+                FieldsetChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                FieldsetChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                FieldsetChild::BlockQuote(el) => crate::Node::from(el),
+                FieldsetChild::Bold(el) => crate::Node::from(el),
+                FieldsetChild::Button(el) => crate::Node::from(el),
+                FieldsetChild::Canvas(el) => crate::Node::from(el),
+                FieldsetChild::Cite(el) => crate::Node::from(el),
+                FieldsetChild::Code(el) => crate::Node::from(el),
+                FieldsetChild::Data(el) => crate::Node::from(el),
+                FieldsetChild::DataList(el) => crate::Node::from(el),
+                FieldsetChild::Definition(el) => crate::Node::from(el),
+                FieldsetChild::DeletedText(el) => crate::Node::from(el),
+                FieldsetChild::DescriptionList(el) => crate::Node::from(el),
+                FieldsetChild::Details(el) => crate::Node::from(el),
+                FieldsetChild::Dialog(el) => crate::Node::from(el),
+                FieldsetChild::Division(el) => crate::Node::from(el),
+                FieldsetChild::Embed(el) => crate::Node::from(el),
+                FieldsetChild::Emphasis(el) => crate::Node::from(el),
+                FieldsetChild::Fieldset(el) => crate::Node::from(el),
+                FieldsetChild::Figure(el) => crate::Node::from(el),
+                FieldsetChild::Footer(el) => crate::Node::from(el),
+                FieldsetChild::Form(el) => crate::Node::from(el),
+                FieldsetChild::Header(el) => crate::Node::from(el),
+                FieldsetChild::Heading1(el) => crate::Node::from(el),
+                FieldsetChild::Heading2(el) => crate::Node::from(el),
+                FieldsetChild::Heading3(el) => crate::Node::from(el),
+                FieldsetChild::Heading4(el) => crate::Node::from(el),
+                FieldsetChild::Heading5(el) => crate::Node::from(el),
+                FieldsetChild::Heading6(el) => crate::Node::from(el),
+                FieldsetChild::HeadingGroup(el) => crate::Node::from(el),
+                FieldsetChild::Iframe(el) => crate::Node::from(el),
+                FieldsetChild::Image(el) => crate::Node::from(el),
+                FieldsetChild::ImageMap(el) => crate::Node::from(el),
+                FieldsetChild::ImageMapArea(el) => crate::Node::from(el),
+                FieldsetChild::Input(el) => crate::Node::from(el),
+                FieldsetChild::InsertedText(el) => crate::Node::from(el),
+                FieldsetChild::Italic(el) => crate::Node::from(el),
+                FieldsetChild::KeyboardInput(el) => crate::Node::from(el),
+                FieldsetChild::Label(el) => crate::Node::from(el),
+                FieldsetChild::Legend(el) => crate::Node::from(el),
+                FieldsetChild::LineBreak(el) => crate::Node::from(el),
+                FieldsetChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                FieldsetChild::Link(el) => crate::Node::from(el),
+                FieldsetChild::Main(el) => crate::Node::from(el),
+                FieldsetChild::MarkText(el) => crate::Node::from(el),
+                FieldsetChild::Menu(el) => crate::Node::from(el),
+                FieldsetChild::Meta(el) => crate::Node::from(el),
+                FieldsetChild::Meter(el) => crate::Node::from(el),
+                FieldsetChild::Navigation(el) => crate::Node::from(el),
+                FieldsetChild::NoScript(el) => crate::Node::from(el),
+                FieldsetChild::Object(el) => crate::Node::from(el),
+                FieldsetChild::OrderedList(el) => crate::Node::from(el),
+                FieldsetChild::Output(el) => crate::Node::from(el),
+                FieldsetChild::Paragraph(el) => crate::Node::from(el),
+                FieldsetChild::Picture(el) => crate::Node::from(el),
+                FieldsetChild::PreformattedText(el) => crate::Node::from(el),
+                FieldsetChild::Progress(el) => crate::Node::from(el),
+                FieldsetChild::Quotation(el) => crate::Node::from(el),
+                FieldsetChild::RubyAnnotation(el) => crate::Node::from(el),
+                FieldsetChild::SampleOutput(el) => crate::Node::from(el),
+                FieldsetChild::Script(el) => crate::Node::from(el),
+                FieldsetChild::Search(el) => crate::Node::from(el),
+                FieldsetChild::Section(el) => crate::Node::from(el),
+                FieldsetChild::Select(el) => crate::Node::from(el),
+                FieldsetChild::SideComment(el) => crate::Node::from(el),
+                FieldsetChild::Slot(el) => crate::Node::from(el),
+                FieldsetChild::Span(el) => crate::Node::from(el),
+                FieldsetChild::StrikeThrough(el) => crate::Node::from(el),
+                FieldsetChild::Strong(el) => crate::Node::from(el),
+                FieldsetChild::SubScript(el) => crate::Node::from(el),
+                FieldsetChild::SuperScript(el) => crate::Node::from(el),
+                FieldsetChild::Table(el) => crate::Node::from(el),
+                FieldsetChild::Template(el) => crate::Node::from(el),
+                FieldsetChild::Text(el) => crate::Node::from(el),
+                FieldsetChild::TextArea(el) => crate::Node::from(el),
+                FieldsetChild::ThematicBreak(el) => crate::Node::from(el),
+                FieldsetChild::Time(el) => crate::Node::from(el),
+                FieldsetChild::Underline(el) => crate::Node::from(el),
+                FieldsetChild::UnorderedList(el) => crate::Node::from(el),
+                FieldsetChild::Variable(el) => crate::Node::from(el),
+                FieldsetChild::Video(el) => crate::Node::from(el),
             }
         }
     }

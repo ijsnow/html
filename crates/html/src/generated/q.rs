@@ -15,6 +15,11 @@ pub mod element {
             super::builder::QuotationBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Quotation> for crate::Node<'a> {
+        fn from(element: &'a Quotation) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Quotation {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -866,7 +871,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Quotation {}
+    impl crate::HtmlElement for Quotation {
+        fn tag_name(&self) -> &'static str {
+            "q"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Quotation {}
     impl crate::PhrasingContent for Quotation {}
     impl crate::PalpableContent for Quotation {}
@@ -1415,6 +1445,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a QuotationChild> for crate::Node<'a> {
+        fn from(child: &'a QuotationChild) -> Self {
+            match child {
+                QuotationChild::Abbreviation(el) => crate::Node::from(el),
+                QuotationChild::Anchor(el) => crate::Node::from(el),
+                QuotationChild::Audio(el) => crate::Node::from(el),
+                QuotationChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                QuotationChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                QuotationChild::Bold(el) => crate::Node::from(el),
+                QuotationChild::Button(el) => crate::Node::from(el),
+                QuotationChild::Canvas(el) => crate::Node::from(el),
+                QuotationChild::Cite(el) => crate::Node::from(el),
+                QuotationChild::Code(el) => crate::Node::from(el),
+                QuotationChild::Data(el) => crate::Node::from(el),
+                QuotationChild::DataList(el) => crate::Node::from(el),
+                QuotationChild::Definition(el) => crate::Node::from(el),
+                QuotationChild::DeletedText(el) => crate::Node::from(el),
+                QuotationChild::Embed(el) => crate::Node::from(el),
+                QuotationChild::Emphasis(el) => crate::Node::from(el),
+                QuotationChild::Iframe(el) => crate::Node::from(el),
+                QuotationChild::Image(el) => crate::Node::from(el),
+                QuotationChild::ImageMap(el) => crate::Node::from(el),
+                QuotationChild::ImageMapArea(el) => crate::Node::from(el),
+                QuotationChild::Input(el) => crate::Node::from(el),
+                QuotationChild::InsertedText(el) => crate::Node::from(el),
+                QuotationChild::Italic(el) => crate::Node::from(el),
+                QuotationChild::KeyboardInput(el) => crate::Node::from(el),
+                QuotationChild::Label(el) => crate::Node::from(el),
+                QuotationChild::LineBreak(el) => crate::Node::from(el),
+                QuotationChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                QuotationChild::Link(el) => crate::Node::from(el),
+                QuotationChild::MarkText(el) => crate::Node::from(el),
+                QuotationChild::Meta(el) => crate::Node::from(el),
+                QuotationChild::Meter(el) => crate::Node::from(el),
+                QuotationChild::NoScript(el) => crate::Node::from(el),
+                QuotationChild::Object(el) => crate::Node::from(el),
+                QuotationChild::Output(el) => crate::Node::from(el),
+                QuotationChild::Picture(el) => crate::Node::from(el),
+                QuotationChild::Progress(el) => crate::Node::from(el),
+                QuotationChild::Quotation(el) => crate::Node::from(el),
+                QuotationChild::RubyAnnotation(el) => crate::Node::from(el),
+                QuotationChild::SampleOutput(el) => crate::Node::from(el),
+                QuotationChild::Script(el) => crate::Node::from(el),
+                QuotationChild::Select(el) => crate::Node::from(el),
+                QuotationChild::SideComment(el) => crate::Node::from(el),
+                QuotationChild::Slot(el) => crate::Node::from(el),
+                QuotationChild::Span(el) => crate::Node::from(el),
+                QuotationChild::StrikeThrough(el) => crate::Node::from(el),
+                QuotationChild::Strong(el) => crate::Node::from(el),
+                QuotationChild::SubScript(el) => crate::Node::from(el),
+                QuotationChild::SuperScript(el) => crate::Node::from(el),
+                QuotationChild::Template(el) => crate::Node::from(el),
+                QuotationChild::Text(el) => crate::Node::from(el),
+                QuotationChild::TextArea(el) => crate::Node::from(el),
+                QuotationChild::Time(el) => crate::Node::from(el),
+                QuotationChild::Underline(el) => crate::Node::from(el),
+                QuotationChild::Variable(el) => crate::Node::from(el),
+                QuotationChild::Video(el) => crate::Node::from(el),
             }
         }
     }

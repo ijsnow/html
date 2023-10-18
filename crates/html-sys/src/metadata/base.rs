@@ -32,29 +32,29 @@ impl crate::RenderElement for Base {
     }
 }
 impl crate::ElementDescription for Base {
-    fn set_attributes(
+    fn attributes(
         &self,
-        attrs: &mut std::collections::HashMap<
-            std::borrow::Cow<'static, str>,
-            std::borrow::Cow<'static, str>,
-        >,
-    ) {
-        self.global_attrs.add(attrs);
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
         if let Some(field) = &self.href {
             attrs.insert(std::borrow::Cow::Borrowed("href"), field.to_owned());
         }
         if let Some(field) = &self.target {
             attrs.insert(std::borrow::Cow::Borrowed("target"), field.to_owned());
         }
+        attrs
     }
-    fn set_data(
+    fn data(
         &self,
-        data: &mut std::collections::HashMap<
-            std::borrow::Cow<'static, str>,
-            std::borrow::Cow<'static, str>,
-        >,
-    ) {
-        data.extend((&*self.data_map).clone());
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        (&*self.data_map).clone()
     }
 }
 impl std::fmt::Display for Base {

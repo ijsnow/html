@@ -15,6 +15,11 @@ pub mod element {
             super::builder::TableBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Table> for crate::Node<'a> {
+        fn from(element: &'a Table) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Table {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -888,7 +893,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Table {}
+    impl crate::HtmlElement for Table {
+        fn tag_name(&self) -> &'static str {
+            "table"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Table {}
     impl crate::PalpableContent for Table {}
     impl std::convert::Into<html_sys::tables::Table> for Table {
@@ -998,6 +1028,20 @@ pub mod child {
                 Self::TableHead(el) => write!(f, "{el}"),
                 Self::TableRow(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a TableChild> for crate::Node<'a> {
+        fn from(child: &'a TableChild) -> Self {
+            match child {
+                TableChild::Caption(el) => crate::Node::from(el),
+                TableChild::Script(el) => crate::Node::from(el),
+                TableChild::TableBody(el) => crate::Node::from(el),
+                TableChild::TableColumnGroup(el) => crate::Node::from(el),
+                TableChild::TableFoot(el) => crate::Node::from(el),
+                TableChild::TableHead(el) => crate::Node::from(el),
+                TableChild::TableRow(el) => crate::Node::from(el),
+                TableChild::Template(el) => crate::Node::from(el),
             }
         }
     }

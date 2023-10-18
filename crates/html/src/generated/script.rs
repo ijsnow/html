@@ -15,6 +15,11 @@ pub mod element {
             super::builder::ScriptBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Script> for crate::Node<'a> {
+        fn from(element: &'a Script) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Script {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -476,7 +481,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Script {}
+    impl crate::HtmlElement for Script {
+        fn tag_name(&self) -> &'static str {
+            "script"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::MetadataContent for Script {}
     impl crate::FlowContent for Script {}
     impl crate::PhrasingContent for Script {}
@@ -535,6 +565,13 @@ pub mod child {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
                 Self::Text(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a ScriptChild> for crate::Node<'a> {
+        fn from(child: &'a ScriptChild) -> Self {
+            match child {
+                ScriptChild::Text(el) => crate::Node::from(el),
             }
         }
     }

@@ -14,6 +14,11 @@ pub mod element {
             super::builder::BaseBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Base> for crate::Node<'a> {
+        fn from(element: &'a Base) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Base {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -365,7 +370,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Base {}
+    impl crate::HtmlElement for Base {
+        fn tag_name(&self) -> &'static str {
+            "base"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl crate::MetadataContent for Base {}
     impl std::convert::Into<html_sys::metadata::Base> for Base {
         fn into(self) -> html_sys::metadata::Base {

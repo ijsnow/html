@@ -15,6 +15,11 @@ pub mod element {
             super::builder::ItalicBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Italic> for crate::Node<'a> {
+        fn from(element: &'a Italic) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Italic {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Italic {}
+    impl crate::HtmlElement for Italic {
+        fn tag_name(&self) -> &'static str {
+            "i"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Italic {}
     impl crate::PhrasingContent for Italic {}
     impl crate::PalpableContent for Italic {}
@@ -1404,6 +1434,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a ItalicChild> for crate::Node<'a> {
+        fn from(child: &'a ItalicChild) -> Self {
+            match child {
+                ItalicChild::Abbreviation(el) => crate::Node::from(el),
+                ItalicChild::Anchor(el) => crate::Node::from(el),
+                ItalicChild::Audio(el) => crate::Node::from(el),
+                ItalicChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                ItalicChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                ItalicChild::Bold(el) => crate::Node::from(el),
+                ItalicChild::Button(el) => crate::Node::from(el),
+                ItalicChild::Canvas(el) => crate::Node::from(el),
+                ItalicChild::Cite(el) => crate::Node::from(el),
+                ItalicChild::Code(el) => crate::Node::from(el),
+                ItalicChild::Data(el) => crate::Node::from(el),
+                ItalicChild::DataList(el) => crate::Node::from(el),
+                ItalicChild::Definition(el) => crate::Node::from(el),
+                ItalicChild::DeletedText(el) => crate::Node::from(el),
+                ItalicChild::Embed(el) => crate::Node::from(el),
+                ItalicChild::Emphasis(el) => crate::Node::from(el),
+                ItalicChild::Iframe(el) => crate::Node::from(el),
+                ItalicChild::Image(el) => crate::Node::from(el),
+                ItalicChild::ImageMap(el) => crate::Node::from(el),
+                ItalicChild::ImageMapArea(el) => crate::Node::from(el),
+                ItalicChild::Input(el) => crate::Node::from(el),
+                ItalicChild::InsertedText(el) => crate::Node::from(el),
+                ItalicChild::Italic(el) => crate::Node::from(el),
+                ItalicChild::KeyboardInput(el) => crate::Node::from(el),
+                ItalicChild::Label(el) => crate::Node::from(el),
+                ItalicChild::LineBreak(el) => crate::Node::from(el),
+                ItalicChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                ItalicChild::Link(el) => crate::Node::from(el),
+                ItalicChild::MarkText(el) => crate::Node::from(el),
+                ItalicChild::Meta(el) => crate::Node::from(el),
+                ItalicChild::Meter(el) => crate::Node::from(el),
+                ItalicChild::NoScript(el) => crate::Node::from(el),
+                ItalicChild::Object(el) => crate::Node::from(el),
+                ItalicChild::Output(el) => crate::Node::from(el),
+                ItalicChild::Picture(el) => crate::Node::from(el),
+                ItalicChild::Progress(el) => crate::Node::from(el),
+                ItalicChild::Quotation(el) => crate::Node::from(el),
+                ItalicChild::RubyAnnotation(el) => crate::Node::from(el),
+                ItalicChild::SampleOutput(el) => crate::Node::from(el),
+                ItalicChild::Script(el) => crate::Node::from(el),
+                ItalicChild::Select(el) => crate::Node::from(el),
+                ItalicChild::SideComment(el) => crate::Node::from(el),
+                ItalicChild::Slot(el) => crate::Node::from(el),
+                ItalicChild::Span(el) => crate::Node::from(el),
+                ItalicChild::StrikeThrough(el) => crate::Node::from(el),
+                ItalicChild::Strong(el) => crate::Node::from(el),
+                ItalicChild::SubScript(el) => crate::Node::from(el),
+                ItalicChild::SuperScript(el) => crate::Node::from(el),
+                ItalicChild::Template(el) => crate::Node::from(el),
+                ItalicChild::Text(el) => crate::Node::from(el),
+                ItalicChild::TextArea(el) => crate::Node::from(el),
+                ItalicChild::Time(el) => crate::Node::from(el),
+                ItalicChild::Underline(el) => crate::Node::from(el),
+                ItalicChild::Variable(el) => crate::Node::from(el),
+                ItalicChild::Video(el) => crate::Node::from(el),
             }
         }
     }

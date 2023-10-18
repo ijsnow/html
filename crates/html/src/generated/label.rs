@@ -15,6 +15,11 @@ pub mod element {
             super::builder::LabelBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Label> for crate::Node<'a> {
+        fn from(element: &'a Label) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Label {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -593,7 +598,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Label {}
+    impl crate::HtmlElement for Label {
+        fn tag_name(&self) -> &'static str {
+            "label"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Label {}
     impl crate::PhrasingContent for Label {}
     impl crate::InteractiveContent for Label {}
@@ -1141,6 +1171,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a LabelChild> for crate::Node<'a> {
+        fn from(child: &'a LabelChild) -> Self {
+            match child {
+                LabelChild::Abbreviation(el) => crate::Node::from(el),
+                LabelChild::Anchor(el) => crate::Node::from(el),
+                LabelChild::Audio(el) => crate::Node::from(el),
+                LabelChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                LabelChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                LabelChild::Bold(el) => crate::Node::from(el),
+                LabelChild::Button(el) => crate::Node::from(el),
+                LabelChild::Canvas(el) => crate::Node::from(el),
+                LabelChild::Cite(el) => crate::Node::from(el),
+                LabelChild::Code(el) => crate::Node::from(el),
+                LabelChild::Data(el) => crate::Node::from(el),
+                LabelChild::DataList(el) => crate::Node::from(el),
+                LabelChild::Definition(el) => crate::Node::from(el),
+                LabelChild::DeletedText(el) => crate::Node::from(el),
+                LabelChild::Embed(el) => crate::Node::from(el),
+                LabelChild::Emphasis(el) => crate::Node::from(el),
+                LabelChild::Iframe(el) => crate::Node::from(el),
+                LabelChild::Image(el) => crate::Node::from(el),
+                LabelChild::ImageMap(el) => crate::Node::from(el),
+                LabelChild::ImageMapArea(el) => crate::Node::from(el),
+                LabelChild::Input(el) => crate::Node::from(el),
+                LabelChild::InsertedText(el) => crate::Node::from(el),
+                LabelChild::Italic(el) => crate::Node::from(el),
+                LabelChild::KeyboardInput(el) => crate::Node::from(el),
+                LabelChild::Label(el) => crate::Node::from(el),
+                LabelChild::LineBreak(el) => crate::Node::from(el),
+                LabelChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                LabelChild::Link(el) => crate::Node::from(el),
+                LabelChild::MarkText(el) => crate::Node::from(el),
+                LabelChild::Meta(el) => crate::Node::from(el),
+                LabelChild::Meter(el) => crate::Node::from(el),
+                LabelChild::NoScript(el) => crate::Node::from(el),
+                LabelChild::Object(el) => crate::Node::from(el),
+                LabelChild::Output(el) => crate::Node::from(el),
+                LabelChild::Picture(el) => crate::Node::from(el),
+                LabelChild::Progress(el) => crate::Node::from(el),
+                LabelChild::Quotation(el) => crate::Node::from(el),
+                LabelChild::RubyAnnotation(el) => crate::Node::from(el),
+                LabelChild::SampleOutput(el) => crate::Node::from(el),
+                LabelChild::Script(el) => crate::Node::from(el),
+                LabelChild::Select(el) => crate::Node::from(el),
+                LabelChild::SideComment(el) => crate::Node::from(el),
+                LabelChild::Slot(el) => crate::Node::from(el),
+                LabelChild::Span(el) => crate::Node::from(el),
+                LabelChild::StrikeThrough(el) => crate::Node::from(el),
+                LabelChild::Strong(el) => crate::Node::from(el),
+                LabelChild::SubScript(el) => crate::Node::from(el),
+                LabelChild::SuperScript(el) => crate::Node::from(el),
+                LabelChild::Template(el) => crate::Node::from(el),
+                LabelChild::Text(el) => crate::Node::from(el),
+                LabelChild::TextArea(el) => crate::Node::from(el),
+                LabelChild::Time(el) => crate::Node::from(el),
+                LabelChild::Underline(el) => crate::Node::from(el),
+                LabelChild::Variable(el) => crate::Node::from(el),
+                LabelChild::Video(el) => crate::Node::from(el),
             }
         }
     }

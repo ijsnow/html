@@ -135,14 +135,14 @@ impl crate::RenderElement for Label {
     }
 }
 impl crate::ElementDescription for Label {
-    fn set_attributes(
+    fn attributes(
         &self,
-        attrs: &mut std::collections::HashMap<
-            std::borrow::Cow<'static, str>,
-            std::borrow::Cow<'static, str>,
-        >,
-    ) {
-        self.global_attrs.add(attrs);
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
         if let Some(field) = &self.for_ {
             attrs.insert(std::borrow::Cow::Borrowed("for"), field.to_owned());
         }
@@ -254,15 +254,15 @@ impl crate::ElementDescription for Label {
                     field.to_owned(),
                 );
         }
+        attrs
     }
-    fn set_data(
+    fn data(
         &self,
-        data: &mut std::collections::HashMap<
-            std::borrow::Cow<'static, str>,
-            std::borrow::Cow<'static, str>,
-        >,
-    ) {
-        data.extend((&*self.data_map).clone());
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        (&*self.data_map).clone()
     }
 }
 impl std::fmt::Display for Label {

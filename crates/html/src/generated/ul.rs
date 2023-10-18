@@ -15,6 +15,11 @@ pub mod element {
             super::builder::UnorderedListBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a UnorderedList> for crate::Node<'a> {
+        fn from(element: &'a UnorderedList) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl UnorderedList {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -680,7 +685,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for UnorderedList {}
+    impl crate::HtmlElement for UnorderedList {
+        fn tag_name(&self) -> &'static str {
+            "ul"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for UnorderedList {}
     impl crate::PalpableContent for UnorderedList {}
     impl std::convert::Into<html_sys::text::UnorderedList> for UnorderedList {
@@ -745,6 +775,15 @@ pub mod child {
                 Self::ListItem(el) => write!(f, "{el}"),
                 Self::Script(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a UnorderedListChild> for crate::Node<'a> {
+        fn from(child: &'a UnorderedListChild) -> Self {
+            match child {
+                UnorderedListChild::ListItem(el) => crate::Node::from(el),
+                UnorderedListChild::Script(el) => crate::Node::from(el),
+                UnorderedListChild::Template(el) => crate::Node::from(el),
             }
         }
     }

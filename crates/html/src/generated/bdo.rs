@@ -15,6 +15,11 @@ pub mod element {
             super::builder::BidirectionalTextOverrideBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a BidirectionalTextOverride> for crate::Node<'a> {
+        fn from(element: &'a BidirectionalTextOverride) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl BidirectionalTextOverride {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -857,7 +862,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for BidirectionalTextOverride {}
+    impl crate::HtmlElement for BidirectionalTextOverride {
+        fn tag_name(&self) -> &'static str {
+            "bdo"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for BidirectionalTextOverride {}
     impl crate::PhrasingContent for BidirectionalTextOverride {}
     impl crate::PalpableContent for BidirectionalTextOverride {}
@@ -1459,6 +1489,79 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a BidirectionalTextOverrideChild> for crate::Node<'a> {
+        fn from(child: &'a BidirectionalTextOverrideChild) -> Self {
+            match child {
+                BidirectionalTextOverrideChild::Abbreviation(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Anchor(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Audio(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::BidirectionalIsolate(el) => {
+                    crate::Node::from(el)
+                }
+                BidirectionalTextOverrideChild::BidirectionalTextOverride(el) => {
+                    crate::Node::from(el)
+                }
+                BidirectionalTextOverrideChild::Bold(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Button(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Canvas(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Cite(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Code(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Data(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::DataList(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Definition(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::DeletedText(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Embed(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Emphasis(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Iframe(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Image(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::ImageMap(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::ImageMapArea(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Input(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::InsertedText(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Italic(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::KeyboardInput(el) => {
+                    crate::Node::from(el)
+                }
+                BidirectionalTextOverrideChild::Label(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::LineBreak(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::LineBreakOpportunity(el) => {
+                    crate::Node::from(el)
+                }
+                BidirectionalTextOverrideChild::Link(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::MarkText(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Meta(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Meter(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::NoScript(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Object(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Output(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Picture(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Progress(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Quotation(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::RubyAnnotation(el) => {
+                    crate::Node::from(el)
+                }
+                BidirectionalTextOverrideChild::SampleOutput(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Script(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Select(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::SideComment(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Slot(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Span(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::StrikeThrough(el) => {
+                    crate::Node::from(el)
+                }
+                BidirectionalTextOverrideChild::Strong(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::SubScript(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::SuperScript(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Template(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Text(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::TextArea(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Time(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Underline(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Variable(el) => crate::Node::from(el),
+                BidirectionalTextOverrideChild::Video(el) => crate::Node::from(el),
             }
         }
     }

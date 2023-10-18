@@ -15,6 +15,11 @@ pub mod element {
             super::builder::HtmlBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Html> for crate::Node<'a> {
+        fn from(element: &'a Html) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Html {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -377,7 +382,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Html {}
+    impl crate::HtmlElement for Html {
+        fn tag_name(&self) -> &'static str {
+            "html"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::root::Html> for Html {
         fn into(self) -> html_sys::root::Html {
             self.sys
@@ -431,6 +461,14 @@ pub mod child {
             match self {
                 Self::Body(el) => write!(f, "{el}"),
                 Self::Head(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a HtmlChild> for crate::Node<'a> {
+        fn from(child: &'a HtmlChild) -> Self {
+            match child {
+                HtmlChild::Body(el) => crate::Node::from(el),
+                HtmlChild::Head(el) => crate::Node::from(el),
             }
         }
     }

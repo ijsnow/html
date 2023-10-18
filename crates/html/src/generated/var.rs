@@ -15,6 +15,11 @@ pub mod element {
             super::builder::VariableBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Variable> for crate::Node<'a> {
+        fn from(element: &'a Variable) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Variable {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Variable {}
+    impl crate::HtmlElement for Variable {
+        fn tag_name(&self) -> &'static str {
+            "var"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Variable {}
     impl crate::PhrasingContent for Variable {}
     impl crate::PalpableContent for Variable {}
@@ -1404,6 +1434,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a VariableChild> for crate::Node<'a> {
+        fn from(child: &'a VariableChild) -> Self {
+            match child {
+                VariableChild::Abbreviation(el) => crate::Node::from(el),
+                VariableChild::Anchor(el) => crate::Node::from(el),
+                VariableChild::Audio(el) => crate::Node::from(el),
+                VariableChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                VariableChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                VariableChild::Bold(el) => crate::Node::from(el),
+                VariableChild::Button(el) => crate::Node::from(el),
+                VariableChild::Canvas(el) => crate::Node::from(el),
+                VariableChild::Cite(el) => crate::Node::from(el),
+                VariableChild::Code(el) => crate::Node::from(el),
+                VariableChild::Data(el) => crate::Node::from(el),
+                VariableChild::DataList(el) => crate::Node::from(el),
+                VariableChild::Definition(el) => crate::Node::from(el),
+                VariableChild::DeletedText(el) => crate::Node::from(el),
+                VariableChild::Embed(el) => crate::Node::from(el),
+                VariableChild::Emphasis(el) => crate::Node::from(el),
+                VariableChild::Iframe(el) => crate::Node::from(el),
+                VariableChild::Image(el) => crate::Node::from(el),
+                VariableChild::ImageMap(el) => crate::Node::from(el),
+                VariableChild::ImageMapArea(el) => crate::Node::from(el),
+                VariableChild::Input(el) => crate::Node::from(el),
+                VariableChild::InsertedText(el) => crate::Node::from(el),
+                VariableChild::Italic(el) => crate::Node::from(el),
+                VariableChild::KeyboardInput(el) => crate::Node::from(el),
+                VariableChild::Label(el) => crate::Node::from(el),
+                VariableChild::LineBreak(el) => crate::Node::from(el),
+                VariableChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                VariableChild::Link(el) => crate::Node::from(el),
+                VariableChild::MarkText(el) => crate::Node::from(el),
+                VariableChild::Meta(el) => crate::Node::from(el),
+                VariableChild::Meter(el) => crate::Node::from(el),
+                VariableChild::NoScript(el) => crate::Node::from(el),
+                VariableChild::Object(el) => crate::Node::from(el),
+                VariableChild::Output(el) => crate::Node::from(el),
+                VariableChild::Picture(el) => crate::Node::from(el),
+                VariableChild::Progress(el) => crate::Node::from(el),
+                VariableChild::Quotation(el) => crate::Node::from(el),
+                VariableChild::RubyAnnotation(el) => crate::Node::from(el),
+                VariableChild::SampleOutput(el) => crate::Node::from(el),
+                VariableChild::Script(el) => crate::Node::from(el),
+                VariableChild::Select(el) => crate::Node::from(el),
+                VariableChild::SideComment(el) => crate::Node::from(el),
+                VariableChild::Slot(el) => crate::Node::from(el),
+                VariableChild::Span(el) => crate::Node::from(el),
+                VariableChild::StrikeThrough(el) => crate::Node::from(el),
+                VariableChild::Strong(el) => crate::Node::from(el),
+                VariableChild::SubScript(el) => crate::Node::from(el),
+                VariableChild::SuperScript(el) => crate::Node::from(el),
+                VariableChild::Template(el) => crate::Node::from(el),
+                VariableChild::Text(el) => crate::Node::from(el),
+                VariableChild::TextArea(el) => crate::Node::from(el),
+                VariableChild::Time(el) => crate::Node::from(el),
+                VariableChild::Underline(el) => crate::Node::from(el),
+                VariableChild::Variable(el) => crate::Node::from(el),
+                VariableChild::Video(el) => crate::Node::from(el),
             }
         }
     }

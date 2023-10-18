@@ -15,6 +15,11 @@ pub mod element {
             super::builder::AudioBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Audio> for crate::Node<'a> {
+        fn from(element: &'a Audio) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Audio {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -722,7 +727,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Audio {}
+    impl crate::HtmlElement for Audio {
+        fn tag_name(&self) -> &'static str {
+            "audio"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Audio {}
     impl crate::PhrasingContent for Audio {}
     impl crate::EmbeddedContent for Audio {}
@@ -1796,6 +1826,125 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a AudioChild> for crate::Node<'a> {
+        fn from(child: &'a AudioChild) -> Self {
+            match child {
+                AudioChild::Abbreviation(el) => crate::Node::from(el),
+                AudioChild::Address(el) => crate::Node::from(el),
+                AudioChild::Anchor(el) => crate::Node::from(el),
+                AudioChild::Article(el) => crate::Node::from(el),
+                AudioChild::Aside(el) => crate::Node::from(el),
+                AudioChild::Audio(el) => crate::Node::from(el),
+                AudioChild::Base(el) => crate::Node::from(el),
+                AudioChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                AudioChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                AudioChild::BlockQuote(el) => crate::Node::from(el),
+                AudioChild::Body(el) => crate::Node::from(el),
+                AudioChild::Bold(el) => crate::Node::from(el),
+                AudioChild::Button(el) => crate::Node::from(el),
+                AudioChild::Canvas(el) => crate::Node::from(el),
+                AudioChild::Caption(el) => crate::Node::from(el),
+                AudioChild::Cite(el) => crate::Node::from(el),
+                AudioChild::Code(el) => crate::Node::from(el),
+                AudioChild::Data(el) => crate::Node::from(el),
+                AudioChild::DataList(el) => crate::Node::from(el),
+                AudioChild::Definition(el) => crate::Node::from(el),
+                AudioChild::DeletedText(el) => crate::Node::from(el),
+                AudioChild::DescriptionDetails(el) => crate::Node::from(el),
+                AudioChild::DescriptionList(el) => crate::Node::from(el),
+                AudioChild::DescriptionTerm(el) => crate::Node::from(el),
+                AudioChild::Details(el) => crate::Node::from(el),
+                AudioChild::Dialog(el) => crate::Node::from(el),
+                AudioChild::Division(el) => crate::Node::from(el),
+                AudioChild::Embed(el) => crate::Node::from(el),
+                AudioChild::Emphasis(el) => crate::Node::from(el),
+                AudioChild::Fieldset(el) => crate::Node::from(el),
+                AudioChild::Figure(el) => crate::Node::from(el),
+                AudioChild::FigureCaption(el) => crate::Node::from(el),
+                AudioChild::Footer(el) => crate::Node::from(el),
+                AudioChild::Form(el) => crate::Node::from(el),
+                AudioChild::Head(el) => crate::Node::from(el),
+                AudioChild::Header(el) => crate::Node::from(el),
+                AudioChild::Heading1(el) => crate::Node::from(el),
+                AudioChild::Heading2(el) => crate::Node::from(el),
+                AudioChild::Heading3(el) => crate::Node::from(el),
+                AudioChild::Heading4(el) => crate::Node::from(el),
+                AudioChild::Heading5(el) => crate::Node::from(el),
+                AudioChild::Heading6(el) => crate::Node::from(el),
+                AudioChild::HeadingGroup(el) => crate::Node::from(el),
+                AudioChild::Html(el) => crate::Node::from(el),
+                AudioChild::Iframe(el) => crate::Node::from(el),
+                AudioChild::Image(el) => crate::Node::from(el),
+                AudioChild::ImageMap(el) => crate::Node::from(el),
+                AudioChild::ImageMapArea(el) => crate::Node::from(el),
+                AudioChild::Input(el) => crate::Node::from(el),
+                AudioChild::InsertedText(el) => crate::Node::from(el),
+                AudioChild::Italic(el) => crate::Node::from(el),
+                AudioChild::KeyboardInput(el) => crate::Node::from(el),
+                AudioChild::Label(el) => crate::Node::from(el),
+                AudioChild::Legend(el) => crate::Node::from(el),
+                AudioChild::LineBreak(el) => crate::Node::from(el),
+                AudioChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                AudioChild::Link(el) => crate::Node::from(el),
+                AudioChild::ListItem(el) => crate::Node::from(el),
+                AudioChild::Main(el) => crate::Node::from(el),
+                AudioChild::MarkText(el) => crate::Node::from(el),
+                AudioChild::MediaSource(el) => crate::Node::from(el),
+                AudioChild::Menu(el) => crate::Node::from(el),
+                AudioChild::Meta(el) => crate::Node::from(el),
+                AudioChild::Meter(el) => crate::Node::from(el),
+                AudioChild::Navigation(el) => crate::Node::from(el),
+                AudioChild::NoScript(el) => crate::Node::from(el),
+                AudioChild::Object(el) => crate::Node::from(el),
+                AudioChild::Option(el) => crate::Node::from(el),
+                AudioChild::OptionGroup(el) => crate::Node::from(el),
+                AudioChild::OrderedList(el) => crate::Node::from(el),
+                AudioChild::Output(el) => crate::Node::from(el),
+                AudioChild::Paragraph(el) => crate::Node::from(el),
+                AudioChild::Picture(el) => crate::Node::from(el),
+                AudioChild::PreformattedText(el) => crate::Node::from(el),
+                AudioChild::Progress(el) => crate::Node::from(el),
+                AudioChild::Quotation(el) => crate::Node::from(el),
+                AudioChild::RubyAnnotation(el) => crate::Node::from(el),
+                AudioChild::RubyFallbackParenthesis(el) => crate::Node::from(el),
+                AudioChild::RubyText(el) => crate::Node::from(el),
+                AudioChild::SampleOutput(el) => crate::Node::from(el),
+                AudioChild::Script(el) => crate::Node::from(el),
+                AudioChild::Search(el) => crate::Node::from(el),
+                AudioChild::Section(el) => crate::Node::from(el),
+                AudioChild::Select(el) => crate::Node::from(el),
+                AudioChild::SideComment(el) => crate::Node::from(el),
+                AudioChild::Slot(el) => crate::Node::from(el),
+                AudioChild::Span(el) => crate::Node::from(el),
+                AudioChild::StrikeThrough(el) => crate::Node::from(el),
+                AudioChild::Strong(el) => crate::Node::from(el),
+                AudioChild::Style(el) => crate::Node::from(el),
+                AudioChild::SubScript(el) => crate::Node::from(el),
+                AudioChild::Summary(el) => crate::Node::from(el),
+                AudioChild::SuperScript(el) => crate::Node::from(el),
+                AudioChild::Table(el) => crate::Node::from(el),
+                AudioChild::TableBody(el) => crate::Node::from(el),
+                AudioChild::TableCell(el) => crate::Node::from(el),
+                AudioChild::TableColumn(el) => crate::Node::from(el),
+                AudioChild::TableColumnGroup(el) => crate::Node::from(el),
+                AudioChild::TableFoot(el) => crate::Node::from(el),
+                AudioChild::TableHead(el) => crate::Node::from(el),
+                AudioChild::TableHeader(el) => crate::Node::from(el),
+                AudioChild::TableRow(el) => crate::Node::from(el),
+                AudioChild::Template(el) => crate::Node::from(el),
+                AudioChild::Text(el) => crate::Node::from(el),
+                AudioChild::TextArea(el) => crate::Node::from(el),
+                AudioChild::TextTrack(el) => crate::Node::from(el),
+                AudioChild::ThematicBreak(el) => crate::Node::from(el),
+                AudioChild::Time(el) => crate::Node::from(el),
+                AudioChild::Title(el) => crate::Node::from(el),
+                AudioChild::Underline(el) => crate::Node::from(el),
+                AudioChild::UnorderedList(el) => crate::Node::from(el),
+                AudioChild::Variable(el) => crate::Node::from(el),
+                AudioChild::Video(el) => crate::Node::from(el),
             }
         }
     }

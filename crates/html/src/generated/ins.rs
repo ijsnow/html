@@ -15,6 +15,11 @@ pub mod element {
             super::builder::InsertedTextBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a InsertedText> for crate::Node<'a> {
+        fn from(element: &'a InsertedText) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl InsertedText {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -877,7 +882,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for InsertedText {}
+    impl crate::HtmlElement for InsertedText {
+        fn tag_name(&self) -> &'static str {
+            "ins"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for InsertedText {}
     impl crate::PhrasingContent for InsertedText {}
     impl crate::PalpableContent for InsertedText {}
@@ -1957,6 +1987,125 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a InsertedTextChild> for crate::Node<'a> {
+        fn from(child: &'a InsertedTextChild) -> Self {
+            match child {
+                InsertedTextChild::Abbreviation(el) => crate::Node::from(el),
+                InsertedTextChild::Address(el) => crate::Node::from(el),
+                InsertedTextChild::Anchor(el) => crate::Node::from(el),
+                InsertedTextChild::Article(el) => crate::Node::from(el),
+                InsertedTextChild::Aside(el) => crate::Node::from(el),
+                InsertedTextChild::Audio(el) => crate::Node::from(el),
+                InsertedTextChild::Base(el) => crate::Node::from(el),
+                InsertedTextChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                InsertedTextChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                InsertedTextChild::BlockQuote(el) => crate::Node::from(el),
+                InsertedTextChild::Body(el) => crate::Node::from(el),
+                InsertedTextChild::Bold(el) => crate::Node::from(el),
+                InsertedTextChild::Button(el) => crate::Node::from(el),
+                InsertedTextChild::Canvas(el) => crate::Node::from(el),
+                InsertedTextChild::Caption(el) => crate::Node::from(el),
+                InsertedTextChild::Cite(el) => crate::Node::from(el),
+                InsertedTextChild::Code(el) => crate::Node::from(el),
+                InsertedTextChild::Data(el) => crate::Node::from(el),
+                InsertedTextChild::DataList(el) => crate::Node::from(el),
+                InsertedTextChild::Definition(el) => crate::Node::from(el),
+                InsertedTextChild::DeletedText(el) => crate::Node::from(el),
+                InsertedTextChild::DescriptionDetails(el) => crate::Node::from(el),
+                InsertedTextChild::DescriptionList(el) => crate::Node::from(el),
+                InsertedTextChild::DescriptionTerm(el) => crate::Node::from(el),
+                InsertedTextChild::Details(el) => crate::Node::from(el),
+                InsertedTextChild::Dialog(el) => crate::Node::from(el),
+                InsertedTextChild::Division(el) => crate::Node::from(el),
+                InsertedTextChild::Embed(el) => crate::Node::from(el),
+                InsertedTextChild::Emphasis(el) => crate::Node::from(el),
+                InsertedTextChild::Fieldset(el) => crate::Node::from(el),
+                InsertedTextChild::Figure(el) => crate::Node::from(el),
+                InsertedTextChild::FigureCaption(el) => crate::Node::from(el),
+                InsertedTextChild::Footer(el) => crate::Node::from(el),
+                InsertedTextChild::Form(el) => crate::Node::from(el),
+                InsertedTextChild::Head(el) => crate::Node::from(el),
+                InsertedTextChild::Header(el) => crate::Node::from(el),
+                InsertedTextChild::Heading1(el) => crate::Node::from(el),
+                InsertedTextChild::Heading2(el) => crate::Node::from(el),
+                InsertedTextChild::Heading3(el) => crate::Node::from(el),
+                InsertedTextChild::Heading4(el) => crate::Node::from(el),
+                InsertedTextChild::Heading5(el) => crate::Node::from(el),
+                InsertedTextChild::Heading6(el) => crate::Node::from(el),
+                InsertedTextChild::HeadingGroup(el) => crate::Node::from(el),
+                InsertedTextChild::Html(el) => crate::Node::from(el),
+                InsertedTextChild::Iframe(el) => crate::Node::from(el),
+                InsertedTextChild::Image(el) => crate::Node::from(el),
+                InsertedTextChild::ImageMap(el) => crate::Node::from(el),
+                InsertedTextChild::ImageMapArea(el) => crate::Node::from(el),
+                InsertedTextChild::Input(el) => crate::Node::from(el),
+                InsertedTextChild::InsertedText(el) => crate::Node::from(el),
+                InsertedTextChild::Italic(el) => crate::Node::from(el),
+                InsertedTextChild::KeyboardInput(el) => crate::Node::from(el),
+                InsertedTextChild::Label(el) => crate::Node::from(el),
+                InsertedTextChild::Legend(el) => crate::Node::from(el),
+                InsertedTextChild::LineBreak(el) => crate::Node::from(el),
+                InsertedTextChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                InsertedTextChild::Link(el) => crate::Node::from(el),
+                InsertedTextChild::ListItem(el) => crate::Node::from(el),
+                InsertedTextChild::Main(el) => crate::Node::from(el),
+                InsertedTextChild::MarkText(el) => crate::Node::from(el),
+                InsertedTextChild::MediaSource(el) => crate::Node::from(el),
+                InsertedTextChild::Menu(el) => crate::Node::from(el),
+                InsertedTextChild::Meta(el) => crate::Node::from(el),
+                InsertedTextChild::Meter(el) => crate::Node::from(el),
+                InsertedTextChild::Navigation(el) => crate::Node::from(el),
+                InsertedTextChild::NoScript(el) => crate::Node::from(el),
+                InsertedTextChild::Object(el) => crate::Node::from(el),
+                InsertedTextChild::Option(el) => crate::Node::from(el),
+                InsertedTextChild::OptionGroup(el) => crate::Node::from(el),
+                InsertedTextChild::OrderedList(el) => crate::Node::from(el),
+                InsertedTextChild::Output(el) => crate::Node::from(el),
+                InsertedTextChild::Paragraph(el) => crate::Node::from(el),
+                InsertedTextChild::Picture(el) => crate::Node::from(el),
+                InsertedTextChild::PreformattedText(el) => crate::Node::from(el),
+                InsertedTextChild::Progress(el) => crate::Node::from(el),
+                InsertedTextChild::Quotation(el) => crate::Node::from(el),
+                InsertedTextChild::RubyAnnotation(el) => crate::Node::from(el),
+                InsertedTextChild::RubyFallbackParenthesis(el) => crate::Node::from(el),
+                InsertedTextChild::RubyText(el) => crate::Node::from(el),
+                InsertedTextChild::SampleOutput(el) => crate::Node::from(el),
+                InsertedTextChild::Script(el) => crate::Node::from(el),
+                InsertedTextChild::Search(el) => crate::Node::from(el),
+                InsertedTextChild::Section(el) => crate::Node::from(el),
+                InsertedTextChild::Select(el) => crate::Node::from(el),
+                InsertedTextChild::SideComment(el) => crate::Node::from(el),
+                InsertedTextChild::Slot(el) => crate::Node::from(el),
+                InsertedTextChild::Span(el) => crate::Node::from(el),
+                InsertedTextChild::StrikeThrough(el) => crate::Node::from(el),
+                InsertedTextChild::Strong(el) => crate::Node::from(el),
+                InsertedTextChild::Style(el) => crate::Node::from(el),
+                InsertedTextChild::SubScript(el) => crate::Node::from(el),
+                InsertedTextChild::Summary(el) => crate::Node::from(el),
+                InsertedTextChild::SuperScript(el) => crate::Node::from(el),
+                InsertedTextChild::Table(el) => crate::Node::from(el),
+                InsertedTextChild::TableBody(el) => crate::Node::from(el),
+                InsertedTextChild::TableCell(el) => crate::Node::from(el),
+                InsertedTextChild::TableColumn(el) => crate::Node::from(el),
+                InsertedTextChild::TableColumnGroup(el) => crate::Node::from(el),
+                InsertedTextChild::TableFoot(el) => crate::Node::from(el),
+                InsertedTextChild::TableHead(el) => crate::Node::from(el),
+                InsertedTextChild::TableHeader(el) => crate::Node::from(el),
+                InsertedTextChild::TableRow(el) => crate::Node::from(el),
+                InsertedTextChild::Template(el) => crate::Node::from(el),
+                InsertedTextChild::Text(el) => crate::Node::from(el),
+                InsertedTextChild::TextArea(el) => crate::Node::from(el),
+                InsertedTextChild::TextTrack(el) => crate::Node::from(el),
+                InsertedTextChild::ThematicBreak(el) => crate::Node::from(el),
+                InsertedTextChild::Time(el) => crate::Node::from(el),
+                InsertedTextChild::Title(el) => crate::Node::from(el),
+                InsertedTextChild::Underline(el) => crate::Node::from(el),
+                InsertedTextChild::UnorderedList(el) => crate::Node::from(el),
+                InsertedTextChild::Variable(el) => crate::Node::from(el),
+                InsertedTextChild::Video(el) => crate::Node::from(el),
             }
         }
     }

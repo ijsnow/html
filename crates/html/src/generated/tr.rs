@@ -15,6 +15,11 @@ pub mod element {
             super::builder::TableRowBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a TableRow> for crate::Node<'a> {
+        fn from(element: &'a TableRow) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl TableRow {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -888,7 +893,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for TableRow {}
+    impl crate::HtmlElement for TableRow {
+        fn tag_name(&self) -> &'static str {
+            "tr"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::tables::TableRow> for TableRow {
         fn into(self) -> html_sys::tables::TableRow {
             self.sys
@@ -960,6 +990,16 @@ pub mod child {
                 Self::TableCell(el) => write!(f, "{el}"),
                 Self::TableHeader(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a TableRowChild> for crate::Node<'a> {
+        fn from(child: &'a TableRowChild) -> Self {
+            match child {
+                TableRowChild::Script(el) => crate::Node::from(el),
+                TableRowChild::TableCell(el) => crate::Node::from(el),
+                TableRowChild::TableHeader(el) => crate::Node::from(el),
+                TableRowChild::Template(el) => crate::Node::from(el),
             }
         }
     }

@@ -14,6 +14,11 @@ pub mod element {
             super::builder::TemplateBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Template> for crate::Node<'a> {
+        fn from(element: &'a Template) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Template {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -345,7 +350,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Template {}
+    impl crate::HtmlElement for Template {
+        fn tag_name(&self) -> &'static str {
+            "template"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl crate::MetadataContent for Template {}
     impl crate::FlowContent for Template {}
     impl crate::PhrasingContent for Template {}

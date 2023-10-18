@@ -15,6 +15,11 @@ pub mod element {
             super::builder::OrderedListBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a OrderedList> for crate::Node<'a> {
+        fn from(element: &'a OrderedList) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl OrderedList {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -713,7 +718,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for OrderedList {}
+    impl crate::HtmlElement for OrderedList {
+        fn tag_name(&self) -> &'static str {
+            "ol"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for OrderedList {}
     impl crate::PalpableContent for OrderedList {}
     impl std::convert::Into<html_sys::text::OrderedList> for OrderedList {
@@ -778,6 +808,15 @@ pub mod child {
                 Self::ListItem(el) => write!(f, "{el}"),
                 Self::Script(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a OrderedListChild> for crate::Node<'a> {
+        fn from(child: &'a OrderedListChild) -> Self {
+            match child {
+                OrderedListChild::ListItem(el) => crate::Node::from(el),
+                OrderedListChild::Script(el) => crate::Node::from(el),
+                OrderedListChild::Template(el) => crate::Node::from(el),
             }
         }
     }

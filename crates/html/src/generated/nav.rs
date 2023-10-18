@@ -15,6 +15,11 @@ pub mod element {
             super::builder::NavigationBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Navigation> for crate::Node<'a> {
+        fn from(element: &'a Navigation) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Navigation {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -656,7 +661,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Navigation {}
+    impl crate::HtmlElement for Navigation {
+        fn tag_name(&self) -> &'static str {
+            "nav"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Navigation {}
     impl crate::SectioningContent for Navigation {}
     impl crate::PalpableContent for Navigation {}
@@ -1485,6 +1515,98 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a NavigationChild> for crate::Node<'a> {
+        fn from(child: &'a NavigationChild) -> Self {
+            match child {
+                NavigationChild::Abbreviation(el) => crate::Node::from(el),
+                NavigationChild::Address(el) => crate::Node::from(el),
+                NavigationChild::Anchor(el) => crate::Node::from(el),
+                NavigationChild::Article(el) => crate::Node::from(el),
+                NavigationChild::Aside(el) => crate::Node::from(el),
+                NavigationChild::Audio(el) => crate::Node::from(el),
+                NavigationChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                NavigationChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                NavigationChild::BlockQuote(el) => crate::Node::from(el),
+                NavigationChild::Bold(el) => crate::Node::from(el),
+                NavigationChild::Button(el) => crate::Node::from(el),
+                NavigationChild::Canvas(el) => crate::Node::from(el),
+                NavigationChild::Cite(el) => crate::Node::from(el),
+                NavigationChild::Code(el) => crate::Node::from(el),
+                NavigationChild::Data(el) => crate::Node::from(el),
+                NavigationChild::DataList(el) => crate::Node::from(el),
+                NavigationChild::Definition(el) => crate::Node::from(el),
+                NavigationChild::DeletedText(el) => crate::Node::from(el),
+                NavigationChild::DescriptionList(el) => crate::Node::from(el),
+                NavigationChild::Details(el) => crate::Node::from(el),
+                NavigationChild::Dialog(el) => crate::Node::from(el),
+                NavigationChild::Division(el) => crate::Node::from(el),
+                NavigationChild::Embed(el) => crate::Node::from(el),
+                NavigationChild::Emphasis(el) => crate::Node::from(el),
+                NavigationChild::Fieldset(el) => crate::Node::from(el),
+                NavigationChild::Figure(el) => crate::Node::from(el),
+                NavigationChild::Footer(el) => crate::Node::from(el),
+                NavigationChild::Form(el) => crate::Node::from(el),
+                NavigationChild::Header(el) => crate::Node::from(el),
+                NavigationChild::Heading1(el) => crate::Node::from(el),
+                NavigationChild::Heading2(el) => crate::Node::from(el),
+                NavigationChild::Heading3(el) => crate::Node::from(el),
+                NavigationChild::Heading4(el) => crate::Node::from(el),
+                NavigationChild::Heading5(el) => crate::Node::from(el),
+                NavigationChild::Heading6(el) => crate::Node::from(el),
+                NavigationChild::HeadingGroup(el) => crate::Node::from(el),
+                NavigationChild::Iframe(el) => crate::Node::from(el),
+                NavigationChild::Image(el) => crate::Node::from(el),
+                NavigationChild::ImageMap(el) => crate::Node::from(el),
+                NavigationChild::ImageMapArea(el) => crate::Node::from(el),
+                NavigationChild::Input(el) => crate::Node::from(el),
+                NavigationChild::InsertedText(el) => crate::Node::from(el),
+                NavigationChild::Italic(el) => crate::Node::from(el),
+                NavigationChild::KeyboardInput(el) => crate::Node::from(el),
+                NavigationChild::Label(el) => crate::Node::from(el),
+                NavigationChild::LineBreak(el) => crate::Node::from(el),
+                NavigationChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                NavigationChild::Link(el) => crate::Node::from(el),
+                NavigationChild::Main(el) => crate::Node::from(el),
+                NavigationChild::MarkText(el) => crate::Node::from(el),
+                NavigationChild::Menu(el) => crate::Node::from(el),
+                NavigationChild::Meta(el) => crate::Node::from(el),
+                NavigationChild::Meter(el) => crate::Node::from(el),
+                NavigationChild::Navigation(el) => crate::Node::from(el),
+                NavigationChild::NoScript(el) => crate::Node::from(el),
+                NavigationChild::Object(el) => crate::Node::from(el),
+                NavigationChild::OrderedList(el) => crate::Node::from(el),
+                NavigationChild::Output(el) => crate::Node::from(el),
+                NavigationChild::Paragraph(el) => crate::Node::from(el),
+                NavigationChild::Picture(el) => crate::Node::from(el),
+                NavigationChild::PreformattedText(el) => crate::Node::from(el),
+                NavigationChild::Progress(el) => crate::Node::from(el),
+                NavigationChild::Quotation(el) => crate::Node::from(el),
+                NavigationChild::RubyAnnotation(el) => crate::Node::from(el),
+                NavigationChild::SampleOutput(el) => crate::Node::from(el),
+                NavigationChild::Script(el) => crate::Node::from(el),
+                NavigationChild::Search(el) => crate::Node::from(el),
+                NavigationChild::Section(el) => crate::Node::from(el),
+                NavigationChild::Select(el) => crate::Node::from(el),
+                NavigationChild::SideComment(el) => crate::Node::from(el),
+                NavigationChild::Slot(el) => crate::Node::from(el),
+                NavigationChild::Span(el) => crate::Node::from(el),
+                NavigationChild::StrikeThrough(el) => crate::Node::from(el),
+                NavigationChild::Strong(el) => crate::Node::from(el),
+                NavigationChild::SubScript(el) => crate::Node::from(el),
+                NavigationChild::SuperScript(el) => crate::Node::from(el),
+                NavigationChild::Table(el) => crate::Node::from(el),
+                NavigationChild::Template(el) => crate::Node::from(el),
+                NavigationChild::Text(el) => crate::Node::from(el),
+                NavigationChild::TextArea(el) => crate::Node::from(el),
+                NavigationChild::ThematicBreak(el) => crate::Node::from(el),
+                NavigationChild::Time(el) => crate::Node::from(el),
+                NavigationChild::Underline(el) => crate::Node::from(el),
+                NavigationChild::UnorderedList(el) => crate::Node::from(el),
+                NavigationChild::Variable(el) => crate::Node::from(el),
+                NavigationChild::Video(el) => crate::Node::from(el),
             }
         }
     }

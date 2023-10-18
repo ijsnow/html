@@ -15,6 +15,11 @@ pub mod element {
             super::builder::OptionGroupBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a OptionGroup> for crate::Node<'a> {
+        fn from(element: &'a OptionGroup) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl OptionGroup {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -656,7 +661,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for OptionGroup {}
+    impl crate::HtmlElement for OptionGroup {
+        fn tag_name(&self) -> &'static str {
+            "optgroup"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::forms::OptionGroup> for OptionGroup {
         fn into(self) -> html_sys::forms::OptionGroup {
             self.sys
@@ -719,6 +749,15 @@ pub mod child {
                 Self::Option(el) => write!(f, "{el}"),
                 Self::Script(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a OptionGroupChild> for crate::Node<'a> {
+        fn from(child: &'a OptionGroupChild) -> Self {
+            match child {
+                OptionGroupChild::Option(el) => crate::Node::from(el),
+                OptionGroupChild::Script(el) => crate::Node::from(el),
+                OptionGroupChild::Template(el) => crate::Node::from(el),
             }
         }
     }

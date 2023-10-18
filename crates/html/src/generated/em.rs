@@ -15,6 +15,11 @@ pub mod element {
             super::builder::EmphasisBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Emphasis> for crate::Node<'a> {
+        fn from(element: &'a Emphasis) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Emphasis {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Emphasis {}
+    impl crate::HtmlElement for Emphasis {
+        fn tag_name(&self) -> &'static str {
+            "em"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Emphasis {}
     impl crate::PhrasingContent for Emphasis {}
     impl crate::PalpableContent for Emphasis {}
@@ -1404,6 +1434,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a EmphasisChild> for crate::Node<'a> {
+        fn from(child: &'a EmphasisChild) -> Self {
+            match child {
+                EmphasisChild::Abbreviation(el) => crate::Node::from(el),
+                EmphasisChild::Anchor(el) => crate::Node::from(el),
+                EmphasisChild::Audio(el) => crate::Node::from(el),
+                EmphasisChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                EmphasisChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                EmphasisChild::Bold(el) => crate::Node::from(el),
+                EmphasisChild::Button(el) => crate::Node::from(el),
+                EmphasisChild::Canvas(el) => crate::Node::from(el),
+                EmphasisChild::Cite(el) => crate::Node::from(el),
+                EmphasisChild::Code(el) => crate::Node::from(el),
+                EmphasisChild::Data(el) => crate::Node::from(el),
+                EmphasisChild::DataList(el) => crate::Node::from(el),
+                EmphasisChild::Definition(el) => crate::Node::from(el),
+                EmphasisChild::DeletedText(el) => crate::Node::from(el),
+                EmphasisChild::Embed(el) => crate::Node::from(el),
+                EmphasisChild::Emphasis(el) => crate::Node::from(el),
+                EmphasisChild::Iframe(el) => crate::Node::from(el),
+                EmphasisChild::Image(el) => crate::Node::from(el),
+                EmphasisChild::ImageMap(el) => crate::Node::from(el),
+                EmphasisChild::ImageMapArea(el) => crate::Node::from(el),
+                EmphasisChild::Input(el) => crate::Node::from(el),
+                EmphasisChild::InsertedText(el) => crate::Node::from(el),
+                EmphasisChild::Italic(el) => crate::Node::from(el),
+                EmphasisChild::KeyboardInput(el) => crate::Node::from(el),
+                EmphasisChild::Label(el) => crate::Node::from(el),
+                EmphasisChild::LineBreak(el) => crate::Node::from(el),
+                EmphasisChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                EmphasisChild::Link(el) => crate::Node::from(el),
+                EmphasisChild::MarkText(el) => crate::Node::from(el),
+                EmphasisChild::Meta(el) => crate::Node::from(el),
+                EmphasisChild::Meter(el) => crate::Node::from(el),
+                EmphasisChild::NoScript(el) => crate::Node::from(el),
+                EmphasisChild::Object(el) => crate::Node::from(el),
+                EmphasisChild::Output(el) => crate::Node::from(el),
+                EmphasisChild::Picture(el) => crate::Node::from(el),
+                EmphasisChild::Progress(el) => crate::Node::from(el),
+                EmphasisChild::Quotation(el) => crate::Node::from(el),
+                EmphasisChild::RubyAnnotation(el) => crate::Node::from(el),
+                EmphasisChild::SampleOutput(el) => crate::Node::from(el),
+                EmphasisChild::Script(el) => crate::Node::from(el),
+                EmphasisChild::Select(el) => crate::Node::from(el),
+                EmphasisChild::SideComment(el) => crate::Node::from(el),
+                EmphasisChild::Slot(el) => crate::Node::from(el),
+                EmphasisChild::Span(el) => crate::Node::from(el),
+                EmphasisChild::StrikeThrough(el) => crate::Node::from(el),
+                EmphasisChild::Strong(el) => crate::Node::from(el),
+                EmphasisChild::SubScript(el) => crate::Node::from(el),
+                EmphasisChild::SuperScript(el) => crate::Node::from(el),
+                EmphasisChild::Template(el) => crate::Node::from(el),
+                EmphasisChild::Text(el) => crate::Node::from(el),
+                EmphasisChild::TextArea(el) => crate::Node::from(el),
+                EmphasisChild::Time(el) => crate::Node::from(el),
+                EmphasisChild::Underline(el) => crate::Node::from(el),
+                EmphasisChild::Variable(el) => crate::Node::from(el),
+                EmphasisChild::Video(el) => crate::Node::from(el),
             }
         }
     }

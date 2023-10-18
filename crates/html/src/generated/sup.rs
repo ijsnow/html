@@ -15,6 +15,11 @@ pub mod element {
             super::builder::SuperScriptBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a SuperScript> for crate::Node<'a> {
+        fn from(element: &'a SuperScript) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl SuperScript {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for SuperScript {}
+    impl crate::HtmlElement for SuperScript {
+        fn tag_name(&self) -> &'static str {
+            "sup"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for SuperScript {}
     impl crate::PhrasingContent for SuperScript {}
     impl crate::PalpableContent for SuperScript {}
@@ -1404,6 +1434,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a SuperScriptChild> for crate::Node<'a> {
+        fn from(child: &'a SuperScriptChild) -> Self {
+            match child {
+                SuperScriptChild::Abbreviation(el) => crate::Node::from(el),
+                SuperScriptChild::Anchor(el) => crate::Node::from(el),
+                SuperScriptChild::Audio(el) => crate::Node::from(el),
+                SuperScriptChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                SuperScriptChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                SuperScriptChild::Bold(el) => crate::Node::from(el),
+                SuperScriptChild::Button(el) => crate::Node::from(el),
+                SuperScriptChild::Canvas(el) => crate::Node::from(el),
+                SuperScriptChild::Cite(el) => crate::Node::from(el),
+                SuperScriptChild::Code(el) => crate::Node::from(el),
+                SuperScriptChild::Data(el) => crate::Node::from(el),
+                SuperScriptChild::DataList(el) => crate::Node::from(el),
+                SuperScriptChild::Definition(el) => crate::Node::from(el),
+                SuperScriptChild::DeletedText(el) => crate::Node::from(el),
+                SuperScriptChild::Embed(el) => crate::Node::from(el),
+                SuperScriptChild::Emphasis(el) => crate::Node::from(el),
+                SuperScriptChild::Iframe(el) => crate::Node::from(el),
+                SuperScriptChild::Image(el) => crate::Node::from(el),
+                SuperScriptChild::ImageMap(el) => crate::Node::from(el),
+                SuperScriptChild::ImageMapArea(el) => crate::Node::from(el),
+                SuperScriptChild::Input(el) => crate::Node::from(el),
+                SuperScriptChild::InsertedText(el) => crate::Node::from(el),
+                SuperScriptChild::Italic(el) => crate::Node::from(el),
+                SuperScriptChild::KeyboardInput(el) => crate::Node::from(el),
+                SuperScriptChild::Label(el) => crate::Node::from(el),
+                SuperScriptChild::LineBreak(el) => crate::Node::from(el),
+                SuperScriptChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                SuperScriptChild::Link(el) => crate::Node::from(el),
+                SuperScriptChild::MarkText(el) => crate::Node::from(el),
+                SuperScriptChild::Meta(el) => crate::Node::from(el),
+                SuperScriptChild::Meter(el) => crate::Node::from(el),
+                SuperScriptChild::NoScript(el) => crate::Node::from(el),
+                SuperScriptChild::Object(el) => crate::Node::from(el),
+                SuperScriptChild::Output(el) => crate::Node::from(el),
+                SuperScriptChild::Picture(el) => crate::Node::from(el),
+                SuperScriptChild::Progress(el) => crate::Node::from(el),
+                SuperScriptChild::Quotation(el) => crate::Node::from(el),
+                SuperScriptChild::RubyAnnotation(el) => crate::Node::from(el),
+                SuperScriptChild::SampleOutput(el) => crate::Node::from(el),
+                SuperScriptChild::Script(el) => crate::Node::from(el),
+                SuperScriptChild::Select(el) => crate::Node::from(el),
+                SuperScriptChild::SideComment(el) => crate::Node::from(el),
+                SuperScriptChild::Slot(el) => crate::Node::from(el),
+                SuperScriptChild::Span(el) => crate::Node::from(el),
+                SuperScriptChild::StrikeThrough(el) => crate::Node::from(el),
+                SuperScriptChild::Strong(el) => crate::Node::from(el),
+                SuperScriptChild::SubScript(el) => crate::Node::from(el),
+                SuperScriptChild::SuperScript(el) => crate::Node::from(el),
+                SuperScriptChild::Template(el) => crate::Node::from(el),
+                SuperScriptChild::Text(el) => crate::Node::from(el),
+                SuperScriptChild::TextArea(el) => crate::Node::from(el),
+                SuperScriptChild::Time(el) => crate::Node::from(el),
+                SuperScriptChild::Underline(el) => crate::Node::from(el),
+                SuperScriptChild::Variable(el) => crate::Node::from(el),
+                SuperScriptChild::Video(el) => crate::Node::from(el),
             }
         }
     }

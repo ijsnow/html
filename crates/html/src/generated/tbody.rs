@@ -15,6 +15,11 @@ pub mod element {
             super::builder::TableBodyBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a TableBody> for crate::Node<'a> {
+        fn from(element: &'a TableBody) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl TableBody {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -888,7 +893,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for TableBody {}
+    impl crate::HtmlElement for TableBody {
+        fn tag_name(&self) -> &'static str {
+            "tbody"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::tables::TableBody> for TableBody {
         fn into(self) -> html_sys::tables::TableBody {
             self.sys
@@ -951,6 +981,15 @@ pub mod child {
                 Self::Script(el) => write!(f, "{el}"),
                 Self::TableRow(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a TableBodyChild> for crate::Node<'a> {
+        fn from(child: &'a TableBodyChild) -> Self {
+            match child {
+                TableBodyChild::Script(el) => crate::Node::from(el),
+                TableBodyChild::TableRow(el) => crate::Node::from(el),
+                TableBodyChild::Template(el) => crate::Node::from(el),
             }
         }
     }

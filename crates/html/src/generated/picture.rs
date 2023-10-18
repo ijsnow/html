@@ -15,6 +15,11 @@ pub mod element {
             super::builder::PictureBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Picture> for crate::Node<'a> {
+        fn from(element: &'a Picture) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Picture {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -374,7 +379,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Picture {}
+    impl crate::HtmlElement for Picture {
+        fn tag_name(&self) -> &'static str {
+            "picture"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Picture {}
     impl crate::PhrasingContent for Picture {}
     impl crate::EmbeddedContent for Picture {}
@@ -450,6 +480,16 @@ pub mod child {
                 Self::MediaSource(el) => write!(f, "{el}"),
                 Self::Script(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a PictureChild> for crate::Node<'a> {
+        fn from(child: &'a PictureChild) -> Self {
+            match child {
+                PictureChild::Image(el) => crate::Node::from(el),
+                PictureChild::MediaSource(el) => crate::Node::from(el),
+                PictureChild::Script(el) => crate::Node::from(el),
+                PictureChild::Template(el) => crate::Node::from(el),
             }
         }
     }

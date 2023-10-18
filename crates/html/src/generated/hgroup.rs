@@ -15,6 +15,11 @@ pub mod element {
             super::builder::HeadingGroupBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a HeadingGroup> for crate::Node<'a> {
+        fn from(element: &'a HeadingGroup) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl HeadingGroup {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -888,7 +893,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for HeadingGroup {}
+    impl crate::HtmlElement for HeadingGroup {
+        fn tag_name(&self) -> &'static str {
+            "hgroup"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for HeadingGroup {}
     impl crate::HeadingContent for HeadingGroup {}
     impl crate::PalpableContent for HeadingGroup {}
@@ -981,6 +1011,18 @@ pub mod child {
                 Self::Heading4(el) => write!(f, "{el}"),
                 Self::Heading5(el) => write!(f, "{el}"),
                 Self::Heading6(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a HeadingGroupChild> for crate::Node<'a> {
+        fn from(child: &'a HeadingGroupChild) -> Self {
+            match child {
+                HeadingGroupChild::Heading1(el) => crate::Node::from(el),
+                HeadingGroupChild::Heading2(el) => crate::Node::from(el),
+                HeadingGroupChild::Heading3(el) => crate::Node::from(el),
+                HeadingGroupChild::Heading4(el) => crate::Node::from(el),
+                HeadingGroupChild::Heading5(el) => crate::Node::from(el),
+                HeadingGroupChild::Heading6(el) => crate::Node::from(el),
             }
         }
     }

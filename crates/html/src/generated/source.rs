@@ -14,6 +14,11 @@ pub mod element {
             super::builder::MediaSourceBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a MediaSource> for crate::Node<'a> {
+        fn from(element: &'a MediaSource) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl MediaSource {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -365,7 +370,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for MediaSource {}
+    impl crate::HtmlElement for MediaSource {
+        fn tag_name(&self) -> &'static str {
+            "source"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl std::convert::Into<html_sys::embedded::MediaSource> for MediaSource {
         fn into(self) -> html_sys::embedded::MediaSource {
             self.sys

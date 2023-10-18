@@ -14,6 +14,11 @@ pub mod element {
             super::builder::LineBreakOpportunityBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a LineBreakOpportunity> for crate::Node<'a> {
+        fn from(element: &'a LineBreakOpportunity) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl LineBreakOpportunity {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -362,7 +367,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for LineBreakOpportunity {}
+    impl crate::HtmlElement for LineBreakOpportunity {
+        fn tag_name(&self) -> &'static str {
+            "wbr"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl crate::FlowContent for LineBreakOpportunity {}
     impl crate::PhrasingContent for LineBreakOpportunity {}
     impl std::convert::Into<html_sys::text::LineBreakOpportunity>

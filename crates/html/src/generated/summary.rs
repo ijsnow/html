@@ -15,6 +15,11 @@ pub mod element {
             super::builder::SummaryBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Summary> for crate::Node<'a> {
+        fn from(element: &'a Summary) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Summary {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -888,7 +893,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Summary {}
+    impl crate::HtmlElement for Summary {
+        fn tag_name(&self) -> &'static str {
+            "summary"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::interactive::Summary> for Summary {
         fn into(self) -> html_sys::interactive::Summary {
             self.sys
@@ -1497,6 +1527,74 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a SummaryChild> for crate::Node<'a> {
+        fn from(child: &'a SummaryChild) -> Self {
+            match child {
+                SummaryChild::Abbreviation(el) => crate::Node::from(el),
+                SummaryChild::Anchor(el) => crate::Node::from(el),
+                SummaryChild::Audio(el) => crate::Node::from(el),
+                SummaryChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                SummaryChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                SummaryChild::Bold(el) => crate::Node::from(el),
+                SummaryChild::Button(el) => crate::Node::from(el),
+                SummaryChild::Canvas(el) => crate::Node::from(el),
+                SummaryChild::Cite(el) => crate::Node::from(el),
+                SummaryChild::Code(el) => crate::Node::from(el),
+                SummaryChild::Data(el) => crate::Node::from(el),
+                SummaryChild::DataList(el) => crate::Node::from(el),
+                SummaryChild::Definition(el) => crate::Node::from(el),
+                SummaryChild::DeletedText(el) => crate::Node::from(el),
+                SummaryChild::Embed(el) => crate::Node::from(el),
+                SummaryChild::Emphasis(el) => crate::Node::from(el),
+                SummaryChild::Heading1(el) => crate::Node::from(el),
+                SummaryChild::Heading2(el) => crate::Node::from(el),
+                SummaryChild::Heading3(el) => crate::Node::from(el),
+                SummaryChild::Heading4(el) => crate::Node::from(el),
+                SummaryChild::Heading5(el) => crate::Node::from(el),
+                SummaryChild::Heading6(el) => crate::Node::from(el),
+                SummaryChild::HeadingGroup(el) => crate::Node::from(el),
+                SummaryChild::Iframe(el) => crate::Node::from(el),
+                SummaryChild::Image(el) => crate::Node::from(el),
+                SummaryChild::ImageMap(el) => crate::Node::from(el),
+                SummaryChild::ImageMapArea(el) => crate::Node::from(el),
+                SummaryChild::Input(el) => crate::Node::from(el),
+                SummaryChild::InsertedText(el) => crate::Node::from(el),
+                SummaryChild::Italic(el) => crate::Node::from(el),
+                SummaryChild::KeyboardInput(el) => crate::Node::from(el),
+                SummaryChild::Label(el) => crate::Node::from(el),
+                SummaryChild::LineBreak(el) => crate::Node::from(el),
+                SummaryChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                SummaryChild::Link(el) => crate::Node::from(el),
+                SummaryChild::MarkText(el) => crate::Node::from(el),
+                SummaryChild::Meta(el) => crate::Node::from(el),
+                SummaryChild::Meter(el) => crate::Node::from(el),
+                SummaryChild::NoScript(el) => crate::Node::from(el),
+                SummaryChild::Object(el) => crate::Node::from(el),
+                SummaryChild::Output(el) => crate::Node::from(el),
+                SummaryChild::Picture(el) => crate::Node::from(el),
+                SummaryChild::Progress(el) => crate::Node::from(el),
+                SummaryChild::Quotation(el) => crate::Node::from(el),
+                SummaryChild::RubyAnnotation(el) => crate::Node::from(el),
+                SummaryChild::SampleOutput(el) => crate::Node::from(el),
+                SummaryChild::Script(el) => crate::Node::from(el),
+                SummaryChild::Select(el) => crate::Node::from(el),
+                SummaryChild::SideComment(el) => crate::Node::from(el),
+                SummaryChild::Slot(el) => crate::Node::from(el),
+                SummaryChild::Span(el) => crate::Node::from(el),
+                SummaryChild::StrikeThrough(el) => crate::Node::from(el),
+                SummaryChild::Strong(el) => crate::Node::from(el),
+                SummaryChild::SubScript(el) => crate::Node::from(el),
+                SummaryChild::SuperScript(el) => crate::Node::from(el),
+                SummaryChild::Template(el) => crate::Node::from(el),
+                SummaryChild::Text(el) => crate::Node::from(el),
+                SummaryChild::TextArea(el) => crate::Node::from(el),
+                SummaryChild::Time(el) => crate::Node::from(el),
+                SummaryChild::Underline(el) => crate::Node::from(el),
+                SummaryChild::Variable(el) => crate::Node::from(el),
+                SummaryChild::Video(el) => crate::Node::from(el),
             }
         }
     }

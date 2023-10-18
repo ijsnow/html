@@ -14,6 +14,11 @@ pub mod element {
             super::builder::RubyFallbackParenthesisBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a RubyFallbackParenthesis> for crate::Node<'a> {
+        fn from(element: &'a RubyFallbackParenthesis) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl RubyFallbackParenthesis {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -834,7 +839,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for RubyFallbackParenthesis {}
+    impl crate::HtmlElement for RubyFallbackParenthesis {
+        fn tag_name(&self) -> &'static str {
+            "rp"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl std::convert::Into<html_sys::text::RubyFallbackParenthesis>
     for RubyFallbackParenthesis {
         fn into(self) -> html_sys::text::RubyFallbackParenthesis {

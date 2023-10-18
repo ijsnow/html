@@ -15,6 +15,11 @@ pub mod element {
             super::builder::StrikeThroughBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a StrikeThrough> for crate::Node<'a> {
+        fn from(element: &'a StrikeThrough) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl StrikeThrough {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for StrikeThrough {}
+    impl crate::HtmlElement for StrikeThrough {
+        fn tag_name(&self) -> &'static str {
+            "s"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for StrikeThrough {}
     impl crate::PhrasingContent for StrikeThrough {}
     impl crate::PalpableContent for StrikeThrough {}
@@ -1407,6 +1437,69 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a StrikeThroughChild> for crate::Node<'a> {
+        fn from(child: &'a StrikeThroughChild) -> Self {
+            match child {
+                StrikeThroughChild::Abbreviation(el) => crate::Node::from(el),
+                StrikeThroughChild::Anchor(el) => crate::Node::from(el),
+                StrikeThroughChild::Audio(el) => crate::Node::from(el),
+                StrikeThroughChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                StrikeThroughChild::BidirectionalTextOverride(el) => {
+                    crate::Node::from(el)
+                }
+                StrikeThroughChild::Bold(el) => crate::Node::from(el),
+                StrikeThroughChild::Button(el) => crate::Node::from(el),
+                StrikeThroughChild::Canvas(el) => crate::Node::from(el),
+                StrikeThroughChild::Cite(el) => crate::Node::from(el),
+                StrikeThroughChild::Code(el) => crate::Node::from(el),
+                StrikeThroughChild::Data(el) => crate::Node::from(el),
+                StrikeThroughChild::DataList(el) => crate::Node::from(el),
+                StrikeThroughChild::Definition(el) => crate::Node::from(el),
+                StrikeThroughChild::DeletedText(el) => crate::Node::from(el),
+                StrikeThroughChild::Embed(el) => crate::Node::from(el),
+                StrikeThroughChild::Emphasis(el) => crate::Node::from(el),
+                StrikeThroughChild::Iframe(el) => crate::Node::from(el),
+                StrikeThroughChild::Image(el) => crate::Node::from(el),
+                StrikeThroughChild::ImageMap(el) => crate::Node::from(el),
+                StrikeThroughChild::ImageMapArea(el) => crate::Node::from(el),
+                StrikeThroughChild::Input(el) => crate::Node::from(el),
+                StrikeThroughChild::InsertedText(el) => crate::Node::from(el),
+                StrikeThroughChild::Italic(el) => crate::Node::from(el),
+                StrikeThroughChild::KeyboardInput(el) => crate::Node::from(el),
+                StrikeThroughChild::Label(el) => crate::Node::from(el),
+                StrikeThroughChild::LineBreak(el) => crate::Node::from(el),
+                StrikeThroughChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                StrikeThroughChild::Link(el) => crate::Node::from(el),
+                StrikeThroughChild::MarkText(el) => crate::Node::from(el),
+                StrikeThroughChild::Meta(el) => crate::Node::from(el),
+                StrikeThroughChild::Meter(el) => crate::Node::from(el),
+                StrikeThroughChild::NoScript(el) => crate::Node::from(el),
+                StrikeThroughChild::Object(el) => crate::Node::from(el),
+                StrikeThroughChild::Output(el) => crate::Node::from(el),
+                StrikeThroughChild::Picture(el) => crate::Node::from(el),
+                StrikeThroughChild::Progress(el) => crate::Node::from(el),
+                StrikeThroughChild::Quotation(el) => crate::Node::from(el),
+                StrikeThroughChild::RubyAnnotation(el) => crate::Node::from(el),
+                StrikeThroughChild::SampleOutput(el) => crate::Node::from(el),
+                StrikeThroughChild::Script(el) => crate::Node::from(el),
+                StrikeThroughChild::Select(el) => crate::Node::from(el),
+                StrikeThroughChild::SideComment(el) => crate::Node::from(el),
+                StrikeThroughChild::Slot(el) => crate::Node::from(el),
+                StrikeThroughChild::Span(el) => crate::Node::from(el),
+                StrikeThroughChild::StrikeThrough(el) => crate::Node::from(el),
+                StrikeThroughChild::Strong(el) => crate::Node::from(el),
+                StrikeThroughChild::SubScript(el) => crate::Node::from(el),
+                StrikeThroughChild::SuperScript(el) => crate::Node::from(el),
+                StrikeThroughChild::Template(el) => crate::Node::from(el),
+                StrikeThroughChild::Text(el) => crate::Node::from(el),
+                StrikeThroughChild::TextArea(el) => crate::Node::from(el),
+                StrikeThroughChild::Time(el) => crate::Node::from(el),
+                StrikeThroughChild::Underline(el) => crate::Node::from(el),
+                StrikeThroughChild::Variable(el) => crate::Node::from(el),
+                StrikeThroughChild::Video(el) => crate::Node::from(el),
             }
         }
     }

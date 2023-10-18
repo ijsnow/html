@@ -15,6 +15,11 @@ pub mod element {
             super::builder::HeadBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Head> for crate::Node<'a> {
+        fn from(element: &'a Head) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Head {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -366,7 +371,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Head {}
+    impl crate::HtmlElement for Head {
+        fn tag_name(&self) -> &'static str {
+            "head"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::metadata::Head> for Head {
         fn into(self) -> html_sys::metadata::Head {
             self.sys
@@ -474,6 +504,20 @@ pub mod child {
                 Self::Style(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
                 Self::Title(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a HeadChild> for crate::Node<'a> {
+        fn from(child: &'a HeadChild) -> Self {
+            match child {
+                HeadChild::Base(el) => crate::Node::from(el),
+                HeadChild::Link(el) => crate::Node::from(el),
+                HeadChild::Meta(el) => crate::Node::from(el),
+                HeadChild::NoScript(el) => crate::Node::from(el),
+                HeadChild::Script(el) => crate::Node::from(el),
+                HeadChild::Style(el) => crate::Node::from(el),
+                HeadChild::Template(el) => crate::Node::from(el),
+                HeadChild::Title(el) => crate::Node::from(el),
             }
         }
     }

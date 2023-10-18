@@ -15,6 +15,11 @@ pub mod element {
             super::builder::DivisionBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Division> for crate::Node<'a> {
+        fn from(element: &'a Division) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Division {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Division {}
+    impl crate::HtmlElement for Division {
+        fn tag_name(&self) -> &'static str {
+            "div"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Division {}
     impl crate::PalpableContent for Division {}
     impl std::convert::Into<html_sys::text::Division> for Division {
@@ -1701,6 +1731,100 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a DivisionChild> for crate::Node<'a> {
+        fn from(child: &'a DivisionChild) -> Self {
+            match child {
+                DivisionChild::Abbreviation(el) => crate::Node::from(el),
+                DivisionChild::Address(el) => crate::Node::from(el),
+                DivisionChild::Anchor(el) => crate::Node::from(el),
+                DivisionChild::Article(el) => crate::Node::from(el),
+                DivisionChild::Aside(el) => crate::Node::from(el),
+                DivisionChild::Audio(el) => crate::Node::from(el),
+                DivisionChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                DivisionChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                DivisionChild::BlockQuote(el) => crate::Node::from(el),
+                DivisionChild::Bold(el) => crate::Node::from(el),
+                DivisionChild::Button(el) => crate::Node::from(el),
+                DivisionChild::Canvas(el) => crate::Node::from(el),
+                DivisionChild::Cite(el) => crate::Node::from(el),
+                DivisionChild::Code(el) => crate::Node::from(el),
+                DivisionChild::Data(el) => crate::Node::from(el),
+                DivisionChild::DataList(el) => crate::Node::from(el),
+                DivisionChild::Definition(el) => crate::Node::from(el),
+                DivisionChild::DeletedText(el) => crate::Node::from(el),
+                DivisionChild::DescriptionDetails(el) => crate::Node::from(el),
+                DivisionChild::DescriptionList(el) => crate::Node::from(el),
+                DivisionChild::DescriptionTerm(el) => crate::Node::from(el),
+                DivisionChild::Details(el) => crate::Node::from(el),
+                DivisionChild::Dialog(el) => crate::Node::from(el),
+                DivisionChild::Division(el) => crate::Node::from(el),
+                DivisionChild::Embed(el) => crate::Node::from(el),
+                DivisionChild::Emphasis(el) => crate::Node::from(el),
+                DivisionChild::Fieldset(el) => crate::Node::from(el),
+                DivisionChild::Figure(el) => crate::Node::from(el),
+                DivisionChild::Footer(el) => crate::Node::from(el),
+                DivisionChild::Form(el) => crate::Node::from(el),
+                DivisionChild::Header(el) => crate::Node::from(el),
+                DivisionChild::Heading1(el) => crate::Node::from(el),
+                DivisionChild::Heading2(el) => crate::Node::from(el),
+                DivisionChild::Heading3(el) => crate::Node::from(el),
+                DivisionChild::Heading4(el) => crate::Node::from(el),
+                DivisionChild::Heading5(el) => crate::Node::from(el),
+                DivisionChild::Heading6(el) => crate::Node::from(el),
+                DivisionChild::HeadingGroup(el) => crate::Node::from(el),
+                DivisionChild::Iframe(el) => crate::Node::from(el),
+                DivisionChild::Image(el) => crate::Node::from(el),
+                DivisionChild::ImageMap(el) => crate::Node::from(el),
+                DivisionChild::ImageMapArea(el) => crate::Node::from(el),
+                DivisionChild::Input(el) => crate::Node::from(el),
+                DivisionChild::InsertedText(el) => crate::Node::from(el),
+                DivisionChild::Italic(el) => crate::Node::from(el),
+                DivisionChild::KeyboardInput(el) => crate::Node::from(el),
+                DivisionChild::Label(el) => crate::Node::from(el),
+                DivisionChild::LineBreak(el) => crate::Node::from(el),
+                DivisionChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                DivisionChild::Link(el) => crate::Node::from(el),
+                DivisionChild::Main(el) => crate::Node::from(el),
+                DivisionChild::MarkText(el) => crate::Node::from(el),
+                DivisionChild::Menu(el) => crate::Node::from(el),
+                DivisionChild::Meta(el) => crate::Node::from(el),
+                DivisionChild::Meter(el) => crate::Node::from(el),
+                DivisionChild::Navigation(el) => crate::Node::from(el),
+                DivisionChild::NoScript(el) => crate::Node::from(el),
+                DivisionChild::Object(el) => crate::Node::from(el),
+                DivisionChild::OrderedList(el) => crate::Node::from(el),
+                DivisionChild::Output(el) => crate::Node::from(el),
+                DivisionChild::Paragraph(el) => crate::Node::from(el),
+                DivisionChild::Picture(el) => crate::Node::from(el),
+                DivisionChild::PreformattedText(el) => crate::Node::from(el),
+                DivisionChild::Progress(el) => crate::Node::from(el),
+                DivisionChild::Quotation(el) => crate::Node::from(el),
+                DivisionChild::RubyAnnotation(el) => crate::Node::from(el),
+                DivisionChild::SampleOutput(el) => crate::Node::from(el),
+                DivisionChild::Script(el) => crate::Node::from(el),
+                DivisionChild::Search(el) => crate::Node::from(el),
+                DivisionChild::Section(el) => crate::Node::from(el),
+                DivisionChild::Select(el) => crate::Node::from(el),
+                DivisionChild::SideComment(el) => crate::Node::from(el),
+                DivisionChild::Slot(el) => crate::Node::from(el),
+                DivisionChild::Span(el) => crate::Node::from(el),
+                DivisionChild::StrikeThrough(el) => crate::Node::from(el),
+                DivisionChild::Strong(el) => crate::Node::from(el),
+                DivisionChild::SubScript(el) => crate::Node::from(el),
+                DivisionChild::SuperScript(el) => crate::Node::from(el),
+                DivisionChild::Table(el) => crate::Node::from(el),
+                DivisionChild::Template(el) => crate::Node::from(el),
+                DivisionChild::Text(el) => crate::Node::from(el),
+                DivisionChild::TextArea(el) => crate::Node::from(el),
+                DivisionChild::ThematicBreak(el) => crate::Node::from(el),
+                DivisionChild::Time(el) => crate::Node::from(el),
+                DivisionChild::Underline(el) => crate::Node::from(el),
+                DivisionChild::UnorderedList(el) => crate::Node::from(el),
+                DivisionChild::Variable(el) => crate::Node::from(el),
+                DivisionChild::Video(el) => crate::Node::from(el),
             }
         }
     }

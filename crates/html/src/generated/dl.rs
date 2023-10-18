@@ -15,6 +15,11 @@ pub mod element {
             super::builder::DescriptionListBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a DescriptionList> for crate::Node<'a> {
+        fn from(element: &'a DescriptionList) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl DescriptionList {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -637,7 +642,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for DescriptionList {}
+    impl crate::HtmlElement for DescriptionList {
+        fn tag_name(&self) -> &'static str {
+            "dl"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for DescriptionList {}
     impl crate::PalpableContent for DescriptionList {}
     impl std::convert::Into<html_sys::text::DescriptionList> for DescriptionList {
@@ -722,6 +752,17 @@ pub mod child {
                 Self::Division(el) => write!(f, "{el}"),
                 Self::Script(el) => write!(f, "{el}"),
                 Self::Template(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a DescriptionListChild> for crate::Node<'a> {
+        fn from(child: &'a DescriptionListChild) -> Self {
+            match child {
+                DescriptionListChild::DescriptionDetails(el) => crate::Node::from(el),
+                DescriptionListChild::DescriptionTerm(el) => crate::Node::from(el),
+                DescriptionListChild::Division(el) => crate::Node::from(el),
+                DescriptionListChild::Script(el) => crate::Node::from(el),
+                DescriptionListChild::Template(el) => crate::Node::from(el),
             }
         }
     }

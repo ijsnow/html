@@ -15,6 +15,11 @@ pub mod element {
             super::builder::SearchBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Search> for crate::Node<'a> {
+        fn from(element: &'a Search) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Search {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -637,7 +642,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Search {}
+    impl crate::HtmlElement for Search {
+        fn tag_name(&self) -> &'static str {
+            "search"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Search {}
     impl crate::PalpableContent for Search {}
     impl std::convert::Into<html_sys::text::Search> for Search {
@@ -1464,6 +1494,98 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a SearchChild> for crate::Node<'a> {
+        fn from(child: &'a SearchChild) -> Self {
+            match child {
+                SearchChild::Abbreviation(el) => crate::Node::from(el),
+                SearchChild::Address(el) => crate::Node::from(el),
+                SearchChild::Anchor(el) => crate::Node::from(el),
+                SearchChild::Article(el) => crate::Node::from(el),
+                SearchChild::Aside(el) => crate::Node::from(el),
+                SearchChild::Audio(el) => crate::Node::from(el),
+                SearchChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                SearchChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                SearchChild::BlockQuote(el) => crate::Node::from(el),
+                SearchChild::Bold(el) => crate::Node::from(el),
+                SearchChild::Button(el) => crate::Node::from(el),
+                SearchChild::Canvas(el) => crate::Node::from(el),
+                SearchChild::Cite(el) => crate::Node::from(el),
+                SearchChild::Code(el) => crate::Node::from(el),
+                SearchChild::Data(el) => crate::Node::from(el),
+                SearchChild::DataList(el) => crate::Node::from(el),
+                SearchChild::Definition(el) => crate::Node::from(el),
+                SearchChild::DeletedText(el) => crate::Node::from(el),
+                SearchChild::DescriptionList(el) => crate::Node::from(el),
+                SearchChild::Details(el) => crate::Node::from(el),
+                SearchChild::Dialog(el) => crate::Node::from(el),
+                SearchChild::Division(el) => crate::Node::from(el),
+                SearchChild::Embed(el) => crate::Node::from(el),
+                SearchChild::Emphasis(el) => crate::Node::from(el),
+                SearchChild::Fieldset(el) => crate::Node::from(el),
+                SearchChild::Figure(el) => crate::Node::from(el),
+                SearchChild::Footer(el) => crate::Node::from(el),
+                SearchChild::Form(el) => crate::Node::from(el),
+                SearchChild::Header(el) => crate::Node::from(el),
+                SearchChild::Heading1(el) => crate::Node::from(el),
+                SearchChild::Heading2(el) => crate::Node::from(el),
+                SearchChild::Heading3(el) => crate::Node::from(el),
+                SearchChild::Heading4(el) => crate::Node::from(el),
+                SearchChild::Heading5(el) => crate::Node::from(el),
+                SearchChild::Heading6(el) => crate::Node::from(el),
+                SearchChild::HeadingGroup(el) => crate::Node::from(el),
+                SearchChild::Iframe(el) => crate::Node::from(el),
+                SearchChild::Image(el) => crate::Node::from(el),
+                SearchChild::ImageMap(el) => crate::Node::from(el),
+                SearchChild::ImageMapArea(el) => crate::Node::from(el),
+                SearchChild::Input(el) => crate::Node::from(el),
+                SearchChild::InsertedText(el) => crate::Node::from(el),
+                SearchChild::Italic(el) => crate::Node::from(el),
+                SearchChild::KeyboardInput(el) => crate::Node::from(el),
+                SearchChild::Label(el) => crate::Node::from(el),
+                SearchChild::LineBreak(el) => crate::Node::from(el),
+                SearchChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                SearchChild::Link(el) => crate::Node::from(el),
+                SearchChild::Main(el) => crate::Node::from(el),
+                SearchChild::MarkText(el) => crate::Node::from(el),
+                SearchChild::Menu(el) => crate::Node::from(el),
+                SearchChild::Meta(el) => crate::Node::from(el),
+                SearchChild::Meter(el) => crate::Node::from(el),
+                SearchChild::Navigation(el) => crate::Node::from(el),
+                SearchChild::NoScript(el) => crate::Node::from(el),
+                SearchChild::Object(el) => crate::Node::from(el),
+                SearchChild::OrderedList(el) => crate::Node::from(el),
+                SearchChild::Output(el) => crate::Node::from(el),
+                SearchChild::Paragraph(el) => crate::Node::from(el),
+                SearchChild::Picture(el) => crate::Node::from(el),
+                SearchChild::PreformattedText(el) => crate::Node::from(el),
+                SearchChild::Progress(el) => crate::Node::from(el),
+                SearchChild::Quotation(el) => crate::Node::from(el),
+                SearchChild::RubyAnnotation(el) => crate::Node::from(el),
+                SearchChild::SampleOutput(el) => crate::Node::from(el),
+                SearchChild::Script(el) => crate::Node::from(el),
+                SearchChild::Search(el) => crate::Node::from(el),
+                SearchChild::Section(el) => crate::Node::from(el),
+                SearchChild::Select(el) => crate::Node::from(el),
+                SearchChild::SideComment(el) => crate::Node::from(el),
+                SearchChild::Slot(el) => crate::Node::from(el),
+                SearchChild::Span(el) => crate::Node::from(el),
+                SearchChild::StrikeThrough(el) => crate::Node::from(el),
+                SearchChild::Strong(el) => crate::Node::from(el),
+                SearchChild::SubScript(el) => crate::Node::from(el),
+                SearchChild::SuperScript(el) => crate::Node::from(el),
+                SearchChild::Table(el) => crate::Node::from(el),
+                SearchChild::Template(el) => crate::Node::from(el),
+                SearchChild::Text(el) => crate::Node::from(el),
+                SearchChild::TextArea(el) => crate::Node::from(el),
+                SearchChild::ThematicBreak(el) => crate::Node::from(el),
+                SearchChild::Time(el) => crate::Node::from(el),
+                SearchChild::Underline(el) => crate::Node::from(el),
+                SearchChild::UnorderedList(el) => crate::Node::from(el),
+                SearchChild::Variable(el) => crate::Node::from(el),
+                SearchChild::Video(el) => crate::Node::from(el),
             }
         }
     }

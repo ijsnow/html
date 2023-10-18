@@ -15,6 +15,11 @@ pub mod element {
             super::builder::OptionBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Option> for crate::Node<'a> {
+        fn from(element: &'a Option) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Option {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -699,7 +704,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Option {}
+    impl crate::HtmlElement for Option {
+        fn tag_name(&self) -> &'static str {
+            "option"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::forms::Option> for Option {
         fn into(self) -> html_sys::forms::Option {
             self.sys
@@ -754,6 +784,13 @@ pub mod child {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
                 Self::Text(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a OptionChild> for crate::Node<'a> {
+        fn from(child: &'a OptionChild) -> Self {
+            match child {
+                OptionChild::Text(el) => crate::Node::from(el),
             }
         }
     }

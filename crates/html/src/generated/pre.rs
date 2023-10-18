@@ -15,6 +15,11 @@ pub mod element {
             super::builder::PreformattedTextBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a PreformattedText> for crate::Node<'a> {
+        fn from(element: &'a PreformattedText) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl PreformattedText {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -850,7 +855,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for PreformattedText {}
+    impl crate::HtmlElement for PreformattedText {
+        fn tag_name(&self) -> &'static str {
+            "pre"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for PreformattedText {}
     impl crate::PalpableContent for PreformattedText {}
     impl std::convert::Into<html_sys::text::PreformattedText> for PreformattedText {
@@ -1409,6 +1439,69 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a PreformattedTextChild> for crate::Node<'a> {
+        fn from(child: &'a PreformattedTextChild) -> Self {
+            match child {
+                PreformattedTextChild::Abbreviation(el) => crate::Node::from(el),
+                PreformattedTextChild::Anchor(el) => crate::Node::from(el),
+                PreformattedTextChild::Audio(el) => crate::Node::from(el),
+                PreformattedTextChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                PreformattedTextChild::BidirectionalTextOverride(el) => {
+                    crate::Node::from(el)
+                }
+                PreformattedTextChild::Bold(el) => crate::Node::from(el),
+                PreformattedTextChild::Button(el) => crate::Node::from(el),
+                PreformattedTextChild::Canvas(el) => crate::Node::from(el),
+                PreformattedTextChild::Cite(el) => crate::Node::from(el),
+                PreformattedTextChild::Code(el) => crate::Node::from(el),
+                PreformattedTextChild::Data(el) => crate::Node::from(el),
+                PreformattedTextChild::DataList(el) => crate::Node::from(el),
+                PreformattedTextChild::Definition(el) => crate::Node::from(el),
+                PreformattedTextChild::DeletedText(el) => crate::Node::from(el),
+                PreformattedTextChild::Embed(el) => crate::Node::from(el),
+                PreformattedTextChild::Emphasis(el) => crate::Node::from(el),
+                PreformattedTextChild::Iframe(el) => crate::Node::from(el),
+                PreformattedTextChild::Image(el) => crate::Node::from(el),
+                PreformattedTextChild::ImageMap(el) => crate::Node::from(el),
+                PreformattedTextChild::ImageMapArea(el) => crate::Node::from(el),
+                PreformattedTextChild::Input(el) => crate::Node::from(el),
+                PreformattedTextChild::InsertedText(el) => crate::Node::from(el),
+                PreformattedTextChild::Italic(el) => crate::Node::from(el),
+                PreformattedTextChild::KeyboardInput(el) => crate::Node::from(el),
+                PreformattedTextChild::Label(el) => crate::Node::from(el),
+                PreformattedTextChild::LineBreak(el) => crate::Node::from(el),
+                PreformattedTextChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                PreformattedTextChild::Link(el) => crate::Node::from(el),
+                PreformattedTextChild::MarkText(el) => crate::Node::from(el),
+                PreformattedTextChild::Meta(el) => crate::Node::from(el),
+                PreformattedTextChild::Meter(el) => crate::Node::from(el),
+                PreformattedTextChild::NoScript(el) => crate::Node::from(el),
+                PreformattedTextChild::Object(el) => crate::Node::from(el),
+                PreformattedTextChild::Output(el) => crate::Node::from(el),
+                PreformattedTextChild::Picture(el) => crate::Node::from(el),
+                PreformattedTextChild::Progress(el) => crate::Node::from(el),
+                PreformattedTextChild::Quotation(el) => crate::Node::from(el),
+                PreformattedTextChild::RubyAnnotation(el) => crate::Node::from(el),
+                PreformattedTextChild::SampleOutput(el) => crate::Node::from(el),
+                PreformattedTextChild::Script(el) => crate::Node::from(el),
+                PreformattedTextChild::Select(el) => crate::Node::from(el),
+                PreformattedTextChild::SideComment(el) => crate::Node::from(el),
+                PreformattedTextChild::Slot(el) => crate::Node::from(el),
+                PreformattedTextChild::Span(el) => crate::Node::from(el),
+                PreformattedTextChild::StrikeThrough(el) => crate::Node::from(el),
+                PreformattedTextChild::Strong(el) => crate::Node::from(el),
+                PreformattedTextChild::SubScript(el) => crate::Node::from(el),
+                PreformattedTextChild::SuperScript(el) => crate::Node::from(el),
+                PreformattedTextChild::Template(el) => crate::Node::from(el),
+                PreformattedTextChild::Text(el) => crate::Node::from(el),
+                PreformattedTextChild::TextArea(el) => crate::Node::from(el),
+                PreformattedTextChild::Time(el) => crate::Node::from(el),
+                PreformattedTextChild::Underline(el) => crate::Node::from(el),
+                PreformattedTextChild::Variable(el) => crate::Node::from(el),
+                PreformattedTextChild::Video(el) => crate::Node::from(el),
             }
         }
     }

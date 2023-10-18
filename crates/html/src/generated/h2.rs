@@ -15,6 +15,11 @@ pub mod element {
             super::builder::Heading2Builder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Heading2> for crate::Node<'a> {
+        fn from(element: &'a Heading2) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Heading2 {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -658,7 +663,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Heading2 {}
+    impl crate::HtmlElement for Heading2 {
+        fn tag_name(&self) -> &'static str {
+            "h2"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Heading2 {}
     impl crate::HeadingContent for Heading2 {}
     impl crate::PalpableContent for Heading2 {}
@@ -1207,6 +1237,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a Heading2Child> for crate::Node<'a> {
+        fn from(child: &'a Heading2Child) -> Self {
+            match child {
+                Heading2Child::Abbreviation(el) => crate::Node::from(el),
+                Heading2Child::Anchor(el) => crate::Node::from(el),
+                Heading2Child::Audio(el) => crate::Node::from(el),
+                Heading2Child::BidirectionalIsolate(el) => crate::Node::from(el),
+                Heading2Child::BidirectionalTextOverride(el) => crate::Node::from(el),
+                Heading2Child::Bold(el) => crate::Node::from(el),
+                Heading2Child::Button(el) => crate::Node::from(el),
+                Heading2Child::Canvas(el) => crate::Node::from(el),
+                Heading2Child::Cite(el) => crate::Node::from(el),
+                Heading2Child::Code(el) => crate::Node::from(el),
+                Heading2Child::Data(el) => crate::Node::from(el),
+                Heading2Child::DataList(el) => crate::Node::from(el),
+                Heading2Child::Definition(el) => crate::Node::from(el),
+                Heading2Child::DeletedText(el) => crate::Node::from(el),
+                Heading2Child::Embed(el) => crate::Node::from(el),
+                Heading2Child::Emphasis(el) => crate::Node::from(el),
+                Heading2Child::Iframe(el) => crate::Node::from(el),
+                Heading2Child::Image(el) => crate::Node::from(el),
+                Heading2Child::ImageMap(el) => crate::Node::from(el),
+                Heading2Child::ImageMapArea(el) => crate::Node::from(el),
+                Heading2Child::Input(el) => crate::Node::from(el),
+                Heading2Child::InsertedText(el) => crate::Node::from(el),
+                Heading2Child::Italic(el) => crate::Node::from(el),
+                Heading2Child::KeyboardInput(el) => crate::Node::from(el),
+                Heading2Child::Label(el) => crate::Node::from(el),
+                Heading2Child::LineBreak(el) => crate::Node::from(el),
+                Heading2Child::LineBreakOpportunity(el) => crate::Node::from(el),
+                Heading2Child::Link(el) => crate::Node::from(el),
+                Heading2Child::MarkText(el) => crate::Node::from(el),
+                Heading2Child::Meta(el) => crate::Node::from(el),
+                Heading2Child::Meter(el) => crate::Node::from(el),
+                Heading2Child::NoScript(el) => crate::Node::from(el),
+                Heading2Child::Object(el) => crate::Node::from(el),
+                Heading2Child::Output(el) => crate::Node::from(el),
+                Heading2Child::Picture(el) => crate::Node::from(el),
+                Heading2Child::Progress(el) => crate::Node::from(el),
+                Heading2Child::Quotation(el) => crate::Node::from(el),
+                Heading2Child::RubyAnnotation(el) => crate::Node::from(el),
+                Heading2Child::SampleOutput(el) => crate::Node::from(el),
+                Heading2Child::Script(el) => crate::Node::from(el),
+                Heading2Child::Select(el) => crate::Node::from(el),
+                Heading2Child::SideComment(el) => crate::Node::from(el),
+                Heading2Child::Slot(el) => crate::Node::from(el),
+                Heading2Child::Span(el) => crate::Node::from(el),
+                Heading2Child::StrikeThrough(el) => crate::Node::from(el),
+                Heading2Child::Strong(el) => crate::Node::from(el),
+                Heading2Child::SubScript(el) => crate::Node::from(el),
+                Heading2Child::SuperScript(el) => crate::Node::from(el),
+                Heading2Child::Template(el) => crate::Node::from(el),
+                Heading2Child::Text(el) => crate::Node::from(el),
+                Heading2Child::TextArea(el) => crate::Node::from(el),
+                Heading2Child::Time(el) => crate::Node::from(el),
+                Heading2Child::Underline(el) => crate::Node::from(el),
+                Heading2Child::Variable(el) => crate::Node::from(el),
+                Heading2Child::Video(el) => crate::Node::from(el),
             }
         }
     }

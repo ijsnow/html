@@ -14,6 +14,11 @@ pub mod element {
             super::builder::InputBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Input> for crate::Node<'a> {
+        fn from(element: &'a Input) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Input {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -1174,7 +1179,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Input {}
+    impl crate::HtmlElement for Input {
+        fn tag_name(&self) -> &'static str {
+            "input"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl crate::FlowContent for Input {}
     impl crate::PhrasingContent for Input {}
     impl crate::InteractiveContent for Input {}

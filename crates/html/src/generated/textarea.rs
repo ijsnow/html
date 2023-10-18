@@ -14,6 +14,11 @@ pub mod element {
             super::builder::TextAreaBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a TextArea> for crate::Node<'a> {
+        fn from(element: &'a TextArea) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl TextArea {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -784,7 +789,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for TextArea {}
+    impl crate::HtmlElement for TextArea {
+        fn tag_name(&self) -> &'static str {
+            "textarea"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            vec![]
+        }
+    }
     impl crate::FlowContent for TextArea {}
     impl crate::PhrasingContent for TextArea {}
     impl crate::InteractiveContent for TextArea {}

@@ -15,6 +15,11 @@ pub mod element {
             super::builder::RubyTextBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a RubyText> for crate::Node<'a> {
+        fn from(element: &'a RubyText) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl RubyText {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -855,7 +860,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for RubyText {}
+    impl crate::HtmlElement for RubyText {
+        fn tag_name(&self) -> &'static str {
+            "rt"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl std::convert::Into<html_sys::text::RubyText> for RubyText {
         fn into(self) -> html_sys::text::RubyText {
             self.sys
@@ -1401,6 +1431,67 @@ pub mod child {
                 Self::Underline(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a RubyTextChild> for crate::Node<'a> {
+        fn from(child: &'a RubyTextChild) -> Self {
+            match child {
+                RubyTextChild::Abbreviation(el) => crate::Node::from(el),
+                RubyTextChild::Anchor(el) => crate::Node::from(el),
+                RubyTextChild::Audio(el) => crate::Node::from(el),
+                RubyTextChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                RubyTextChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                RubyTextChild::Bold(el) => crate::Node::from(el),
+                RubyTextChild::Button(el) => crate::Node::from(el),
+                RubyTextChild::Canvas(el) => crate::Node::from(el),
+                RubyTextChild::Cite(el) => crate::Node::from(el),
+                RubyTextChild::Code(el) => crate::Node::from(el),
+                RubyTextChild::Data(el) => crate::Node::from(el),
+                RubyTextChild::DataList(el) => crate::Node::from(el),
+                RubyTextChild::Definition(el) => crate::Node::from(el),
+                RubyTextChild::DeletedText(el) => crate::Node::from(el),
+                RubyTextChild::Embed(el) => crate::Node::from(el),
+                RubyTextChild::Emphasis(el) => crate::Node::from(el),
+                RubyTextChild::Iframe(el) => crate::Node::from(el),
+                RubyTextChild::Image(el) => crate::Node::from(el),
+                RubyTextChild::ImageMap(el) => crate::Node::from(el),
+                RubyTextChild::ImageMapArea(el) => crate::Node::from(el),
+                RubyTextChild::Input(el) => crate::Node::from(el),
+                RubyTextChild::InsertedText(el) => crate::Node::from(el),
+                RubyTextChild::Italic(el) => crate::Node::from(el),
+                RubyTextChild::KeyboardInput(el) => crate::Node::from(el),
+                RubyTextChild::Label(el) => crate::Node::from(el),
+                RubyTextChild::LineBreak(el) => crate::Node::from(el),
+                RubyTextChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                RubyTextChild::Link(el) => crate::Node::from(el),
+                RubyTextChild::MarkText(el) => crate::Node::from(el),
+                RubyTextChild::Meta(el) => crate::Node::from(el),
+                RubyTextChild::Meter(el) => crate::Node::from(el),
+                RubyTextChild::NoScript(el) => crate::Node::from(el),
+                RubyTextChild::Object(el) => crate::Node::from(el),
+                RubyTextChild::Output(el) => crate::Node::from(el),
+                RubyTextChild::Picture(el) => crate::Node::from(el),
+                RubyTextChild::Progress(el) => crate::Node::from(el),
+                RubyTextChild::Quotation(el) => crate::Node::from(el),
+                RubyTextChild::RubyAnnotation(el) => crate::Node::from(el),
+                RubyTextChild::SampleOutput(el) => crate::Node::from(el),
+                RubyTextChild::Script(el) => crate::Node::from(el),
+                RubyTextChild::Select(el) => crate::Node::from(el),
+                RubyTextChild::SideComment(el) => crate::Node::from(el),
+                RubyTextChild::Slot(el) => crate::Node::from(el),
+                RubyTextChild::Span(el) => crate::Node::from(el),
+                RubyTextChild::StrikeThrough(el) => crate::Node::from(el),
+                RubyTextChild::Strong(el) => crate::Node::from(el),
+                RubyTextChild::SubScript(el) => crate::Node::from(el),
+                RubyTextChild::SuperScript(el) => crate::Node::from(el),
+                RubyTextChild::Template(el) => crate::Node::from(el),
+                RubyTextChild::Text(el) => crate::Node::from(el),
+                RubyTextChild::TextArea(el) => crate::Node::from(el),
+                RubyTextChild::Time(el) => crate::Node::from(el),
+                RubyTextChild::Underline(el) => crate::Node::from(el),
+                RubyTextChild::Variable(el) => crate::Node::from(el),
+                RubyTextChild::Video(el) => crate::Node::from(el),
             }
         }
     }

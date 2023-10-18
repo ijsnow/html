@@ -15,6 +15,11 @@ pub mod element {
             super::builder::FormBuilder::new(Default::default())
         }
     }
+    impl<'a> From<&'a Form> for crate::Node<'a> {
+        fn from(element: &'a Form) -> crate::Node<'a> {
+            crate::Node::Element(element)
+        }
+    }
     impl Form {
         /// Access the element's `data-*` properties
         pub fn data_map(&self) -> &html_sys::DataMap {
@@ -711,7 +716,32 @@ pub mod element {
             Ok(())
         }
     }
-    impl crate::HtmlElement for Form {}
+    impl crate::HtmlElement for Form {
+        fn tag_name(&self) -> &'static str {
+            "form"
+        }
+        fn attributes(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.attributes()
+        }
+        fn data(
+            &self,
+        ) -> std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        > {
+            use html_sys::ElementDescription;
+            self.sys.data()
+        }
+        fn children<'a>(&'a self) -> Vec<crate::Node<'a>> {
+            self.children.iter().map(From::from).collect()
+        }
+    }
     impl crate::FlowContent for Form {}
     impl crate::PalpableContent for Form {}
     impl std::convert::Into<html_sys::forms::Form> for Form {
@@ -1536,6 +1566,98 @@ pub mod child {
                 Self::UnorderedList(el) => write!(f, "{el}"),
                 Self::Variable(el) => write!(f, "{el}"),
                 Self::Video(el) => write!(f, "{el}"),
+            }
+        }
+    }
+    impl<'a> From<&'a FormChild> for crate::Node<'a> {
+        fn from(child: &'a FormChild) -> Self {
+            match child {
+                FormChild::Abbreviation(el) => crate::Node::from(el),
+                FormChild::Address(el) => crate::Node::from(el),
+                FormChild::Anchor(el) => crate::Node::from(el),
+                FormChild::Article(el) => crate::Node::from(el),
+                FormChild::Aside(el) => crate::Node::from(el),
+                FormChild::Audio(el) => crate::Node::from(el),
+                FormChild::BidirectionalIsolate(el) => crate::Node::from(el),
+                FormChild::BidirectionalTextOverride(el) => crate::Node::from(el),
+                FormChild::BlockQuote(el) => crate::Node::from(el),
+                FormChild::Bold(el) => crate::Node::from(el),
+                FormChild::Button(el) => crate::Node::from(el),
+                FormChild::Canvas(el) => crate::Node::from(el),
+                FormChild::Cite(el) => crate::Node::from(el),
+                FormChild::Code(el) => crate::Node::from(el),
+                FormChild::Data(el) => crate::Node::from(el),
+                FormChild::DataList(el) => crate::Node::from(el),
+                FormChild::Definition(el) => crate::Node::from(el),
+                FormChild::DeletedText(el) => crate::Node::from(el),
+                FormChild::DescriptionList(el) => crate::Node::from(el),
+                FormChild::Details(el) => crate::Node::from(el),
+                FormChild::Dialog(el) => crate::Node::from(el),
+                FormChild::Division(el) => crate::Node::from(el),
+                FormChild::Embed(el) => crate::Node::from(el),
+                FormChild::Emphasis(el) => crate::Node::from(el),
+                FormChild::Fieldset(el) => crate::Node::from(el),
+                FormChild::Figure(el) => crate::Node::from(el),
+                FormChild::Footer(el) => crate::Node::from(el),
+                FormChild::Form(el) => crate::Node::from(el),
+                FormChild::Header(el) => crate::Node::from(el),
+                FormChild::Heading1(el) => crate::Node::from(el),
+                FormChild::Heading2(el) => crate::Node::from(el),
+                FormChild::Heading3(el) => crate::Node::from(el),
+                FormChild::Heading4(el) => crate::Node::from(el),
+                FormChild::Heading5(el) => crate::Node::from(el),
+                FormChild::Heading6(el) => crate::Node::from(el),
+                FormChild::HeadingGroup(el) => crate::Node::from(el),
+                FormChild::Iframe(el) => crate::Node::from(el),
+                FormChild::Image(el) => crate::Node::from(el),
+                FormChild::ImageMap(el) => crate::Node::from(el),
+                FormChild::ImageMapArea(el) => crate::Node::from(el),
+                FormChild::Input(el) => crate::Node::from(el),
+                FormChild::InsertedText(el) => crate::Node::from(el),
+                FormChild::Italic(el) => crate::Node::from(el),
+                FormChild::KeyboardInput(el) => crate::Node::from(el),
+                FormChild::Label(el) => crate::Node::from(el),
+                FormChild::LineBreak(el) => crate::Node::from(el),
+                FormChild::LineBreakOpportunity(el) => crate::Node::from(el),
+                FormChild::Link(el) => crate::Node::from(el),
+                FormChild::Main(el) => crate::Node::from(el),
+                FormChild::MarkText(el) => crate::Node::from(el),
+                FormChild::Menu(el) => crate::Node::from(el),
+                FormChild::Meta(el) => crate::Node::from(el),
+                FormChild::Meter(el) => crate::Node::from(el),
+                FormChild::Navigation(el) => crate::Node::from(el),
+                FormChild::NoScript(el) => crate::Node::from(el),
+                FormChild::Object(el) => crate::Node::from(el),
+                FormChild::OrderedList(el) => crate::Node::from(el),
+                FormChild::Output(el) => crate::Node::from(el),
+                FormChild::Paragraph(el) => crate::Node::from(el),
+                FormChild::Picture(el) => crate::Node::from(el),
+                FormChild::PreformattedText(el) => crate::Node::from(el),
+                FormChild::Progress(el) => crate::Node::from(el),
+                FormChild::Quotation(el) => crate::Node::from(el),
+                FormChild::RubyAnnotation(el) => crate::Node::from(el),
+                FormChild::SampleOutput(el) => crate::Node::from(el),
+                FormChild::Script(el) => crate::Node::from(el),
+                FormChild::Search(el) => crate::Node::from(el),
+                FormChild::Section(el) => crate::Node::from(el),
+                FormChild::Select(el) => crate::Node::from(el),
+                FormChild::SideComment(el) => crate::Node::from(el),
+                FormChild::Slot(el) => crate::Node::from(el),
+                FormChild::Span(el) => crate::Node::from(el),
+                FormChild::StrikeThrough(el) => crate::Node::from(el),
+                FormChild::Strong(el) => crate::Node::from(el),
+                FormChild::SubScript(el) => crate::Node::from(el),
+                FormChild::SuperScript(el) => crate::Node::from(el),
+                FormChild::Table(el) => crate::Node::from(el),
+                FormChild::Template(el) => crate::Node::from(el),
+                FormChild::Text(el) => crate::Node::from(el),
+                FormChild::TextArea(el) => crate::Node::from(el),
+                FormChild::ThematicBreak(el) => crate::Node::from(el),
+                FormChild::Time(el) => crate::Node::from(el),
+                FormChild::Underline(el) => crate::Node::from(el),
+                FormChild::UnorderedList(el) => crate::Node::from(el),
+                FormChild::Variable(el) => crate::Node::from(el),
+                FormChild::Video(el) => crate::Node::from(el),
             }
         }
     }
