@@ -101,6 +101,74 @@ impl crate::RenderElement for Link {
         Ok(())
     }
 }
+impl crate::ElementDescription for Link {
+    fn attributes(
+        &self,
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
+        if let Some(field) = &self.href {
+            attrs.insert(std::borrow::Cow::Borrowed("href"), field.to_owned());
+        }
+        if let Some(field) = &self.crossorigin {
+            attrs.insert(std::borrow::Cow::Borrowed("crossorigin"), field.to_owned());
+        }
+        if let Some(field) = &self.rel {
+            attrs.insert(std::borrow::Cow::Borrowed("rel"), field.to_owned());
+        }
+        if let Some(field) = &self.media {
+            attrs.insert(std::borrow::Cow::Borrowed("media"), field.to_owned());
+        }
+        if let Some(field) = &self.integrity {
+            attrs.insert(std::borrow::Cow::Borrowed("integrity"), field.to_owned());
+        }
+        if let Some(field) = &self.hreflang {
+            attrs.insert(std::borrow::Cow::Borrowed("hreflang"), field.to_owned());
+        }
+        if let Some(field) = &self.type_ {
+            attrs.insert(std::borrow::Cow::Borrowed("type"), field.to_owned());
+        }
+        if let Some(field) = &self.referrerpolicy {
+            attrs.insert(std::borrow::Cow::Borrowed("referrerpolicy"), field.to_owned());
+        }
+        if let Some(field) = &self.sizes {
+            attrs.insert(std::borrow::Cow::Borrowed("sizes"), field.to_owned());
+        }
+        if let Some(field) = &self.imagesrcset {
+            attrs.insert(std::borrow::Cow::Borrowed("imagesrcset"), field.to_owned());
+        }
+        if let Some(field) = &self.imagesizes {
+            attrs.insert(std::borrow::Cow::Borrowed("imagesizes"), field.to_owned());
+        }
+        if let Some(field) = &self.as_ {
+            attrs.insert(std::borrow::Cow::Borrowed("as"), field.to_owned());
+        }
+        if let Some(field) = &self.blocking {
+            attrs.insert(std::borrow::Cow::Borrowed("blocking"), field.to_owned());
+        }
+        if let Some(field) = &self.color {
+            attrs.insert(std::borrow::Cow::Borrowed("color"), field.to_owned());
+        }
+        if let Some(field) = &self.disabled {
+            attrs.insert(std::borrow::Cow::Borrowed("disabled"), field.to_owned());
+        }
+        if let Some(field) = &self.fetchpriority {
+            attrs.insert(std::borrow::Cow::Borrowed("fetchpriority"), field.to_owned());
+        }
+        attrs
+    }
+    fn data(
+        &self,
+    ) -> &std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        &*self.data_map
+    }
+}
 impl std::fmt::Display for Link {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use crate::RenderElement;

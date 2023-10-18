@@ -22,6 +22,26 @@ impl crate::RenderElement for Head {
         Ok(())
     }
 }
+impl crate::ElementDescription for Head {
+    fn attributes(
+        &self,
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
+        attrs
+    }
+    fn data(
+        &self,
+    ) -> &std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        &*self.data_map
+    }
+}
 impl std::fmt::Display for Head {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use crate::RenderElement;

@@ -32,6 +32,32 @@ impl crate::RenderElement for Style {
         Ok(())
     }
 }
+impl crate::ElementDescription for Style {
+    fn attributes(
+        &self,
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
+        if let Some(field) = &self.media {
+            attrs.insert(std::borrow::Cow::Borrowed("media"), field.to_owned());
+        }
+        if let Some(field) = &self.blocking {
+            attrs.insert(std::borrow::Cow::Borrowed("blocking"), field.to_owned());
+        }
+        attrs
+    }
+    fn data(
+        &self,
+    ) -> &std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        &*self.data_map
+    }
+}
 impl std::fmt::Display for Style {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use crate::RenderElement;

@@ -17,6 +17,15 @@ pub trait RenderElement {
     fn write_closing_tag<W: std::fmt::Write >(&self, writer: &mut W) -> std::fmt::Result;
 }
 
+/// Get information about an element.
+pub trait ElementDescription {
+    /// Access the attributes that have a value for an element.
+    fn attributes(&self) -> std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>;
+
+    /// Access the data attributes that have a value for an element.
+    fn data(&self) -> &std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>;
+}
+
 /// Container for `data-*` attributes.
 #[derive(Debug, Clone, PartialEq, Default)]
 pub struct DataMap {
@@ -97,8 +106,10 @@ pub fn generate(
             let fields = generate_fields(global_attributes);
 
             let mut display_attrs = String::new();
+            let mut add_attrs = String::new();
             for attr in global_attributes {
                 display_attrs.push_str(&generate_attribute_display(&attr));
+                add_attrs.push_str(&generate_attribute_adder(&attr));
             }
             formatdoc!(
                 r#"
@@ -113,6 +124,12 @@ pub fn generate(
                         fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {{
                             {display_attrs}
                             Ok(())
+                        }}
+                    }}
+
+                    impl GlobalAttributes {{
+                        fn add(&self, attrs: &mut std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>) {{
+                            {add_attrs}
                         }}
                     }}
                     "#
@@ -146,6 +163,11 @@ fn generate_element(el: MergedElement) -> Result<CodeFile> {
     let opening_tag_content = generate_opening_tag(&attributes, &tag_name, has_global_attributes);
     let closing_tag_content = generate_closing_tag(&tag_name, has_closing_tag);
 
+    let mut add_attrs = String::new();
+    for attr in attributes {
+        add_attrs.push_str(&generate_attribute_adder(&attr));
+    }
+
     let global_field = match has_global_attributes {
         true => format!("global_attrs: crate::GlobalAttributes,"),
         false => String::new(),
@@ -174,6 +196,29 @@ fn generate_element(el: MergedElement) -> Result<CodeFile> {
             fn write_closing_tag<W: std::fmt::Write>(&self, writer: &mut W) -> std::fmt::Result {{
                 {closing_tag_content}
                 Ok(())
+            }}
+        }}
+
+        impl crate::ElementDescription for {struct_name} {{
+            fn attributes(&self) -> std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>> {{
+                let mut attrs = std::collections::HashMap::new();
+                self.global_attrs.add(&mut attrs);
+                {add_attrs}
+                attrs
+            }}
+
+            fn data(&self) -> &std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>> {{
+                &*self.data_map
+            }}
+
+            fn set_attributes(&self, attrs: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
+                self.global_attrs.add(&mut attrs);
+                {add_attrs}
+            }}
+
+            fn set_data(&self, data: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
+                use std::iter::Extend;
+                data.extend(self.data_map);
             }}
         }}
 
@@ -294,6 +339,35 @@ fn generate_attribute_display(attr: &Attribute) -> String {
         AttributeType::String | AttributeType::Integer | AttributeType::Float => format!(
             r##"if let Some(field) = self.{field_name}.as_ref() {{
                 write!(writer, r#" {name}="{{field}}""#)?;
+            }}"##
+        ),
+        AttributeType::Identifier(_) => todo!(),
+        AttributeType::Enumerable(_) => todo!(),
+    }
+}
+
+fn generate_attribute_adder(attr: &Attribute) -> String {
+    let Attribute {
+        name,
+        field_name,
+        ty,
+        ..
+    } = &attr;
+    match ty {
+        AttributeType::Bool => format!(
+            r##"if self.{field_name} {{
+                    attrs.insert(std::borrow::Cow::Borrowed("{name}"), std::borrow::Cow::Borrowed("true"));
+            }}"##
+        ),
+        // TODO: make enum attribute for value kinds.
+        AttributeType::String => format!(
+            r##"if let Some(field) = &self.{field_name} {{
+                attrs.insert(std::borrow::Cow::Borrowed("{name}"), field.to_owned());
+            }}"##
+        ),
+        AttributeType::Integer | AttributeType::Float => format!(
+            r##"if let Some(field) = &self.{field_name} {{
+                attrs.insert(std::borrow::Cow::Borrowed("{name}"), std::borrow::Cow::Owned(format!(r#" {{field}}"#)));
             }}"##
         ),
         AttributeType::Identifier(_) => todo!(),

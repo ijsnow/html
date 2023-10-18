@@ -72,6 +72,56 @@ impl crate::RenderElement for Script {
         Ok(())
     }
 }
+impl crate::ElementDescription for Script {
+    fn attributes(
+        &self,
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
+        if let Some(field) = &self.src {
+            attrs.insert(std::borrow::Cow::Borrowed("src"), field.to_owned());
+        }
+        if let Some(field) = &self.type_ {
+            attrs.insert(std::borrow::Cow::Borrowed("type"), field.to_owned());
+        }
+        if let Some(field) = &self.nomodule {
+            attrs.insert(std::borrow::Cow::Borrowed("nomodule"), field.to_owned());
+        }
+        if let Some(field) = &self.async_ {
+            attrs.insert(std::borrow::Cow::Borrowed("async"), field.to_owned());
+        }
+        if let Some(field) = &self.defer {
+            attrs.insert(std::borrow::Cow::Borrowed("defer"), field.to_owned());
+        }
+        if let Some(field) = &self.crossorigin {
+            attrs.insert(std::borrow::Cow::Borrowed("crossorigin"), field.to_owned());
+        }
+        if let Some(field) = &self.integrity {
+            attrs.insert(std::borrow::Cow::Borrowed("integrity"), field.to_owned());
+        }
+        if let Some(field) = &self.referrerpolicy {
+            attrs.insert(std::borrow::Cow::Borrowed("referrerpolicy"), field.to_owned());
+        }
+        if let Some(field) = &self.blocking {
+            attrs.insert(std::borrow::Cow::Borrowed("blocking"), field.to_owned());
+        }
+        if let Some(field) = &self.fetchpriority {
+            attrs.insert(std::borrow::Cow::Borrowed("fetchpriority"), field.to_owned());
+        }
+        attrs
+    }
+    fn data(
+        &self,
+    ) -> &std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        &*self.data_map
+    }
+}
 impl std::fmt::Display for Script {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use crate::RenderElement;

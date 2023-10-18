@@ -67,7 +67,10 @@ mod generated;
 mod manual;
 
 use std::borrow::Cow;
+use std::collections::HashMap;
+use std::marker::PhantomData;
 
+use html_sys::ElementDescription;
 pub use manual::categories::*;
 
 pub use manual::content;
@@ -121,4 +124,17 @@ where
 }
 
 /// An HTML Element
-pub trait HtmlElement {}
+pub trait HtmlElement {
+    fn tag_name(&self) -> Option<&'static str>;
+
+    fn set_attributes(&self, attrs: &mut HashMap<Cow<'static, str>, Cow<'static, str>>);
+
+    fn set_data(&self, data: &mut HashMap<Cow<'static, str>, Cow<'static, str>>);
+
+    fn set_children(&self, nodes: &mut Vec<Node<'_>>);
+}
+
+pub enum Node<'a> {
+    Element(&'a dyn HtmlElement),
+    Text(Cow<'static, str>),
+}

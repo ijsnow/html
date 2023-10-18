@@ -31,6 +31,32 @@ impl crate::RenderElement for MediaSource {
         Ok(())
     }
 }
+impl crate::ElementDescription for MediaSource {
+    fn attributes(
+        &self,
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
+        if let Some(field) = &self.type_ {
+            attrs.insert(std::borrow::Cow::Borrowed("type"), field.to_owned());
+        }
+        if let Some(field) = &self.media {
+            attrs.insert(std::borrow::Cow::Borrowed("media"), field.to_owned());
+        }
+        attrs
+    }
+    fn data(
+        &self,
+    ) -> &std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        &*self.data_map
+    }
+}
 impl std::fmt::Display for MediaSource {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use crate::RenderElement;

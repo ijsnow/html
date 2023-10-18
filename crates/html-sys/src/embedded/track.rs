@@ -46,6 +46,45 @@ impl crate::RenderElement for TextTrack {
         Ok(())
     }
 }
+impl crate::ElementDescription for TextTrack {
+    fn attributes(
+        &self,
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
+        if let Some(field) = &self.kind {
+            attrs.insert(std::borrow::Cow::Borrowed("kind"), field.to_owned());
+        }
+        if let Some(field) = &self.src {
+            attrs.insert(std::borrow::Cow::Borrowed("src"), field.to_owned());
+        }
+        if let Some(field) = &self.srclang {
+            attrs.insert(std::borrow::Cow::Borrowed("srclang"), field.to_owned());
+        }
+        if let Some(field) = &self.label {
+            attrs.insert(std::borrow::Cow::Borrowed("label"), field.to_owned());
+        }
+        if self.default {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("default"),
+                    std::borrow::Cow::Borrowed("true"),
+                );
+        }
+        attrs
+    }
+    fn data(
+        &self,
+    ) -> &std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        &*self.data_map
+    }
+}
 impl std::fmt::Display for TextTrack {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use crate::RenderElement;

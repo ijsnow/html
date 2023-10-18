@@ -211,6 +211,196 @@ impl crate::RenderElement for Iframe {
         Ok(())
     }
 }
+impl crate::ElementDescription for Iframe {
+    fn attributes(
+        &self,
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
+        if let Some(field) = &self.src {
+            attrs.insert(std::borrow::Cow::Borrowed("src"), field.to_owned());
+        }
+        if let Some(field) = &self.srcdoc {
+            attrs.insert(std::borrow::Cow::Borrowed("srcdoc"), field.to_owned());
+        }
+        if let Some(field) = &self.name {
+            attrs.insert(std::borrow::Cow::Borrowed("name"), field.to_owned());
+        }
+        if let Some(field) = &self.sandbox {
+            attrs.insert(std::borrow::Cow::Borrowed("sandbox"), field.to_owned());
+        }
+        if let Some(field) = &self.allow {
+            attrs.insert(std::borrow::Cow::Borrowed("allow"), field.to_owned());
+        }
+        if let Some(field) = &self.allowfullscreen {
+            attrs
+                .insert(std::borrow::Cow::Borrowed("allowfullscreen"), field.to_owned());
+        }
+        if let Some(field) = &self.width {
+            attrs.insert(std::borrow::Cow::Borrowed("width"), field.to_owned());
+        }
+        if let Some(field) = &self.height {
+            attrs.insert(std::borrow::Cow::Borrowed("height"), field.to_owned());
+        }
+        if let Some(field) = &self.referrerpolicy {
+            attrs.insert(std::borrow::Cow::Borrowed("referrerpolicy"), field.to_owned());
+        }
+        if let Some(field) = &self.loading {
+            attrs.insert(std::borrow::Cow::Borrowed("loading"), field.to_owned());
+        }
+        if let Some(field) = &self.role {
+            attrs.insert(std::borrow::Cow::Borrowed("role"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_active_descendant_element {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-activedescendant"),
+                    field.to_owned(),
+                );
+        }
+        if self.aria_atomic {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-atomic"),
+                    std::borrow::Cow::Borrowed("true"),
+                );
+        }
+        if let Some(field) = &self.aria_braille_label {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-braillelabel"),
+                    field.to_owned(),
+                );
+        }
+        if let Some(field) = &self.aria_braille_role_description {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-brailleroledescription"),
+                    field.to_owned(),
+                );
+        }
+        if self.aria_busy {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-busy"),
+                    std::borrow::Cow::Borrowed("true"),
+                );
+        }
+        if let Some(field) = &self.aria_controls_elements {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-controls"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_current {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-current"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_described_by_elements {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-describedby"),
+                    field.to_owned(),
+                );
+        }
+        if let Some(field) = &self.aria_description {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-description"),
+                    field.to_owned(),
+                );
+        }
+        if let Some(field) = &self.aria_details_elements {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-details"), field.to_owned());
+        }
+        if self.aria_disabled {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-disabled"),
+                    std::borrow::Cow::Borrowed("true"),
+                );
+        }
+        if let Some(field) = &self.aria_drop_effect {
+            attrs
+                .insert(std::borrow::Cow::Borrowed("aria-dropeffect"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_error_message_elements {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-errormessage"),
+                    field.to_owned(),
+                );
+        }
+        if self.aria_expanded {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-expanded"),
+                    std::borrow::Cow::Borrowed("true"),
+                );
+        }
+        if let Some(field) = &self.aria_flow_to_elements {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-flowto"), field.to_owned());
+        }
+        if self.aria_grabbed {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-grabbed"),
+                    std::borrow::Cow::Borrowed("true"),
+                );
+        }
+        if let Some(field) = &self.aria_has_popup {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-haspopup"), field.to_owned());
+        }
+        if self.aria_hidden {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-hidden"),
+                    std::borrow::Cow::Borrowed("true"),
+                );
+        }
+        if let Some(field) = &self.aria_invalid {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-invalid"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_key_shortcuts {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-keyshortcuts"),
+                    field.to_owned(),
+                );
+        }
+        if let Some(field) = &self.aria_label {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-label"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_labelled_by_elements {
+            attrs
+                .insert(std::borrow::Cow::Borrowed("aria-labelledby"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_live {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-live"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_owns_elements {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-owns"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_relevant {
+            attrs.insert(std::borrow::Cow::Borrowed("aria-relevant"), field.to_owned());
+        }
+        if let Some(field) = &self.aria_role_description {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-roledescription"),
+                    field.to_owned(),
+                );
+        }
+        attrs
+    }
+    fn data(
+        &self,
+    ) -> &std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        &*self.data_map
+    }
+}
 impl std::fmt::Display for Iframe {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use crate::RenderElement;

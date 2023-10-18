@@ -139,7 +139,8 @@ fn generate_element(el: MergedElement, global_attributes: &[Attribute]) -> Resul
 
     let has_children = permitted_child_elements.len() != 0;
     let categories_impl = gen_categories_impl(&content_categories, &struct_name);
-    let html_element_impl = gen_html_element_impl(&struct_name, has_global_attributes);
+    let html_element_impl =
+        gen_html_element_impl(&tag_name, &struct_name, has_global_attributes, has_children);
     let children_enum = gen_enum(&struct_name, &permitted_child_elements, should_indent);
     let child_methods = gen_child_methods(&struct_name, &enum_name, &permitted_child_elements);
     let data_map_methods = gen_data_map_methods(&struct_name);
@@ -469,12 +470,48 @@ fn gen_enum(struct_name: &str, permitted_child_elements: &[String], should_inden
     )
 }
 
-fn gen_html_element_impl(struct_name: &str, has_global_attributes: bool) -> String {
+fn gen_html_element_impl(
+    tag_name: &'static str,
+    struct_name: &str,
+    has_global_attributes: bool,
+    has_children: bool,
+) -> String {
     if has_global_attributes {
-        format!(
+        let children = if has_children {
             "
-            impl crate::HtmlElement for {struct_name} {{}}
-        "
+            if nodes.len() < self.children.len() {{
+                nodes.reserve(self.children.len() - nodes.len());
+            }}
+
+            for child in self.children {{
+                nodes.push(From::from(child));
+            }}
+            "
+            .into()
+        } else {
+            String::new()
+        };
+
+        format!(
+            r##"
+            impl crate::HtmlElement for {struct_name} {{
+                fn tag_name(&self) -> &'static str {{
+                    "{tag_name}"
+                }}
+
+                fn set_attributes(&self, attrs: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
+                    html_sys::ElementDescription::set_attributes(attrs);
+                }}
+
+                fn set_data(&self, data: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
+                    html_sys::ElementDescription::set_data(attrs);
+                }}
+
+                fn set_children(&self, nodes: &mut Vec<Node<'_>>) {{
+                    {children}
+                }}
+            }}
+        "##
         )
     } else {
         String::new()

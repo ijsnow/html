@@ -15,19 +15,45 @@ pub trait RenderElement {
     /// Write the closing tag to a writer, if one is available.
     fn write_closing_tag<W: std::fmt::Write>(&self, writer: &mut W) -> std::fmt::Result;
 }
+/// Get information about an element.
+pub trait ElementDescription {
+    /// Access the attributes that have a value for an element.
+    fn attributes(
+        &self,
+    ) -> std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>;
+    /// Access the data attributes that have a value for an element.
+    fn data(
+        &self,
+    ) -> &std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>;
+
+    fn set_attributes<
+        E: Extend<(
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        )>,
+    >(
+        &self,
+        attrs: &mut E,
+    );
+
+    fn set_data<
+        E: Extend<(
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        )>,
+    >(
+        &self,
+        data: &mut E,
+    );
+}
 /// Container for `data-*` attributes.
 #[derive(Debug, Clone, PartialEq, Default)]
 pub struct DataMap {
-    map: std::collections::HashMap<
-        std::borrow::Cow<'static, str>,
-        std::borrow::Cow<'static, str>,
-    >,
+    map: std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>,
 }
 impl std::ops::Deref for DataMap {
-    type Target = std::collections::HashMap<
-        std::borrow::Cow<'static, str>,
-        std::borrow::Cow<'static, str>,
-    >;
+    type Target =
+        std::collections::HashMap<std::borrow::Cow<'static, str>, std::borrow::Cow<'static, str>>;
     fn deref(&self) -> &Self::Target {
         &self.map
     }
@@ -192,5 +218,120 @@ impl std::fmt::Display for GlobalAttributes {
             write!(writer, r#" translate"#)?;
         }
         Ok(())
+    }
+}
+impl GlobalAttributes {
+    fn add(
+        &self,
+        attrs: &mut std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        >,
+    ) {
+        if let Some(field) = &self.access_key {
+            attrs.insert(std::borrow::Cow::Borrowed("accesskey"), field.to_owned());
+        }
+        if let Some(field) = &self.auto_capitalize {
+            attrs.insert(
+                std::borrow::Cow::Borrowed("autocapitalize"),
+                field.to_owned(),
+            );
+        }
+        if self.autofocus {
+            attrs.insert(
+                std::borrow::Cow::Borrowed("autofocus"),
+                std::borrow::Cow::Borrowed("true"),
+            );
+        }
+        if let Some(field) = &self.class {
+            attrs.insert(std::borrow::Cow::Borrowed("class"), field.to_owned());
+        }
+        if let Some(field) = &self.content_editable {
+            attrs.insert(
+                std::borrow::Cow::Borrowed("contenteditable"),
+                field.to_owned(),
+            );
+        }
+        if let Some(field) = &self.direction {
+            attrs.insert(std::borrow::Cow::Borrowed("dir"), field.to_owned());
+        }
+        if self.draggable {
+            attrs.insert(
+                std::borrow::Cow::Borrowed("draggable"),
+                std::borrow::Cow::Borrowed("true"),
+            );
+        }
+        if let Some(field) = &self.enter_key_hint {
+            attrs.insert(std::borrow::Cow::Borrowed("enterkeyhint"), field.to_owned());
+        }
+        if let Some(field) = &self.export_parts {
+            attrs.insert(std::borrow::Cow::Borrowed("exportparts"), field.to_owned());
+        }
+        if let Some(field) = &self.hidden {
+            attrs.insert(std::borrow::Cow::Borrowed("hidden"), field.to_owned());
+        }
+        if let Some(field) = &self.id {
+            attrs.insert(std::borrow::Cow::Borrowed("id"), field.to_owned());
+        }
+        if self.inert {
+            attrs.insert(
+                std::borrow::Cow::Borrowed("inert"),
+                std::borrow::Cow::Borrowed("true"),
+            );
+        }
+        if let Some(field) = &self.input_mode {
+            attrs.insert(std::borrow::Cow::Borrowed("inputmode"), field.to_owned());
+        }
+        if let Some(field) = &self.is_ {
+            attrs.insert(std::borrow::Cow::Borrowed("is"), field.to_owned());
+        }
+        if let Some(field) = &self.item_id {
+            attrs.insert(std::borrow::Cow::Borrowed("itemid"), field.to_owned());
+        }
+        if let Some(field) = &self.item_prop {
+            attrs.insert(std::borrow::Cow::Borrowed("itemprop"), field.to_owned());
+        }
+        if let Some(field) = &self.item_ref {
+            attrs.insert(std::borrow::Cow::Borrowed("itemref"), field.to_owned());
+        }
+        if let Some(field) = &self.item_scope {
+            attrs.insert(std::borrow::Cow::Borrowed("itemscope"), field.to_owned());
+        }
+        if let Some(field) = &self.item_type {
+            attrs.insert(std::borrow::Cow::Borrowed("itemtype"), field.to_owned());
+        }
+        if let Some(field) = &self.lang {
+            attrs.insert(std::borrow::Cow::Borrowed("lang"), field.to_owned());
+        }
+        if let Some(field) = &self.nonce {
+            attrs.insert(std::borrow::Cow::Borrowed("nonce"), field.to_owned());
+        }
+        if let Some(field) = &self.part {
+            attrs.insert(std::borrow::Cow::Borrowed("part"), field.to_owned());
+        }
+        if let Some(field) = &self.slot {
+            attrs.insert(std::borrow::Cow::Borrowed("slot"), field.to_owned());
+        }
+        if let Some(field) = &self.spellcheck {
+            attrs.insert(std::borrow::Cow::Borrowed("spellcheck"), field.to_owned());
+        }
+        if let Some(field) = &self.style {
+            attrs.insert(std::borrow::Cow::Borrowed("style"), field.to_owned());
+        }
+        if let Some(field) = &self.tab_index {
+            attrs.insert(
+                std::borrow::Cow::Borrowed("tabindex"),
+                std::borrow::Cow::Owned(format!(r#" {field}"#)),
+            );
+        }
+        if let Some(field) = &self.title {
+            attrs.insert(std::borrow::Cow::Borrowed("title"), field.to_owned());
+        }
+        if self.translate {
+            attrs.insert(
+                std::borrow::Cow::Borrowed("translate"),
+                std::borrow::Cow::Borrowed("true"),
+            );
+        }
     }
 }

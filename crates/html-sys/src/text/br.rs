@@ -31,6 +31,36 @@ impl crate::RenderElement for LineBreak {
         Ok(())
     }
 }
+impl crate::ElementDescription for LineBreak {
+    fn attributes(
+        &self,
+    ) -> std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        let mut attrs = std::collections::HashMap::new();
+        self.global_attrs.add(&mut attrs);
+        if let Some(field) = &self.role {
+            attrs.insert(std::borrow::Cow::Borrowed("role"), field.to_owned());
+        }
+        if self.aria_hidden {
+            attrs
+                .insert(
+                    std::borrow::Cow::Borrowed("aria-hidden"),
+                    std::borrow::Cow::Borrowed("true"),
+                );
+        }
+        attrs
+    }
+    fn data(
+        &self,
+    ) -> &std::collections::HashMap<
+        std::borrow::Cow<'static, str>,
+        std::borrow::Cow<'static, str>,
+    > {
+        &*self.data_map
+    }
+}
 impl std::fmt::Display for LineBreak {
     fn fmt(&self, writer: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use crate::RenderElement;
