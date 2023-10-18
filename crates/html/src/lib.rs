@@ -149,3 +149,9 @@ impl<'a> From<&'a std::borrow::Cow<'static, str>> for Node<'a> {
         Node::Text(text.to_owned())
     }
 }
+
+impl From<std::borrow::Cow<'static, str>> for Node<'_> {
+    fn from(text: std::borrow::Cow<'static, str>) -> Node<'_> {
+        Node::Text(text)
+    }
+}
