@@ -170,14 +170,14 @@ impl crate::RenderElement for Heading5 {
     }
 }
 impl crate::ElementDescription for Heading5 {
-    fn attributes(
+    fn set_attributes(
         &self,
-    ) -> std::collections::HashMap<
-        std::borrow::Cow<'static, str>,
-        std::borrow::Cow<'static, str>,
-    > {
-        let mut attrs = std::collections::HashMap::new();
-        self.global_attrs.add(&mut attrs);
+        attrs: &mut std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        >,
+    ) {
+        self.global_attrs.add(attrs);
         if let Some(field) = &self.role {
             attrs.insert(std::borrow::Cow::Borrowed("role"), field.to_owned());
         }
@@ -331,15 +331,15 @@ impl crate::ElementDescription for Heading5 {
                     std::borrow::Cow::Owned(format!(r#" {field}"#)),
                 );
         }
-        attrs
     }
-    fn data(
+    fn set_data(
         &self,
-    ) -> &std::collections::HashMap<
-        std::borrow::Cow<'static, str>,
-        std::borrow::Cow<'static, str>,
-    > {
-        &*self.data_map
+        data: &mut std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        >,
+    ) {
+        data.extend((&*self.data_map).clone());
     }
 }
 impl std::fmt::Display for Heading5 {

@@ -125,13 +125,10 @@ where
 
 /// An HTML Element
 pub trait HtmlElement {
-    fn tag_name(&self) -> Option<&'static str>;
-
-    fn set_attributes(&self, attrs: &mut HashMap<Cow<'static, str>, Cow<'static, str>>);
-
-    fn set_data(&self, data: &mut HashMap<Cow<'static, str>, Cow<'static, str>>);
-
-    fn set_children(&self, nodes: &mut Vec<Node<'_>>);
+    // fn tag_name(&self) -> Option<&'static str>;
+    // fn set_attributes(&self, attrs: &mut HashMap<Cow<'static, str>, Cow<'static, str>>);
+    // fn set_data(&self, data: &mut HashMap<Cow<'static, str>, Cow<'static, str>>);
+    // fn set_children(&self, nodes: &mut Vec<Node<'_>>);
 }
 
 pub enum Node<'a> {

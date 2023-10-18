@@ -287,14 +287,14 @@ impl crate::RenderElement for Data {
     }
 }
 impl crate::ElementDescription for Data {
-    fn attributes(
+    fn set_attributes(
         &self,
-    ) -> std::collections::HashMap<
-        std::borrow::Cow<'static, str>,
-        std::borrow::Cow<'static, str>,
-    > {
-        let mut attrs = std::collections::HashMap::new();
-        self.global_attrs.add(&mut attrs);
+        attrs: &mut std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        >,
+    ) {
+        self.global_attrs.add(attrs);
         if let Some(field) = &self.value {
             attrs.insert(std::borrow::Cow::Borrowed("value"), field.to_owned());
         }
@@ -596,15 +596,15 @@ impl crate::ElementDescription for Data {
         if let Some(field) = &self.aria_value_text {
             attrs.insert(std::borrow::Cow::Borrowed("aria-valuetext"), field.to_owned());
         }
-        attrs
     }
-    fn data(
+    fn set_data(
         &self,
-    ) -> &std::collections::HashMap<
-        std::borrow::Cow<'static, str>,
-        std::borrow::Cow<'static, str>,
-    > {
-        &*self.data_map
+        data: &mut std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        >,
+    ) {
+        data.extend((&*self.data_map).clone());
     }
 }
 impl std::fmt::Display for Data {

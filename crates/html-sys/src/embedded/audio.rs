@@ -197,14 +197,14 @@ impl crate::RenderElement for Audio {
     }
 }
 impl crate::ElementDescription for Audio {
-    fn attributes(
+    fn set_attributes(
         &self,
-    ) -> std::collections::HashMap<
-        std::borrow::Cow<'static, str>,
-        std::borrow::Cow<'static, str>,
-    > {
-        let mut attrs = std::collections::HashMap::new();
-        self.global_attrs.add(&mut attrs);
+        attrs: &mut std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        >,
+    ) {
+        self.global_attrs.add(attrs);
         if let Some(field) = &self.src {
             attrs.insert(std::borrow::Cow::Borrowed("src"), field.to_owned());
         }
@@ -365,15 +365,15 @@ impl crate::ElementDescription for Audio {
                     field.to_owned(),
                 );
         }
-        attrs
     }
-    fn data(
+    fn set_data(
         &self,
-    ) -> &std::collections::HashMap<
-        std::borrow::Cow<'static, str>,
-        std::borrow::Cow<'static, str>,
-    > {
-        &*self.data_map
+        data: &mut std::collections::HashMap<
+            std::borrow::Cow<'static, str>,
+            std::borrow::Cow<'static, str>,
+        >,
+    ) {
+        data.extend((&*self.data_map).clone());
     }
 }
 impl std::fmt::Display for Audio {

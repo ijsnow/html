@@ -471,7 +471,7 @@ fn gen_enum(struct_name: &str, permitted_child_elements: &[String], should_inden
 }
 
 fn gen_html_element_impl(
-    tag_name: &'static str,
+    tag_name: &str,
     struct_name: &str,
     has_global_attributes: bool,
     has_children: bool,
@@ -495,21 +495,21 @@ fn gen_html_element_impl(
         format!(
             r##"
             impl crate::HtmlElement for {struct_name} {{
-                fn tag_name(&self) -> &'static str {{
-                    "{tag_name}"
-                }}
-
-                fn set_attributes(&self, attrs: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
-                    html_sys::ElementDescription::set_attributes(attrs);
-                }}
-
-                fn set_data(&self, data: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
-                    html_sys::ElementDescription::set_data(attrs);
-                }}
-
-                fn set_children(&self, nodes: &mut Vec<Node<'_>>) {{
-                    {children}
-                }}
+                // fn tag_name(&self) -> &'static str {{
+                //     "{tag_name}"
+                // }}
+                //
+                // fn set_attributes(&self, attrs: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
+                //     html_sys::ElementDescription::set_attributes(attrs);
+                // }}
+                //
+                // fn set_data(&self, data: &mut HashMap<Cow<'static, str>, Cow<'static, str>>) {{
+                //     html_sys::ElementDescription::set_data(attrs);
+                // }}
+                //
+                // fn set_children(&self, nodes: &mut Vec<Node<'_>>) {{
+                //     {children}
+                // }}
             }}
         "##
         )
