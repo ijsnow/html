@@ -2,7 +2,9 @@
 members = [
     "crates/html",
     "crates/html-bindgen",
+    "crates/html-derive",
     "crates/html-sys",
+    "crates/html-traits",
     "crates/css-sys",
     "xtask",
 ]
