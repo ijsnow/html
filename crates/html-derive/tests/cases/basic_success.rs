@@ -4,8 +4,22 @@ use html_derive::ToHtmlElement;
 use html_traits::ToHtmlElement as _;
 
 #[derive(ToHtmlElement)]
-pub struct DefaultToDiv;
+#[html_element(html::text_content::Division(class = "hello", data::subject = "stranger"))]
+pub struct DefaultToDiv {
+    child: &'static str,
+}
 
 fn main() {
-    let _div: html::text_content::Division = DefaultToDiv.to_html_element();
+    let got: html::text_content::Division = DefaultToDiv {
+        child: "Hello, stranger.",
+    }
+    .to_html_element();
+
+    let want = html::text_content::Division::builder()
+        .class("hello")
+        .data("subject", "stranger")
+        .push("Hello, stranger.")
+        .build();
+
+    assert_eq!(got, want);
 }
